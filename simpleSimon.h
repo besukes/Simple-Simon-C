@@ -13,10 +13,6 @@ typedef struct reverterJogada{
     lastMove ultimasJogadas[250];
 }undoMove;
 
-typedef struct str{
-    char str[20];
-}string;
-
 //modulo interfaceGrafica.c
 int escolhaDeResolucao();
 void atribuiResolucao(int * resX,int * resY,int optn);
@@ -25,9 +21,17 @@ void clean_sdl(SDL_Texture * image[]);
 
 //modulo criarJogo.c
 void preset(int cartas[]);
-void presetStr(string cartasStr[]);
-void baralhar(int cartas[],string cartasStr[]);
-void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21]);
+void baralhar(int cartas[]);
+void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer);
+int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer);
+void proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int numCartas,int * i,int fila);
+void initTexturasCartas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer);
+int inicializaPrimeiras3Linhas(int cartas[],int matrizCartasJogo[10][21],int * i);
+void inicializaMatrizJogo(int cartas[],int matrizCartasJogo[10][21]);
+
+//modulo funcoesFundamentais.c
+void shuffleCartas(int cartas[]);
+void preset(int cartas[]);
 
 //modulo funcoesBase.c
 int verificaVitoria(int * baralhosCompletos);
