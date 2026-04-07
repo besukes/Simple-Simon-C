@@ -13,11 +13,18 @@ typedef struct reverterJogada{
     lastMove ultimasJogadas[250];
 }undoMove;
 
+typedef struct sdl2graphics{
+    SDL_Renderer * rendererBase;
+    int resolucaoX;
+    int resolucaoY;
+}SDL2Bases;
+
+
 //modulo interfaceGrafica.c
 int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
-SDL_Renderer * sdl_initializer(void);
-void clean_sdl(SDL_Texture * image[]);
+SDL2Bases sdl_initializer();
+void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
 
 //modulo criarJogo.c
 void preset(int cartas[]);
