@@ -4,7 +4,7 @@
 //gcc frameworkSDL2.c -o teste -lSDL2 -lSDL2_image
 
 
-SDL_Renderer * sdl_initializer(){
+SDL_Renderer * sdl_initializer(void){
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow("Stu 67", 50, 25, 1280, 600, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -18,7 +18,7 @@ void clean_sdl(SDL_Texture * image){
     SDL_Quit();
 }
 
-int main() {
+int main(void) {
     SDL_Renderer* renderer = sdl_initializer(); //sdl_initiliazer funcao criada por mim
     // 2. Load the PNG into a Texture
     // This helper function handles the Surface -> Texture conversion for you
