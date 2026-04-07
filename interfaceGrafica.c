@@ -32,7 +32,7 @@ SDL2Bases sdl_initializer(void){
     atribuiResolucao(&resX,&resY,resolution);
     SDL_Window* window = SDL_CreateWindow("Simple Simon", 50*(resX/1920), 25*(resY/1080), resX, resY, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL2Bases args={.rendererBase=renderer,.resolucaoX=resX,.resolucaoY=resY,.mouseButtonDown=0,.fila=(-1)};
+    SDL2Bases args={.rendererBase=renderer,.resolucaoX=resX,.resolucaoY=resY,.mouseButtonDown=0,.filaSelecionada=(-1)};
     return args;
 }
 
