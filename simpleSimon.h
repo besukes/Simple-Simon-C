@@ -13,11 +13,15 @@ typedef struct reverterJogada{
     lastMove ultimasJogadas[250];
 }undoMove;
 
+typedef int filaEscolhida;
+typedef int boolean;
+
 typedef struct sdl2graphics{
     SDL_Renderer * rendererBase;
     int resolucaoX;
     int resolucaoY;
-    int mouseButtonDown;
+    boolean mouseButtonDown;
+    filaEscolhida filaSelecionada;
 }SDL2Bases;
 
 
