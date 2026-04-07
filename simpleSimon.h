@@ -17,6 +17,7 @@ typedef struct sdl2graphics{
     SDL_Renderer * rendererBase;
     int resolucaoX;
     int resolucaoY;
+    int mouseButtonDown;
 }SDL2Bases;
 
 
