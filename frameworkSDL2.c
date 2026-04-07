@@ -4,7 +4,7 @@
 //gcc frameworkSDL2.c -o teste -lSDL2 -lSDL2_image
 
 
-SDL_Renderer * sdl_initializer(void){
+SDL_Renderer * sdl_initializer(){
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Window* window = SDL_CreateWindow("Stu 67", 50, 25, 1280, 600, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -18,7 +18,7 @@ void clean_sdl(SDL_Texture * image){
     SDL_Quit();
 }
 
-int main(void) {
+int main() {
     SDL_Renderer* renderer = sdl_initializer(); //sdl_initiliazer funcao criada por mim
     // 2. Load the PNG into a Texture
     // This helper function handles the Surface -> Texture conversion for you
@@ -47,3 +47,25 @@ int main(void) {
     clean_sdl(my_image);
     return 0;
 }
+
+
+/* Exemplo que o GEMINI nos deu para por as cartas no ecra (Muito bom exemplo)
+// Dentro do teu loop principal de renderização
+for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 21; j++) {
+        // 1. Só desenha se existir uma textura carregada nessa posição
+        if (imagensCartas[i][j] != NULL) {
+            
+            // 2. Define ONDE a carta vai aparecer no ecrã
+            SDL_Rect destino;
+            destino.x = i * 80;  // Afasta as colunas (ex: 80 pixéis cada)
+            destino.y = j * 30;  // Afasta as cartas na pilha (ex: sobreposição de 30 px)
+            destino.w = 70;      // Largura da carta
+            destino.h = 100;     // Altura da carta
+
+            // 3. Copia a textura do teu array para o renderer
+            SDL_RenderCopy(renderer, imagensCartas[i][j], NULL, &destino);
+        }
+    }
+}
+*/
