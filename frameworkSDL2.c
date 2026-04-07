@@ -24,9 +24,20 @@ int main() {
     // This helper function handles the Surface -> Texture conversion for you
     SDL_Texture* my_image = IMG_LoadTexture(renderer, "stuzao.png");
     SDL_Rect destination_rect = { 400, 150, 400, 300 };
-    SDL_Event e;
-    while (!(e.type == SDL_QUIT)) {
-        SDL_PollEvent(&e);
+    SDL_Event event;
+    while (!(event.type == SDL_QUIT)) {
+        SDL_PollEvent(&event);
+        int mouseX, mouseY;
+        // Verifica se o utilizador quer fechar a janela
+        if(event.type== SDL_MOUSEBUTTONDOWN){
+            // Verifica se foi o botão esquerdo
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                mouseX = event.button.x;
+                mouseY = event.button.y;
+                
+                printf("Clique detetado em: X=%d, Y=%d\n", mouseX, mouseY);
+            }
+        }
         SDL_RenderClear(renderer);
         // 4. Copy the texture to the renderer
         // NULL for the second argument means "use the entire source image"
