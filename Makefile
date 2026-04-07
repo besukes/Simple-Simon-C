@@ -1,5 +1,5 @@
 simpleSimon.o:simpleSimon.c
-  	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c simpleSimon.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c simpleSimon.c
 interfaceGrafica.o:interfaceGrafica.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c interfaceGrafica.c
 funcoesBase.o:funcoesBase.c
@@ -9,6 +9,6 @@ criarJogo.o:criarJogo.c
 funcoesFundamentais.o:funcoesFundamentais.c
 	gcc -Wall -ggdb -c funcoesFundamentais.c
 simpleSimon:simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o funcoesFundamentais.o
-  	gcc $^ -o $@
+	gcc -ggdb $^ -o $@ -lSDL2 -lSDL2_image
 clean:
-  	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o funcoesFundamentais.o simpleSimon
+	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o funcoesFundamentais.o simpleSimon
