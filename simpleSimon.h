@@ -28,7 +28,7 @@ typedef struct sdl2graphics{
 //modulo interfaceGrafica.c
 int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
-SDL2Bases sdl_initializer();
+SDL2Bases sdl_initializer(void);
 void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
 
 //modulo criarJogo.c
