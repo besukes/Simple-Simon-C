@@ -14,9 +14,9 @@ typedef struct reverterJogada{
 }undoMove;
 
 //modulo interfaceGrafica.c
-int escolhaDeResolucao();
+int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
-SDL_Renderer * sdl_initializer();
+SDL_Renderer * sdl_initializer(void);
 void clean_sdl(SDL_Texture * image[]);
 
 //modulo criarJogo.c
