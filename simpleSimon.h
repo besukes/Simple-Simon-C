@@ -4,7 +4,7 @@
 typedef int numCarta;
 
 typedef struct ultimaJogada{
-    numCarta cartas[13];
+    numCarta cartas[14];
     int novaPos;
     int antigaPos;
 }lastMove;
