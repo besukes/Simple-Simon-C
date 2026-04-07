@@ -23,16 +23,17 @@ void atribuiResolucao(int * resX,int * resY,int optn){
     }
 }
 
-SDL_Renderer * sdl_initializer(void){
+SDL2Bases sdl_initializer(void){
     SDL_Init(SDL_INIT_VIDEO);
     int resolution=escolhaDeResolucao(),resX,resY;
     atribuiResolucao(&resX,&resY,resolution);
     SDL_Window* window = SDL_CreateWindow("Simple Simon", 50*(resX/1920), 25*(resY/1080), resX, resY, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    return renderer;
+    SDL2Bases args={.rendererBase=renderer,.resolucaoX=resX,.resolucaoY=resY};
+    return args;
 }
 
-void clean_sdl(SDL_Texture * image[]){
+void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
     for(int i=0;i<52;i++){
         SDL_DestroyTexture(image[i]); //temos que apagar a imagem da memoria da gpu
     }
