@@ -20,6 +20,9 @@ void atribuiResolucao(int * resX,int * resY,int optn){
         case 3:
             *resX=1920;*resY=1080;
         break;
+        //passivel de mudancas
+        default:
+            *resX=1920;*resY=1080;
     }
 }
 
