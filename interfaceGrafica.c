@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-int escolhaDeResolucao(){
+int escolhaDeResolucao(void){
     printf("Introduza o número da resolução que pretende utilizar\n(1)-1280x720;\n(2)-1600x900\n(3)-1920x1080");
     int u;
     scanf("%d",&u);
@@ -23,7 +23,7 @@ void atribuiResolucao(int * resX,int * resY,int optn){
     }
 }
 
-SDL_Renderer * sdl_initializer(){
+SDL_Renderer * sdl_initializer(void){
     SDL_Init(SDL_INIT_VIDEO);
     int resolution=escolhaDeResolucao(),resX,resY;
     atribuiResolucao(&resX,&resY,resolution);
