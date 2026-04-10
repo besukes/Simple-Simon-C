@@ -10,8 +10,8 @@ int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]){
     //Caso de não haver cartas nessa fila
     if(cartaClique==(-1)) return 0;
     int i,numeroCartasFila = matrizCartasJogo[linhaMatriz][0],naipe=cartaClique/13;
-    for(i=numeroCartasFila;(matrizCartasJogo[linhaMatriz][i])/13 == naipe;i++);
-    return (matrizCartasJogo[linhaMatriz][--i] == cartaClique);
+    for(i=numeroCartasFila;(matrizCartasJogo[linhaMatriz][i])/13 == naipe;i--);
+    return (matrizCartasJogo[linhaMatriz][++i] == cartaClique);
 }
 
 //Pode se colocar uma carta em cima de outra caso 

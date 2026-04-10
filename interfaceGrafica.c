@@ -35,7 +35,8 @@ SDL2Bases sdl_initializer(void){
     //para nao precisar de dar scale as imagens no ecra
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
-    SDL2Bases args={.rendererBase=renderer,.resolucaoX=resX,.resolucaoY=resY,.mouseButtonDown=0,.filaSelecionada=(-1)};
+    SDL2Bases args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),
+        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY};
     return args;
 }
 

@@ -22,6 +22,8 @@ typedef struct sdl2graphics{
     int resolucaoY;
     boolean mouseButtonDown;
     filaEscolhida filaSelecionada;
+    numCarta cartas[14];
+    int numCartasSelecionadas;
 }SDL2Bases;
 
 

@@ -17,6 +17,9 @@ SDL_Event event){
             //o utilizador possui uma fila selecionada e quer coloca-la num local,temos de verificar se e valido..
             if((*args).filaSelecionada!=(-1)){
                 efetuaEventoSoltar(matrizCartasJogo,baralhosCompletos,estadoUndoGlobal,args,event);
+                // (*args).filaSelecionada = args->filaSelecionada
+                args->filaSelecionada=(-1);
+                args->numCartasSelecionadas=0;
             }
         }
     }
