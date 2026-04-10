@@ -30,6 +30,8 @@ int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
 SDL2Bases sdl_initializer(void);
 void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
+void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
+SDL2Bases * args,SDL_Event event);
 
 //modulo criarJogo.c
 void preset(int cartas[]);
@@ -49,3 +51,10 @@ void preset(int cartas[]);
 int verificaVitoria(int * baralhosCompletos);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
+
+//modulo eventos.c
+void efetuaEventoClique(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,
+SDL2Bases * args,SDL_Event event);
+void efetuaEventoSoltar(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,
+SDL2Bases * args,SDL_Event event);
+

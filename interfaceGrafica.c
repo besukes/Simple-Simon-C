@@ -48,6 +48,6 @@ void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
 }
 
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
-SDL2Bases args,SDL_Event event){
+SDL2Bases * args,SDL_Event event){
 
 }
