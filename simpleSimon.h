@@ -15,6 +15,7 @@ typedef struct reverterJogada{
 
 typedef int filaEscolhida;
 typedef int boolean;
+typedef enum {invalida,sair,valido} tipoJogada;
 
 typedef struct sdl2graphics{
     SDL_Renderer * rendererBase;
@@ -24,6 +25,7 @@ typedef struct sdl2graphics{
     filaEscolhida filaSelecionada;
     numCarta cartas[14];
     int numCartasSelecionadas;
+    tipoJogada jogada;
 }SDL2Bases;
 
 

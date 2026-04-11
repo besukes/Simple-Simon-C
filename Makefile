@@ -5,7 +5,7 @@ eventos.o:eventos.c
 interfaceGrafica.o:interfaceGrafica.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c interfaceGrafica.c
 funcoesBase.o:funcoesBase.c
-	gcc -Wall -ggdb -c funcoesBase.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c funcoesBase.c
 criarJogo.o:criarJogo.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c criarJogo.c 
 funcoesFundamentais.o:funcoesFundamentais.c

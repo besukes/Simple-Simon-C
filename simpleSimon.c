@@ -30,7 +30,7 @@ void interfaceJogo(int matrizCartasJogo[10][21],int baralhosCompletos[], undoMov
 SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],SDL2Bases * args){
     SDL_Event event;
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
-    while(!(event.type == SDL_QUIT)){
+    while(event.type != SDL_QUIT && (*args).jogada!=sair){
         SDL_PollEvent(&event);
         SDL_RenderClear((*args).rendererBase);
         desenharJogo(matrizCartasJogo,imagensCartas,imagensJogo,args,event);

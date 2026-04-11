@@ -36,7 +36,7 @@ SDL2Bases sdl_initializer(void){
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
     SDL2Bases args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),
-        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY};
+        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido};
     return args;
 }
 
