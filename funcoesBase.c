@@ -2,10 +2,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-int verificaVitoria(int * baralhosCompletos){
-    int u=0;
-    for(int i=0;i<4;i++) u+=*(baralhosCompletos+i);
-    return (u==52);
+
+int verificaVitoria(int m[10][21]){
+    int n=0;
+    for(int i=0;i<10;i++) n+=m[i][0];
+    //O jogo acabou se nao houverem cartas em nenhuma das 10 pilhas
+    return (!n);
 }
 
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]){
@@ -33,3 +35,4 @@ int dentroDoBotao(SDL_Event e,SDL2Bases * args,float offsetX,float offsetY,float
 int ePosicaoMatriz(int l,int c){
     return (l>=0 && l<10 && c>=0 && c<20);
 }
+

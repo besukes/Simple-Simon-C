@@ -4,9 +4,11 @@
 typedef int numCarta;
 
 typedef struct ultimaJogada{
-    numCarta cartas[14];
+    numCarta cartas[13];
+    SDL_Texture * imgs[13];
     int novaPos;
     int antigaPos;
+    numCarta cartasMovidas;
 }lastMove;
 typedef struct reverterJogada{
     int isp;
@@ -23,7 +25,8 @@ typedef struct sdl2graphics{
     int resolucaoY;
     boolean mouseButtonDown;
     filaEscolhida filaSelecionada;
-    numCarta cartas[14];
+    numCarta cartas[13];
+    SDL_Texture * imgs[13];
     int numCartasSelecionadas;
     tipoJogada jogada;
 }SDL2Bases;
@@ -52,13 +55,11 @@ void shuffleCartas(int cartas[]);
 void preset(int cartas[]);
 
 //modulo funcoesBase.c
-int verificaVitoria(int * baralhosCompletos);
+int verificaVitoria(int matrizCartasJogo[10][21]);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
 
 //modulo eventos.c
-void efetuaEventoClique(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,
-SDL2Bases * args,SDL_Event event);
-void efetuaEventoSoltar(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,
-SDL2Bases * args,SDL_Event event);
+void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event);
+void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event);
 
