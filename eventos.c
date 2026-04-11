@@ -1,4 +1,6 @@
 #include "simpleSimon.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 void efetuaEventoClique(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,
 SDL2Bases * args,SDL_Event event){
@@ -33,10 +35,16 @@ SDL2Bases * args,SDL_Event event){
     const float offset_x=60*(args->resolucaoX)/1600,
               offset_y=40*(args->resolucaoY)/900;
     int linha = ((event.button).x)/offset_x , 
-        coluna= ((event.button).y)/offset_y;
+        coluna = ((event.button).y)/offset_y;
     // boolean seria um int , 0 ou 1
+    // eventoRelevante de soltar , seria um evento onde o utilizador soltou o rato numa coluna de cartas
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas;
     if(eventoRelevante && cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0])){
         colocaArrayCartas(matrizCartasJogo,baralhosCompletos,estadoUndoGlobal,args);
     }
+    else jogadaNaoRealizada(matrizCartasJogo,args);
+}
+
+void efetuaEventoMotion(int matrizCartasJogo[10][21],SDL2Bases * args){
+
 }

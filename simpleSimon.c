@@ -4,7 +4,7 @@
 
 
 void handleGameplay(int matrizCartasJogo[10][21],int baralhosCompletos[],undoMove * estadoUndoGlobal,SDL2Bases * args,
-SDL_Event event){
+SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
             (*args).mouseButtonDown = 1;
@@ -23,6 +23,9 @@ SDL_Event event){
             }
         }
     }
+    else if(event.type == SDL_MOUSEMOTION && args->mouseButtonDown && args->numCartasSelecionadas){
+        efetuaEventoMotion(matrizCartasJogo,args);
+    }
 }
 
 
@@ -35,7 +38,7 @@ SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],SDL2Bases * args
         SDL_RenderClear((*args).rendererBase);
         desenharJogo(matrizCartasJogo,imagensCartas,imagensJogo,args,event);
         SDL_RenderPresent((*args).rendererBase);
-        handleGameplay(matrizCartasJogo,baralhosCompletos,estadoUndoGlobal,args,event);
+        handleGameplay(matrizCartasJogo,baralhosCompletos,estadoUndoGlobal,args,event,imagensCartas);
     }
 }
 
