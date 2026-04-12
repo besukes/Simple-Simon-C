@@ -53,6 +53,8 @@ int main(void){
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     balatro = Mix_LoadMUS("musica/balatro.mp3");
     Mix_PlayMusic(balatro, -1);
+    Mix_VolumeMusic(50);
+    
     //o limite máximo teórico numa fila de cartas seria 21
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};
