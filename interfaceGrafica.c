@@ -48,7 +48,36 @@ void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
     SDL_Quit();
 }
 
-void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
-SDL2Bases * args,SDL_Event event){
+void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
+                  SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
 
+    SDL_Renderer *r = args->rendererBase;
+
+    // Fundo
+    SDL_Rect fundo = {0, 0, 1920, 1080};
+    SDL_RenderCopy(r, imagensJogo[0], NULL, &fundo);
+    
+    int cartaW = 140;
+    int cartaH = 190;
+    int offsetX = 75;
+    int espacoX = 178;
+    int offsetY = 80;
+    int passo = 32;
+
+    for (int col = 0; col < 10; col++) {
+        for (int row = 0; row < 21; row++) {
+
+            if (matrizJogo[col][row] == 0) break;
+
+            SDL_Rect dest;
+            dest.x = offsetX + col * espacoX;
+            dest.y = offsetY + row * passo;
+            dest.w = cartaW;
+            dest.h = cartaH;
+
+            SDL_RenderCopy(r, imagensCartas[col][row], NULL, &dest);
+        }
+    }
+
+    SDL_RenderPresent(r);
 }
