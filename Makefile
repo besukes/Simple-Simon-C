@@ -16,3 +16,13 @@ simpleSimon:simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o funcoesFu
 	gcc -ggdb $^ -o $@ -lSDL2 -lSDL2_image -lSDL2_mixer
 clean:
 	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o funcoesFundamentais.o simpleSimon eventos.o handleJogadas.o
+check:
+
+	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
+	@command -v make >/dev/null 2>&1 || { echo "make not installed"; exit 1; }
+
+	@pkg-config --exists sdl2 || { echo "SDL2 missing"; exit 1; }
+	@pkg-config --exists SDL2_image || { echo "SDL2_image missing"; exit 1; }
+	@pkg-config --exists SDL2_mixer || { echo "SDL2_mixer missing"; exit 1; }
+
+	@echo "All dependencies OK"
