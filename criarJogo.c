@@ -19,7 +19,7 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
     return i;
 }
 
-void proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * renderer,int i,int fila,int mJogo[10][21]){
+int proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * renderer,int i,int fila,int mJogo[10][21]){
     mJogo[fila][0]=(10-fila);
     for(int n=0;n<=(10-fila);n++){
         char str[30];
@@ -27,12 +27,13 @@ void proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer *
         mTexturas[fila][n]= IMG_LoadTexture(renderer,str);
         mJogo[fila][n]=cartas[i++];
     }
+    return i;
 }
 
 void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]){
     int fila=3,i=primeiras3Linhas(cartas,imagensCartas,renderer,matrizCartasJogo);
     while(fila<10){
-        proximas7Linhas(cartas,imagensCartas,renderer,i,fila,matrizCartasJogo);
+        i = proximas7Linhas(cartas,imagensCartas,renderer,i,fila,matrizCartasJogo);
         fila++;
     }
 }
