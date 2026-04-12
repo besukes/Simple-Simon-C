@@ -60,6 +60,18 @@ int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
 
 //modulo eventos.c
-void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event);
-void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event);
+void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
+void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
+void efetuaEventoMotion(int matrizCartasJogo[10][21], SDL2Bases * args);
+int dentroDoBotao(SDL_Event e, SDL2Bases * args, float offsetX, float offsetY, float posX, float posY);
+int ePosicaoMatriz(int l, int c);
 
+//modulo handleJogadas.c
+void desfazerJogada(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
+void adicionaJogadaUndoMove(int matrizCartasJogo[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
+void rowCompleta(int mcj[10][21], SDL_Texture * img[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
+void rowNaoCompleta(int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
+void reeniciaJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL2Bases * args, SDL_Texture * imagensCartas[10][21]);
+void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args);
+void colocaArrayCartas(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL2Bases * args, SDL_Texture * imagensCartas[10][21]);
+void jogadaNaoRealizada(int matrizCartasJogo[10][21], SDL2Bases * args);
