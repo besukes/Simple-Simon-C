@@ -6,60 +6,44 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Estas 3 funcoes que se seguem inicializam a matriz imagensCartas com as respectivas texturas que queremos
-int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer){
+int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,
+int matrizCartasJogo[10][21]){
     int i=0;
     for(int l=0;l<3;l++){
+        matrizCartasJogo[l][0] = 8;
         for(int u=1;u<9;u++){
             char str[30];
-            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i++]);
+            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
             imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
+            matrizCartasJogo[l][u]=cartas[i++];
         }
     }
     return i;
 }
 
-void proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int numCartas,int * i,int fila){
-    for(int n=0;n<=numCartas;n++){
+void proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int i,int fila,
+int matrizCartasJogo[10][21]){
+    matrizCartasJogo[fila][0]=(10-fila);
+    for(int n=0;n<=(10-fila);n++){
         char str[30];
-            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[(*i)++]);
-            imagensCartas[fila][n]= IMG_LoadTexture(renderer,str);
+        sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
+        imagensCartas[fila][n]= IMG_LoadTexture(renderer,str);
+        matrizCartasJogo[fila][n]=cartas[i++];
     }
 }
 
-void initTexturasCartas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer){
-    int fila=3,cartasFila=7,i=primeiras3Linhas(cartas,imagensCartas,renderer);
-    while(cartasFila>0){
-        proximas7Linhas(cartas,imagensCartas,renderer,cartasFila--,&i,fila++);
+void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]){
+    int fila=3,i=primeiras3Linhas(cartas,imagensCartas,renderer,matrizCartasJogo);
+    while(fila<10){
+        proximas7Linhas(cartas,imagensCartas,renderer,i,fila,matrizCartasJogo);
+        fila++;
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-int inicializaPrimeiras3Linhas(int cartas[],int matrizCartasJogo[10][21],int * i){
-    int j=0;
-    for(;j<3;j++){
-        matrizCartasJogo[j][0]=8;
-        for(int u=1;u<9;u++){
-            matrizCartasJogo[j][u]=cartas[(*i)++];
-        }
-    }
-    return j;
-}
-
-void inicializaMatrizJogo(int cartas[],int matrizCartasJogo[10][21]){
-    int i=0,j=inicializaPrimeiras3Linhas(cartas,matrizCartasJogo,&i),numCartas=7;
-    do{
-        matrizCartasJogo[j][0]=numCartas;
-        for(int n=0;n<=numCartas;n++){
-            matrizCartasJogo[j][n]=cartas[i++];
-        }
-        j++;
-    }while((numCartas--)>0);
-}
-
 void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer){
     int cartas[52];preset(cartas);
     shuffleCartas(cartas);
-    initTexturasCartas(cartas,imagensCartas,renderer);
-    inicializaMatrizJogo(cartas,matrizCartasJogo);
+    initMatrizes(cartas,imagensCartas,renderer,matrizCartasJogo);
 }
