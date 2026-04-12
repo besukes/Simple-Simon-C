@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Estas 3 funcoes que se seguem inicializam a matriz imagensCartas com as respectivas texturas que queremos
 int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,
 int matrizCartasJogo[10][21]){
@@ -39,7 +38,6 @@ void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer 
         fila++;
     }
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer){
