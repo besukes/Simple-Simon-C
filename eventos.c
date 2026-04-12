@@ -3,8 +3,8 @@
 #include <SDL2/SDL_image.h>
 
 void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
-    const float offset_CartaX=60*(args->resolucaoX)/1600,
-                offset_CartaY=40*(args->resolucaoY)/900;
+    const float offset_CartaX=140*(args->resolucaoX)/1600,
+                offset_CartaY=190*(args->resolucaoY)/900;
     int linhaClique= ((event.button).x)/offset_CartaX,
         colunaClique= ((event.button).y)/offset_CartaY;
     //Clicou no botao de SAIR
