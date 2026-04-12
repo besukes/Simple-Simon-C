@@ -1,13 +1,38 @@
 #include "simpleSimon.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+// remover depois
+#include <stdio.h>
+
+int calculaPosXClique(float posX){
+    float i=75;
+    int n;
+    for(n=0;n<10;n++){
+        if(i<=posX && i+140>=posX) return n;
+        i+=(140+38);
+    }
+    return (-1);
+}
+
+int calculaPosYClique(int matrizCartasJogo[10][21],int posX,float posY){
+    int n,numC=matrizCartasJogo[posX][0];
+    float i=80 + 36*(numC-1);
+    if(i+158>=posY && posY>=i) return numC;
+    for(n=matrizCartasJogo[posX][0] - 1;n>=0;n--){
+        if(i-36<=posY && posY<=i) return n;
+        i-=36;
+    }
+    return (-1);
+}
+
 
 void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
-    const float offset_CartaX=140*(args->resolucaoX)/1600,
-                offset_CartaY=190*(args->resolucaoY)/900;
-    int linhaClique= ((event.button).x)/offset_CartaX,
-        colunaClique= ((event.button).y)/offset_CartaY;
+    float scaleX=(args->resolucaoX)/1600,scaleY=(args->resolucaoY)/900,
+          posX=(event.button.x),posY= (event.button.y);
+    int linhaClique= calculaPosXClique(posX),
+        colunaClique= calculaPosYClique(matrizCartasJogo,linhaClique,posY);
     //Clicou no botao de SAIR
+    printf("linha = %d , coluna = %d ",linhaClique,colunaClique);
     if(dentroDoBotao(event,args,100,50,400,20)){
         args->jogada=sair;
     }
