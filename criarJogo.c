@@ -11,7 +11,7 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
     for(int l=0;l<3;l++){
         for(int u=1;u<9;u++){
             char str[8];
-            sprintf(str,"%d.png",cartas[i++]);
+            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i++]);
             imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
         }
     }
@@ -21,7 +21,7 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
 void proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int numCartas,int * i,int fila){
     for(int n=0;n<=numCartas;n++){
         char str[8];
-            sprintf(str,"%d.png",cartas[*(i++)]);
+            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[*(i++)]);
             imagensCartas[fila][n]= IMG_LoadTexture(renderer,str);
     }
 }

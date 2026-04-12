@@ -11,7 +11,9 @@ void desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL
     matrizCartasJogo[linhaAtual][0]-=numCartas;
     int * arrayCartas=estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].cartas,
           numLantiga = matrizCartasJogo[linhaAntiga][0];
-    SDL_Texture * images[] = estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].imgs;
+          
+    SDL_Texture * *images;
+    images = (estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp]).imgs;
     for(int i=0;i<numCartas;i++){
         matrizCartasJogo[linhaAntiga][numLantiga+i] = arrayCartas[i];
         imagensCartas[linhaAntiga][numLantiga+i] = images[i];
