@@ -48,25 +48,19 @@ void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
     SDL_Quit();
 }
 
+void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
+    SDL_Rect fundo = {0, 0, 1920, 1080};
+    SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
+}
+
+
 void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
                   SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
-
-    SDL_Renderer *r = args->rendererBase;
-
-    SDL_SetRenderDrawColor(r, 0, 120, 0, 255);
-    SDL_RenderClear(r);
-
+    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
-    SDL_Rect fundo = {0, 0, 1920, 1080};
-    SDL_RenderCopy(r, imagensJogo[0], NULL, &fundo);
-
-    int cartaW = 140;
-    int cartaH = 190;
-    int offsetX = 75;
-    int espacoX = 178;
-    int offsetY = 80;
-    int passo = 32;
-
+    desenhaFundo(args,imagensJogo);
+    int cartaW = 140,cartaH=190,offsetX = 75,espacoX = 178,offsetY = 80,passo = 32;
+    // nao podemos desenhar assim
     for (int col = 0; col < 10; col++) {
         for (int row = 0; row < 21; row++) {
 
@@ -78,9 +72,9 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
             dest.w = cartaW;
             dest.h = cartaH;
 
-            SDL_RenderCopy(r, imagensCartas[col][row], NULL, &dest);
+            SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
 
-    SDL_RenderPresent(r);
+    SDL_RenderPresent(args->rendererBase);
 }
