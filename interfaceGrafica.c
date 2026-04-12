@@ -53,10 +53,13 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
 
     SDL_Renderer *r = args->rendererBase;
 
+    SDL_SetRenderDrawColor(r, 0, 120, 0, 255);
+    SDL_RenderClear(r);
+
     // Fundo
     SDL_Rect fundo = {0, 0, 1920, 1080};
     SDL_RenderCopy(r, imagensJogo[0], NULL, &fundo);
-    
+
     int cartaW = 140;
     int cartaH = 190;
     int offsetX = 75;
