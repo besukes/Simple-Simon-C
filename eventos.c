@@ -16,11 +16,11 @@ int calculaPosXClique(float posX){
 
 int calculaPosYClique(int matrizCartasJogo[10][21],int posX,float posY){
     int n,numC=matrizCartasJogo[posX][0];
-    float i=80 + 36*(numC-1);
-    if(i+158>=posY && posY>=i) return numC;
+    float i=80 + 40*(numC-1);
+    if(i+190>=posY && posY>=i) return numC;
     for(n=matrizCartasJogo[posX][0] - 1;n>=0;n--){
-        if(i-36<=posY && posY<=i) return n;
-        i-=36;
+        if(i-40<=posY && posY<=i) return n;
+        i-=40;
     }
     return (-1);
 }
