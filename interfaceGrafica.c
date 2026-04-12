@@ -56,15 +56,16 @@ void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 
 void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
                   SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
-    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
-    // Fundo
-    desenhaFundo(args,imagensJogo);
-    int cartaW = 140,cartaH=190,offsetX = 75,espacoX = 178,offsetY = 80,passo = 32;
-    // nao podemos desenhar assim
-    for (int col = 0; col < 10; col++) {
-        for (int row = 0; row < 21; row++) {
 
-            if (matrizJogo[col][row] == 0) break;
+    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
+
+    // Fundo
+    desenhaFundo(args, imagensJogo);
+
+    int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
+
+    for (int col = 0; col < 10; col++) {
+        for (int row = 1; row <= matrizJogo[col][0]; row++) {
 
             SDL_Rect dest;
             dest.x = offsetX + col * espacoX;
