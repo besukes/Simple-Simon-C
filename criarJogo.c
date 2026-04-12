@@ -21,7 +21,7 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
 
 int proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * renderer,int i,int fila,int mJogo[10][21]){
     mJogo[fila][0]=(10-fila);
-    for(int n=0;n<=(10-fila);n++){
+    for(int n=1;n<=(10-fila);n++){
         char str[30];
         sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
         mTexturas[fila][n]= IMG_LoadTexture(renderer,str);
