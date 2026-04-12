@@ -5,8 +5,7 @@
 
 
 //Estas 3 funcoes que se seguem inicializam a matriz imagensCartas com as respectivas texturas que queremos
-int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,
-int matrizCartasJogo[10][21]){
+int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]){
     int i=0;
     for(int l=0;l<3;l++){
         matrizCartasJogo[l][0] = 8;
@@ -20,14 +19,13 @@ int matrizCartasJogo[10][21]){
     return i;
 }
 
-void proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int i,int fila,
-int matrizCartasJogo[10][21]){
-    matrizCartasJogo[fila][0]=(10-fila);
+void proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * renderer,int i,int fila,int mJogo[10][21]){
+    mJogo[fila][0]=(10-fila);
     for(int n=0;n<=(10-fila);n++){
         char str[30];
         sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
-        imagensCartas[fila][n]= IMG_LoadTexture(renderer,str);
-        matrizCartasJogo[fila][n]=cartas[i++];
+        mTexturas[fila][n]= IMG_LoadTexture(renderer,str);
+        mJogo[fila][n]=cartas[i++];
     }
 }
 
