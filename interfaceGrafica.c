@@ -82,5 +82,26 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
+    if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
+    {
+        
+        dragCartas(matrizJogo, imagensCartas, args);
+    }
+    
+
     SDL_RenderPresent(args->rendererBase);
+}
+void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
+    int cartaW = 140, cartaH = 190, passo = 32;
+    int col = args->filaSelecionada;
+    int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas+2;
+    for (int i = 0; i < args->numCartasSelecionadas; i++) {
+        int row = primeiraCartaSelecionada + i;
+        SDL_Rect dest;
+        dest.x = args->mouseX;
+        dest.y = args->mouseY + i * passo;
+        dest.w = cartaW;
+        dest.h = cartaH;
+        SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
+    }
 }

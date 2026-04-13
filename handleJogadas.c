@@ -108,7 +108,13 @@ void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21
 }
 
 void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha){
-    
+    int numCartas = args->numCartasSelecionadas;
+    int contacartas = matrizCartasJogo[linha][0];
+    for (int i = 0; i < numCartas; i++) {
+        matrizCartasJogo[linha][contacartas + 1 + i] = args->cartas[i];
+        imagensCartas[linha][contacartas + 1 + i] = args->imgs[i];
+    }
+    matrizCartasJogo[linha][0] += numCartas;
 }
 
 void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args){

@@ -30,6 +30,8 @@ typedef struct sdl2graphics{
     SDL_Texture * imgs[13];
     int numCartasSelecionadas;
     tipoJogada jogada;
+    int mouseX;
+    int mouseY;
 }SDL2Bases;
 
 
@@ -40,6 +42,7 @@ SDL2Bases sdl_initializer(void);
 void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
 SDL2Bases * args,SDL_Event event);
+void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args);
 
 //modulo criarJogo.c
 void preset(int cartas[]);
