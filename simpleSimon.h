@@ -2,6 +2,9 @@
 #include <SDL2/SDL_image.h>
 
 typedef int numCarta;
+typedef int filaEscolhida;
+typedef int boolean;
+typedef enum {invalida,sair,valido} tipoJogada;
 
 typedef struct ultimaJogada{
     numCarta cartas[13];
@@ -16,9 +19,6 @@ typedef struct reverterJogada{
     lastMove ultimasJogadas[250];
 }undoMove;
 
-typedef int filaEscolhida;
-typedef int boolean;
-typedef enum {invalida,sair,valido} tipoJogada;
 
 typedef struct sdl2graphics{
     SDL_Renderer * rendererBase;
