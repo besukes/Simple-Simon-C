@@ -17,54 +17,41 @@ int calculaPosXClique(float posX){
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
     if (posX < 0) return (-1);
     int numC = matrizCartasJogo[posX][0];
-
     for (int n = 1; n <= numC; n++) {
         float topoC = 80 + (n - 1) * 32; 
         float fundoC;
-
         if (n == numC) {
             fundoC = topoC + 190;  
         } else {
             fundoC = topoC + 32;
         }
-
         if (posY >= topoC && posY <= fundoC) return n;
     }
     return (-1);
 }
 
 
-void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,
-                        SDL2Bases *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
-
-    float posX = event.button.x;
-    float posY = event.button.y;
-
-    int linhaClique = calculaPosXClique(posX);
-    int colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
-
-    // evitar segfault antes de qualquer acesso a matriz
-    if (linhaClique < 0 || colunaClique < 0) return;
-
+void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,SDL2Bases *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
+    float posX = event.button.x , posY = event.button.y;
+    int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     printf("linha = %d , coluna = %d\n", linhaClique, colunaClique);
-
+    //Clicou no botao de sair do jogo
     if (dentroDoBotao(event, args, 100, 50, 400, 20)) {
         args->jogada = sair;
     }
+    //Clicou no botao de desfazer a jogada
     else if (dentroDoBotao(event, args, 100, 50, 1500, 500)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
     }
+    //Clicou no botao de reeniciar o jogo
     else if (dentroDoBotao(event, args, 100, 50, 700, 20)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
+    //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
         int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
         if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
             updateEstado(linhaClique, colunaClique, matrizCartasJogo, args);
-        } else {
-            args->filaSelecionada = linhaClique;
-            args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
-            args->jogada = invalida;
         }
     }
 }

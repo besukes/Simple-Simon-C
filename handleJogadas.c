@@ -4,22 +4,46 @@
 #include <stdio.h>
 
 
-void desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
-    int linhaAtual=estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].novaPos,
-        linhaAntiga=estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].antigaPos,
-        numCartas = estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].cartasMovidas;
-    matrizCartasJogo[linhaAtual][0]-=numCartas;
-    int * arrayCartas=estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp].cartas,
-          numLantiga = matrizCartasJogo[linhaAntiga][0];
-          
-    SDL_Texture * *images;
-    images = (estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp]).imgs;
-    for(int i=0;i<numCartas;i++){
-        matrizCartasJogo[linhaAntiga][numLantiga+i] = arrayCartas[i];
-        imagensCartas[linhaAntiga][numLantiga+i] = images[i];
-        matrizCartasJogo[linhaAntiga][0]++;
+void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
+    int isp = estadoUndoGlobal->isp,
+        linhaCompleta = estadoUndoGlobal->ultimasJogadas[isp].novaPos,
+        linhaAnterior = estadoUndoGlobal->ultimasJogadas[isp].antigaPos,
+        numCartasColocadas = estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas;
+    int i,m = matrizCartasJogo[linhaAnterior][0];
+    matrizCartasJogo[linhaCompleta][0] = 13-numCartasColocadas;
+    for(i=1;i<=13-numCartasColocadas;i++){
+        matrizCartasJogo[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i];
+        imagensCartas[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i];
     }
-    estadoUndoGlobal->isp --;
+    for(int j=1;i<13;i++,j++){
+        matrizCartasJogo[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i];
+        imagensCartas[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i];
+    }
+}
+
+void desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
+    int isp = -- (estadoUndoGlobal->isp);
+    //SE a fila tiver sido completa nesta jogada entao e um caso especial , que deve ser tratado a parte..
+    if(estadoUndoGlobal->ultimasJogadas[isp].filaPreenchida){
+        desfazerFilaCompleta(matrizCartasJogo,estadoUndoGlobal,imagensCartas);
+    }
+    else{
+        //Inicilizamos todas as variaveis que precisamos para desfazer a jogada , para facilitar a leitura
+        int linhaAtual = estadoUndoGlobal->ultimasJogadas[isp].novaPos,
+            linhaAntiga = estadoUndoGlobal->ultimasJogadas[isp].antigaPos,
+            numCartas = estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas,
+            numCLantiga = matrizCartasJogo[linhaAntiga][0];
+        int * arrayCartas=estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas;
+        //Para facilitar a leitura criamos uma variavel que e um apontador de memoria de uma posicao onde esta um apontador de memoria
+        SDL_Texture * * images= (estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp]).imgs;
+        //A fila nao se completou com a jogada , ao desfazer a jogada simplesmente retiramos as cartas e pomos na outra fila
+        matrizCartasJogo[linhaAtual][0]-=numCartas;
+        for(int i=0;i<numCartas;i++){
+            matrizCartasJogo[linhaAntiga][numCLantiga+i] = arrayCartas[i];
+            imagensCartas[linhaAntiga][numCLantiga+i] = images[i];
+            matrizCartasJogo[linhaAntiga][0]++;
+        }
+    }
 }
 
 void adicionaJogadaUndoMove(int matrizCartasJogo[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal,
@@ -42,7 +66,8 @@ SDL_Texture * imagensCartas[10][21]){
 void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
     estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].antigaPos = args->filaSelecionada;
     estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].novaPos = pos;
-    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartasMovidas = 13;
+    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartasMovidas = args->numCartasSelecionadas;
+    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].filaPreenchida = 1;
      for(int i=0;i<13;i++){
         estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas[i] = mcj[pos][i];
         estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].imgs[i] = img[pos][i];
@@ -50,13 +75,14 @@ void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,SDL2Bases * a
 }
 
 void rowNaoCompleta(int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
-    int numCartasJogadas=args->numCartasSelecionadas;
-        estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].antigaPos = args->filaSelecionada;
-        estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].novaPos = pos;
-        estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartasMovidas = numCartasJogadas;;
+    int numCartasJogadas=args->numCartasSelecionadas , isp = estadoUndoGlobal->isp;
+    estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
+    estadoUndoGlobal->ultimasJogadas[isp].novaPos = pos;
+    estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas = numCartasJogadas;
+    estadoUndoGlobal->ultimasJogadas[isp].filaPreenchida = 0;
     for(int i=0;i<numCartasJogadas;i++){
-        estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas[i] = args->cartas[i];
-        estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].imgs[i] = args->imgs[i];
+        estadoUndoGlobal->ultimasJogadas[isp].cartas[i] = args->cartas[i];
+        estadoUndoGlobal->ultimasJogadas[isp].imgs[i] = args->imgs[i];
     }
 }
 
@@ -72,6 +98,7 @@ SDL_Texture * imagensCartas[10][21]){
 void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases *args) {
     args->filaSelecionada = linhaClique;
     args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
+    args->jogada = valido;
 }
 
 void colocaArrayCartas(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,

@@ -9,6 +9,7 @@ typedef struct ultimaJogada{
     int novaPos;
     int antigaPos;
     numCarta cartasMovidas;
+    boolean filaPreenchida;
 }lastMove;
 typedef struct reverterJogada{
     int isp;
