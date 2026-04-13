@@ -70,7 +70,7 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
             dest.w = cartaW;
             dest.h = cartaH;
             // aumentar a carta
-            if (col == args->filaSelecionada) {
+            /*if (col == args->filaSelecionada) {
                 int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas + 1;
                 if (row >= primeiraCartaSelecionada) {
                     int escala = 10;
@@ -78,13 +78,12 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
                     dest.w += escala;
                     dest.h += escala;
                 }
-            }
+            }*/
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
-        
         dragCartas(matrizJogo, imagensCartas, args);
     }
     

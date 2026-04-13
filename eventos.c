@@ -4,6 +4,13 @@
 // remover depois
 #include <stdio.h>
 
+void resetArgs(SDL2Bases * args){
+    args->filaSelecionada=(-1);
+    args->numCartasSelecionadas=0;
+    args->jogada=valido;
+    args->mouseButtonDown=0;
+}
+
 int calculaPosXClique(float posX){
     float i=75;
     int n;
@@ -67,9 +74,11 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     if(eventoRelevante && cartaPodeSeColocar){
         colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
         adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas);
+        resetArgs(args);
     }
     else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args);
 }
+
 
 void efetuaEventoMotion(int matrizCartasJogo[10][21],SDL2Bases * args){
 
