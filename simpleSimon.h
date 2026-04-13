@@ -72,7 +72,7 @@ int dentroDoBotao(SDL_Event e, SDL2Bases * args, float offsetX, float offsetY, f
 int ePosicaoMatriz(int l, int c);
 
 //modulo handleJogadas.c
-void desfazerJogada(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
+int desfazerJogada(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
 void adicionaJogadaUndoMove(int matrizCartasJogo[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
 void rowCompleta(int mcj[10][21], SDL_Texture * img[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
 void rowNaoCompleta(int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);

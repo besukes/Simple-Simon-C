@@ -29,10 +29,17 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     }
 }
 
+void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
+    //imagensJogo[0] = IMG_LoadTexture(renderer,"assets/fundo.png")
+    imagensJogo[1] = IMG_LoadTexture(renderer,"assets/quit.png");
+    imagensJogo[2] = IMG_LoadTexture(renderer,"assets/NG.png");
+    imagensJogo[3] = IMG_LoadTexture(renderer,"assets/undo.png");
+}
 
 void interfaceJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
 SDL_Texture * imagensJogo[],SDL2Bases * args){
     SDL_Event event;
+    inicializaTexturasJogo(imagensJogo,args->rendererBase);
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
     while(event.type != SDL_QUIT && (*args).jogada!=sair){
         SDL_PollEvent(&event);
