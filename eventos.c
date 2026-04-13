@@ -14,45 +14,61 @@ int calculaPosXClique(float posX){
     return (-1);
 }
 
-int calculaPosYClique(int matrizCartasJogo[10][21],int posX,float posY){
-    int n,numC=matrizCartasJogo[posX][0];
-    float i=80 + 40*(numC-1);
-    if(i+190>=posY && posY>=i) return numC;
-    for(n=matrizCartasJogo[posX][0] - 1;n>=0;n--){
-        if(i-40<=posY && posY<=i) return n;
-        i-=40;
+int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
+    if (posX < 0) return (-1);
+    int numC = matrizCartasJogo[posX][0];
+
+    for (int n = 1; n <= numC; n++) {
+        float topoC = 80 + (n - 1) * 32; 
+        float fundoC;
+
+        if (n == numC) {
+            fundoC = topoC + 190;  
+        } else {
+            fundoC = topoC + 32;
+        }
+
+        if (posY >= topoC && posY <= fundoC) return n;
     }
     return (-1);
 }
 
 
-void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
-    float scaleX=(args->resolucaoX)/1600,scaleY=(args->resolucaoY)/900,
-          posX=(event.button.x),posY= (event.button.y);
-    int linhaClique= calculaPosXClique(posX),
-        colunaClique= calculaPosYClique(matrizCartasJogo,linhaClique,posY);
-    //Clicou no botao de SAIR
-    printf("linha = %d , coluna = %d ",linhaClique,colunaClique);
-    if(dentroDoBotao(event,args,100,50,400,20)){
-        args->jogada=sair;
+void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,
+                        SDL2Bases *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
+
+    float posX = event.button.x;
+    float posY = event.button.y;
+
+    int linhaClique = calculaPosXClique(posX);
+    int colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
+
+    // evitar segfault antes de qualquer acesso a matriz
+    if (linhaClique < 0 || colunaClique < 0) return;
+
+    printf("linha = %d , coluna = %d\n", linhaClique, colunaClique);
+
+    if (dentroDoBotao(event, args, 100, 50, 400, 20)) {
+        args->jogada = sair;
     }
-    //Clicou no botao de UndoMove
-    else if(dentroDoBotao(event,args,100,50,1500,500)){
-        desfazerJogada(matrizCartasJogo,estadoUndoGlobal , imagensCartas);
+    else if (dentroDoBotao(event, args, 100, 50, 1500, 500)) {
+        desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
     }
-    //Clicou para reeniciar o jogo
-    else if(dentroDoBotao(event,args,100,50,700,20)){
-        reeniciaJogo(matrizCartasJogo,estadoUndoGlobal,args,imagensCartas);
+    else if (dentroDoBotao(event, args, 100, 50, 700, 20)) {
+        reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
-    //Clicou numa fila de cartas
-    else if(ePosicaoMatriz(linhaClique,colunaClique)){
+    else if (ePosicaoMatriz(linhaClique, colunaClique)) {
         int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
-        if(cartaPegavel(cartaClique,linhaClique,matrizCartasJogo)){
-            updateEstado(linhaClique,colunaClique,matrizCartasJogo,args);
+        if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
+            updateEstado(linhaClique, colunaClique, matrizCartasJogo, args);
+        } else {
+            args->filaSelecionada = linhaClique;
+            args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
+            args->jogada = invalida;
         }
     }
-    
 }
+
 
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
     const float offset_x=60*(args->resolucaoX)/1600,

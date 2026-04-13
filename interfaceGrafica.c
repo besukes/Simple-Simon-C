@@ -73,6 +73,16 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
             dest.w = cartaW;
             dest.h = cartaH;
 
+            if (col == args->filaSelecionada) {
+                int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas + 1;
+                if (row >= primeiraCartaSelecionada) {
+                    int escala = 10;
+                    dest.x += escala;
+                    dest.w += escala;
+                    dest.h += escala;
+                }
+            }
+
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
