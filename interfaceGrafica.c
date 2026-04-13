@@ -52,12 +52,28 @@ void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
     SDL_Rect fundo = {0, 0, 1920, 1080};
     SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
 }
+//CURSED FUNÇÃO
+void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
+    imagensJogo[1] = IMG_LoadTexture(renderer,"assets/Isoladas/1.jpg");
+    imagensJogo[2] = IMG_LoadTexture(renderer,"assets/Isoladas/1.jpg");
+    imagensJogo[3] = IMG_LoadTexture(renderer,"assets/Isoladas/1.jpg");
+}
+void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
+    SDL_Rect botaoSair = {400, 20, 200, 50};
+    SDL_Rect botaoReiniciar = {700, 20, 200, 50};
+    SDL_Rect botaoDesfazer = {1500, 500, 200, 50};
+    SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoReiniciar);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[3], NULL, &botaoDesfazer);
+}
 
 
 void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
     desenhaFundo(args, imagensJogo);
+    
+
 
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
 
@@ -92,15 +108,12 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
 }
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
     int cartaW = 140, cartaH = 190, passo = 32;
-    int col = args->filaSelecionada;
-    int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas+2;
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
-        int row = primeiraCartaSelecionada + i;
         SDL_Rect dest;
-        dest.x = args->mouseX;
-        dest.y = args->mouseY + i * passo;
+        dest.x = args->mouseX - 70;
+        dest.y = args->mouseY + i * passo - 65;
         dest.w = cartaW;
         dest.h = cartaH;
-        SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
+        SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
     }
 }

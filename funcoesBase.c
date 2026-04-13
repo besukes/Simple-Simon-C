@@ -10,6 +10,7 @@ int verificaVitoria(int m[10][21]){
     return (!n);
 }
 
+
 int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
     int i;
     if (cartaClique == (-1)) return 0;
@@ -22,7 +23,7 @@ int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
 
 //Pode se colocar uma carta em cima de outra caso 
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima){
-    return((cartaDeBaixo-cartaDeCima)==1);
+    return((valorCarta(cartaDeBaixo)-valorCarta(cartaDeCima))==1);
 }
 
 int dentroDoBotao(SDL_Event e,SDL2Bases * args,float offsetX,float offsetY,float posX,float posY){

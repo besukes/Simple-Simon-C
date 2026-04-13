@@ -47,16 +47,20 @@ SDL_Texture * imagensJogo[],SDL2Bases * args){
     }
 }
 
+void tocamusica(void){
+    Mix_Music *balatro = NULL;
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+    balatro = Mix_LoadMUS("musica/balatro.mp3");
+    Mix_PlayMusic(balatro, -1); 
+    Mix_VolumeMusic(50);
+
+}
 
 int main(void){
-    Mix_Music *balatro = NULL;
     SDL2Bases args = sdl_initializer();
     SDL_Texture* imagensJogo[10];
     SDL_Texture* imagensCartas[10][21];
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    balatro = Mix_LoadMUS("musica/balatro.mp3");
-    Mix_PlayMusic(balatro, -1);
-    Mix_VolumeMusic(50);
+    tocamusica();
     //o limite máximo teórico numa fila de cartas seria 21
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};

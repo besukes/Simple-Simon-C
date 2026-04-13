@@ -56,11 +56,13 @@ void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer 
 //modulo funcoesFundamentais.c
 void shuffleCartas(int cartas[]);
 void preset(int cartas[]);
+int valorCarta(int carta);
 
 //modulo funcoesBase.c
 int verificaVitoria(int matrizCartasJogo[10][21]);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
+
 
 //modulo eventos.c
 void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
