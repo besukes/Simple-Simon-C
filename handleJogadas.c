@@ -95,18 +95,24 @@ SDL_Texture * imagensCartas[10][21]){
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 
-void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases *args) {
+void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imgs[10][21]) {
     args->filaSelecionada = linhaClique;
     args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
     args->jogada = valido;
+    int numC= matrizCartasJogo[linhaClique][0];
+    for(int i=0;i<args->numCartasSelecionadas; i++){
+        args->cartas[i] = matrizCartasJogo[linhaClique][numC];
+        args->imgs[i] = imgs[linhaClique][numC--];
+    }
+    matrizCartasJogo[linhaClique][0]-= args->numCartasSelecionadas;
 }
 
-void colocaArrayCartas(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,
-SDL_Texture * imagensCartas[10][21]){
+void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha){
     
 }
 
-void jogadaNaoRealizada(boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args){
+void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args){
+    mcj[args->filaSelecionada][0]+=args->numCartasSelecionadas;
     args->filaSelecionada = (-1);
     args->numCartasSelecionadas = 0;
     if(eventoRelevante && !cartaPodeColocar ) args->jogada = invalida;
