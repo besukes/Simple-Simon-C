@@ -54,11 +54,8 @@ void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 }
 
 
-void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
-                  SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
-
+void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
-
     // Fundo
     desenhaFundo(args, imagensJogo);
 
@@ -66,13 +63,13 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
 
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
-
             SDL_Rect dest;
+            //A posicao dos rentangulos esta definida pelo canto esquerdo superior deste mesmo
             dest.x = offsetX + col * espacoX;
-            dest.y = offsetY + row * passo;
+            dest.y = offsetY + row * passo; 
             dest.w = cartaW;
             dest.h = cartaH;
-
+            // aumentar a carta
             if (col == args->filaSelecionada) {
                 int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas + 1;
                 if (row >= primeiraCartaSelecionada) {
@@ -82,10 +79,8 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],
                     dest.h += escala;
                 }
             }
-
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
-
     SDL_RenderPresent(args->rendererBase);
 }

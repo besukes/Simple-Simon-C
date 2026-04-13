@@ -18,12 +18,12 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
     if (posX < 0) return (-1);
     int numC = matrizCartasJogo[posX][0];
     for (int n = 1; n <= numC; n++) {
-        float topoC = 80 + (n - 1) * 40; 
+        float topoC = 112 + (n - 1) * 32; 
         float fundoC;
         if (n == numC) {
             fundoC = topoC + 190;  
         } else {
-            fundoC = topoC + 40;
+            fundoC = topoC + 32;
         }
         if (posY >= topoC && posY <= fundoC) return n;
     }
