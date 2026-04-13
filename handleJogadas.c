@@ -49,10 +49,10 @@ void desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL
 void adicionaJogadaUndoMove(int matrizCartasJogo[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal,
 SDL_Texture * imagensCartas[10][21]){
     boolean b = 1;
-    int nCartas=matrizCartasJogo[pos][0],ant=matrizCartasJogo[pos][nCartas];
+    int nCartas=matrizCartasJogo[pos][0],ultCartaFila=matrizCartasJogo[pos][nCartas];
     for(int i=nCartas;i>0;i--){
-            if(!((ant/13)==(matrizCartasJogo[pos][i-1]/13))) b=0;
-        }
+            if(!(ultCartaFila/13 == (matrizCartasJogo[pos][i-1] - 1 )/13)) b=0;
+    }
     if(nCartas==13 && b==1){
         rowCompleta(matrizCartasJogo,imagensCartas,pos,args,estadoUndoGlobal);
         estadoUndoGlobal->isp++;
@@ -103,10 +103,13 @@ void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21
 
 void colocaArrayCartas(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,
 SDL_Texture * imagensCartas[10][21]){
-
+    
 }
 
-void jogadaNaoRealizada(int matrizCartasJogo[10][21],SDL2Bases * args){
-
+void jogadaNaoRealizada(boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args){
+    args->filaSelecionada = (-1);
+    args->numCartasSelecionadas = 0;
+    if(eventoRelevante && !cartaPodeColocar ) args->jogada = invalida;
+    else args->jogada=valido;
 }
 

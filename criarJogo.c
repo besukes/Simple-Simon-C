@@ -11,7 +11,7 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
         matrizCartasJogo[l][0] = 8;
         for(int u=1;u<9;u++){
             char str[30];
-            sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
+            sprintf(str,"assets/Isoladas/%d.jpg",cartas[i]);
             imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
             matrizCartasJogo[l][u]=cartas[i++];
         }
@@ -23,7 +23,7 @@ int proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * 
     mJogo[fila][0]=(10-fila);
     for(int n=1;n<=(10-fila);n++){
         char str[30];
-        sprintf(str,"Cartas/Isoladas/%d.jpg",cartas[i]);
+        sprintf(str,"assets/Isoladas/%d.jpg",cartas[i]);
         mTexturas[fila][n]= IMG_LoadTexture(renderer,str);
         mJogo[fila][n]=cartas[i++];
     }

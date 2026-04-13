@@ -10,13 +10,14 @@ int verificaVitoria(int m[10][21]){
     return (!n);
 }
 
-int cartaPegavel(int cartaClique, int linhaMatriz, int matrizCartasJogo[10][21]) {
-    if (cartaClique == (-1)) return 0;
-    int numeroCartasFila = matrizCartasJogo[linhaMatriz][0];
-    int naipe = (cartaClique - 1) / 13;
+int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
     int i;
-    for (i = numeroCartasFila; i >= 1 && (matrizCartasJogo[linhaMatriz][i] - 1) / 13 == naipe; i--);
-    return (matrizCartasJogo[linhaMatriz][++i] == cartaClique);
+    if (cartaClique == (-1)) return 0;
+    int max = mcj[linha][0],naipe = (cartaClique - 1) / 13;
+    for (i = max;i > 1 && (mcj[linha][i] - 1)/13 == naipe && cartaColocavel(mcj[linha][i-1],mcj[linha][i]); i--){
+        if(mcj[linha][i]==cartaClique) return 1;
+    }
+    return (mcj[linha][i] == cartaClique);
 }
 
 //Pode se colocar uma carta em cima de outra caso 
