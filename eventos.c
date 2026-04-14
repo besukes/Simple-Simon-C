@@ -39,6 +39,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botao de desfazer a jogada
     else if (dentroDoBotao(event, args, 100, 50, 1000, 1000)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
+        UndoSFX();
     }
     //Clicou no botao de reeniciar o jogo
     else if (dentroDoBotao(event, args, 100, 50, 700, 1000)) {

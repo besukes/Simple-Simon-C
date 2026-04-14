@@ -131,5 +131,14 @@ void tocaCartaPega (void)
     pgCarta = Mix_LoadWAV("sfx/CardDrop.mp3");
     Mix_VolumeChunk(pgCarta , 128);
     Mix_PlayChannel(1 , pgCarta, 0);
-    Mix_FreeChunk(pgCarta);
+    
+}
+
+void UndoSFX (void)
+{
+    Mix_Chunk* undoSFX = NULL;
+    undoSFX = Mix_LoadWAV("sfx/undo.mp3");
+    Mix_VolumeChunk(undoSFX , 128);
+    Mix_PlayChannel(1 , undoSFX, 0);
+    
 }
