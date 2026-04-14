@@ -74,7 +74,7 @@ SDL_Texture * imagensJogo[],UserBase * args){
             args->mouseY = event.motion.y;
         }
         if(args->screen == jogo){
-            interfaceJogo(matrizCartasJogo,imagensCartas,imagensJogo,estadoUndoGlobal,args,event);
+            interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event);
         }
         else telaMenu(args,imagensJogo,event);
         SDL_RenderPresent((*args).rendererBase);
