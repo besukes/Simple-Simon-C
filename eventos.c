@@ -75,12 +75,6 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     if(eventoRelevante && cartaPodeSeColocar){
             colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
             adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas);
-            resetArgs(args);
     }
     else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args,imagensCartas);
-}
-
-
-void efetuaEventoMotion(int matrizCartasJogo[10][21],SDL2Bases * args){
-
 }

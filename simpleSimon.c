@@ -15,13 +15,8 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     else if(event.type == SDL_MOUSEBUTTONUP){
         if(event.button.button == SDL_BUTTON_LEFT){
             (*args).mouseButtonDown = 0;
-            //o utilizador possui uma fila selecionada e quer coloca-la num local,temos de verificar se e valido..
-            //if((*args).filaSelecionada!=(-1)){
                 efetuaEventoSoltar(matrizCartasJogo,estadoUndoGlobal,args,event , imagensCartas);
-                // (*args).filaSelecionada = args->filaSelecionada
-                args->filaSelecionada=(-1);
-                args->numCartasSelecionadas=0;
-            //}
+                reset(args);
         }
     }
     else if(event.type == SDL_MOUSEMOTION && args->mouseButtonDown && args->numCartasSelecionadas){
