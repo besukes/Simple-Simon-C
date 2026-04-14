@@ -33,42 +33,33 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[2] = IMG_LoadTexture(renderer,"assets/NG.png");
     imagensJogo[3] = IMG_LoadTexture(renderer,"assets/undo.png");
 }
-void telaUtilizador (int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
-SDL_Texture * imagensJogo[],SDL2Bases * args, SDL_Event event)
-{
-    switch (args->screen)
-    {
-    case menu:
-        desenhaMenu(args , imagensJogo , event);
-        handlemenu(args,event);
-    break;
-    
-    case jogo:
-        verificaVitoria(matrizCartasJogo,args);
-        desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event);
-            //TEMOS DE FAZER
-        if(args-> jogada==vitoria) ;
-        handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
-    break;
-    default:
-    break;
-    }
+
+
+void telaMenu (SDL2Bases * args,SDL_Texture * imagensJogo[], SDL_Event event){
+    desenhaMenu(args , imagensJogo , event);
+    handlemenu(args,event);
 }
+
 
 void interfaceJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
 SDL_Texture * imagensJogo[],SDL2Bases * args){
     SDL_Event event;
     inicializaTexturasJogo(imagensJogo,args->rendererBase);
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
-    tipoJogada jogada = (*args).jogada;
-    while(event.type != SDL_QUIT && jogada!= sair){
+    while(event.type != SDL_QUIT && args->jogada!= sair){
         SDL_PollEvent(&event);
+        SDL_RenderClear((*args).rendererBase);
         if(event.type == SDL_MOUSEMOTION){
             args->mouseX = event.motion.x;
             args->mouseY = event.motion.y;
         }
-        SDL_RenderClear((*args).rendererBase);
-        telaUtilizador(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event);
+        if(args->screen == jogo){
+            desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event);
+            handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
+            verificaVitoria(matrizCartasJogo,args);
+            if(args-> jogada == vitoria);
+        }
+        else telaMenu(args,imagensJogo,event);
         SDL_RenderPresent((*args).rendererBase);
     }
 
