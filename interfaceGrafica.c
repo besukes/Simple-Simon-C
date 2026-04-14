@@ -41,9 +41,13 @@ SDL2Bases sdl_initializer(void){
     return args;
 }
 
-void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
+void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
+    //temos que apagar a imagem da memoria da gpu
     for(int i=0;i<10;i++){
-        SDL_DestroyTexture(image[i]); //temos que apagar a imagem da memoria da gpu
+        SDL_DestroyTexture(image[i]);
+        for(int j=1;j<=matrizCartasJogo[i][0];j++){
+            SDL_DestroyTexture(imagensCartas[i][j]);
+        }
     }
     IMG_Quit(); //informar a gpu que ja nao é preciso criar uma window
     SDL_Quit();
