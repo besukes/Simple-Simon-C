@@ -5,6 +5,7 @@ typedef int numCarta;
 typedef int filaEscolhida;
 typedef int boolean;
 typedef enum {invalida,sair,valido,vitoria} tipoJogada;
+typedef enum {menu , jogo} UserScreen;
 
 typedef struct ultimaJogada{
     numCarta cartas[13];
@@ -32,7 +33,7 @@ typedef struct sdl2graphics{
     tipoJogada jogada;
     int mouseX;
     int mouseY;
-    int TelaAtual;
+    UserScreen screen;
 }SDL2Bases;
 
 
@@ -78,6 +79,7 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
 int calculaPosXClique(float posX);
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY);
+void efetuaEventoCliqueMenu(SDL2Bases * args, SDL_Event event);
 
 
 //modulo handleJogadas.c

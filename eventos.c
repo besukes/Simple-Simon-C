@@ -53,6 +53,15 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     }
 }
 
+void efetuaEventoCliqueMenu(SDL2Bases * args, SDL_Event event){
+    if (dentroDoBotao(event, args, 200, 50, 860, 500)) {
+        args->screen = jogo;
+    }
+    if (dentroDoBotao(event, args, 200, 50, 860, 600)) {
+        SDL_Quit();
+    }
+}
+
 
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
     boolean b=1;

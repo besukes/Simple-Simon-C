@@ -37,7 +37,7 @@ SDL2Bases sdl_initializer(void){
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
     SDL2Bases args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),
-        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido ,.TelaAtual = 1};
+        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido ,.screen = menu};
     return args;
 }
 
@@ -59,12 +59,20 @@ void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 }
 
 void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
+    if(args->screen == jogo) {
     SDL_Rect botaoSair = {400, 1000, 200, 50};
     SDL_Rect botaoReiniciar = {700, 1000, 200, 50};
     SDL_Rect botaoDesfazer = {1000, 1000, 200, 50};
     SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
     SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoReiniciar);
     SDL_RenderCopy(args->rendererBase, imagensJogo[3], NULL, &botaoDesfazer);
+    }
+    if (args->screen == menu) {
+        SDL_Rect botaoJogar = {860, 500, 200, 50};
+        SDL_Rect botaoSair = {860, 600, 200, 50};
+        SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoJogar);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
+    }
 }
 
 
@@ -97,7 +105,10 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
 }
 void desenhaMenu(SDL2Bases * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
+    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     desenhaFundo(args , imagensJogo);
+    botoes(args , imagensJogo);
+    SDL_RenderPresent(args->rendererBase);
     
 }
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
