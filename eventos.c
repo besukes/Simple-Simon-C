@@ -72,7 +72,7 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
             cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) 
                 || (ePosicaoMatriz(linha,coluna) && matrizCartasJogo[linha][0]==0);
     if(eventoRelevante && cartaPodeSeColocar){
-        boolean b = colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha,b);
+        boolean b = colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
         adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas,b);
     }
     else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args,imagensCartas);
