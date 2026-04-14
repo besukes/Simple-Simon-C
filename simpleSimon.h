@@ -32,6 +32,7 @@ typedef struct sdl2graphics{
     tipoJogada jogada;
     int mouseX;
     int mouseY;
+    int TelaAtual;
 }SDL2Bases;
 
 
@@ -45,6 +46,7 @@ void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args);
 void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]);
 void tocaCartaPega(void);
+void desenhaMenu(SDL2Bases * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
 
 
 //modulo criarJogo.c

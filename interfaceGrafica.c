@@ -37,7 +37,7 @@ SDL2Bases sdl_initializer(void){
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
     SDL2Bases args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),
-        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido};
+        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido ,.TelaAtual = 1};
     return args;
 }
 
@@ -94,6 +94,11 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
         dragCartas(matrizJogo, imagensCartas, args);
     }
     SDL_RenderPresent(args->rendererBase);
+}
+void desenhaMenu(SDL2Bases * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+{
+    desenhaFundo(args , imagensJogo);
+    
 }
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
     int cartaW = 140, cartaH = 190, passo = 32;
