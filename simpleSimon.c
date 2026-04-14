@@ -33,6 +33,9 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[1] = IMG_LoadTexture(renderer,"assets/quit.png");
     imagensJogo[2] = IMG_LoadTexture(renderer,"assets/NG.png");
     imagensJogo[3] = IMG_LoadTexture(renderer,"assets/undo.png");
+    //botao dica
+    imagensJogo[4] = IMG_LoadTexture(renderer,"assets/undo.png");
+    imagensJogo[5] = IMG_LoadTexture(renderer,"assets/dica.png");
 }
 
 

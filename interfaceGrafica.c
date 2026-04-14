@@ -60,12 +60,10 @@ void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]){
 
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     if(args->screen == jogo) {
-    SDL_Rect botaoSair = {400, 1000, 200, 50};
-    SDL_Rect botaoReiniciar = {700, 1000, 200, 50};
-    SDL_Rect botaoDesfazer = {1000, 1000, 200, 50};
-    SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
-    SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoReiniciar);
-    SDL_RenderCopy(args->rendererBase, imagensJogo[3], NULL, &botaoDesfazer);
+        for(int i=1;i<5;i++){
+            SDL_Rect botao = {400 + 300 *(i-1),1000,200,50};
+            SDL_RenderCopy(args->rendererBase, imagensJogo[i], NULL, &botao);
+        }
     }
     else if(args->screen == menu) {
         SDL_Rect botaoJogar = {860, 500, 200, 50};
@@ -98,7 +96,10 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     desenharCartas(matrizJogo,imagensCartas,args);
     botoes(args,imagensJogo);
     if(args->dica.querDica==1 && args->dica.timeout>0){
-
+        for(int i=0;i<args->dica.numDicas;i++){
+            SDL_Rect b = {75+178*i,112+32*matrizJogo[i][matrizJogo[i][0]],140,190};
+            //queremos colocar aqui a cena por cima das cartas;
+        }
     }
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
