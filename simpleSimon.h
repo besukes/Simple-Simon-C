@@ -79,4 +79,4 @@ void rowNaoCompleta(int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
 void reeniciaJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL2Bases * args, SDL_Texture * imagensCartas[10][21]);
 void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imagensCartas[10][21]);
 void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha);
-void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar, SDL2Bases * args);
+void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar, SDL2Bases * args,SDL_Texture * imagensCata[10][21]);

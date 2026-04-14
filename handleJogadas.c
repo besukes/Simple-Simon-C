@@ -128,7 +128,12 @@ void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture
     matrizCartasJogo[linha][0] += numCartas;
 }
 
-void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args){
+void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args,SDL_Texture * imagens[10][21]){
+    int filaCarta = args->filaSelecionada, tam= mcj[filaCarta][0];
+    for(int i=0;i<args->numCartasSelecionadas;i++){
+        mcj[filaCarta][tam+i+1] = args->cartas[i];
+        imagens[filaCarta][tam+i+1] = args->imgs[i];
+    }
     mcj[args->filaSelecionada][0]+=args->numCartasSelecionadas;
     args->filaSelecionada = (-1);
     args->numCartasSelecionadas = 0;
