@@ -40,13 +40,14 @@ int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
 SDL2Bases sdl_initializer(void);
 void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
-void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
-SDL2Bases * args,SDL_Event event);
+void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]);
+void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],SDL2Bases * args,SDL_Event event);
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args);
+void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]);
 void tocaCartaPega(void);
+
+
 //modulo criarJogo.c
-void preset(int cartas[]);
-void baralhar(int cartas[]);
 void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer);
 int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]);
 int proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int i,int fila,int matrizCartasJogo[10][21]);
@@ -58,25 +59,33 @@ void shuffleCartas(int cartas[]);
 void preset(int cartas[]);
 int valorCarta(int carta);
 
+
 //modulo funcoesBase.c
-int verificaVitoria(int matrizCartasJogo[10][21],SDL2Bases * args);
+void verificaVitoria(int matrizCartasJogo[10][21],SDL2Bases * args);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
+void resetArgs(SDL2Bases * args);
+int dentroDoBotao(SDL_Event e,SDL2Bases * args,float width,float height,float posX,float posY);
+int ePosicaoMatriz(int l,int c);
 void resetArgs(SDL2Bases * args);
 
 
 //modulo eventos.c
 void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
-int dentroDoBotao(SDL_Event e, SDL2Bases * args, float offsetX, float offsetY, float posX, float posY);
-int ePosicaoMatriz(int l, int c);
+boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
+int calculaPosXClique(float posX);
+int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY);
+
 
 //modulo handleJogadas.c
+void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]);
+void desfazJogadaBasica(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]);
 int desfazerJogada(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
-void adicionaJogadaUndoMove(int matrizCartasJogo[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21]);
+void adicionaJogadaUndoMove(int matrizCartasJogo[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],boolean filaCompleta);
 void rowCompleta(int mcj[10][21], SDL_Texture * img[10][21], int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
 void rowNaoCompleta(int pos, SDL2Bases * args, undoMove * estadoUndoGlobal);
 void reeniciaJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL2Bases * args, SDL_Texture * imagensCartas[10][21]);
 void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imagensCartas[10][21]);
-void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha);
+int colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha,boolean b);
 void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar, SDL2Bases * args,SDL_Texture * imagensCata[10][21]);

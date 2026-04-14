@@ -15,8 +15,8 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     else if(event.type == SDL_MOUSEBUTTONUP){
         if(event.button.button == SDL_BUTTON_LEFT){
             (*args).mouseButtonDown = 0;
-                efetuaEventoSoltar(matrizCartasJogo,estadoUndoGlobal,args,event , imagensCartas);
-                resetArgs(args);
+            efetuaEventoSoltar(matrizCartasJogo,estadoUndoGlobal,args,event , imagensCartas);
+            resetArgs(args);
         }
     }
 }

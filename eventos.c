@@ -54,6 +54,15 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
 }
 
 
+boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
+    boolean b=1;
+    int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
+    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
+    if(nCartas==13 && b==1) return 1;
+    else return 0;
+}
+
+
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
     float posX = event.button.x , posY = event.button.y;
     int linha = calculaPosXClique(posX), coluna = calculaPosYClique(matrizCartasJogo, linha, posY);
@@ -61,10 +70,10 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     // eventoRelevante de soltar , seria um evento onde o utilizador soltou o rato numa coluna de cartas
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas,
             cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) 
-            || (ePosicaoMatriz(linha,coluna) && matrizCartasJogo[linha][0]==0);
+                || (ePosicaoMatriz(linha,coluna) && matrizCartasJogo[linha][0]==0);
     if(eventoRelevante && cartaPodeSeColocar){
-            colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
-            adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas);
+        boolean b = colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha,b);
+        adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas,b);
     }
     else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args,imagensCartas);
 }
