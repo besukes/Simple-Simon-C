@@ -65,6 +65,6 @@ int main(void){
     undoMove estadoUndoGlobal = {0,{}};
     criarJogo(matrizCartasJogo,imagensCartas,args.rendererBase);
     interfaceJogo(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args);
-    clean_sdl(imagensJogo,imagensCartas);
+    clean_sdl(matrizCartasJogo,imagensJogo,imagensCartas);
     return 0;
 }

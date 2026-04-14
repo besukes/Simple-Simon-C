@@ -39,7 +39,7 @@ typedef struct sdl2graphics{
 int escolhaDeResolucao(void);
 void atribuiResolucao(int * resX,int * resY,int optn);
 SDL2Bases sdl_initializer(void);
-void clean_sdl(SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
+void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
 SDL2Bases * args,SDL_Event event);
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args);
