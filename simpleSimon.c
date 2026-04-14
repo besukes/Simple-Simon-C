@@ -51,7 +51,7 @@ void tocamusica(void){
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
     balatro = Mix_LoadMUS("musica/balatro.mp3");
     Mix_PlayMusic(balatro, -1); 
-    Mix_VolumeMusic(50);
+    Mix_VolumeMusic(64);
 
 }
 

@@ -1,6 +1,7 @@
 #include"simpleSimon.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 int escolhaDeResolucao(void){
     printf("Introduza o número da resolução que pretende utilizar\n(1)-1280x720;\n(2)-1600x900\n(3)-1920x1080\n");
@@ -100,4 +101,12 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2
         dest.h = cartaH;
         SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
     }
+    tocaCartaPega();
+}
+void tocaCartaPega (void)
+{
+    Mix_Chunk* pgCarta = NULL;
+    pgCarta = Mix_LoadWAV("sfx/CardDrop.mp3");
+    Mix_VolumeChunk(pgCarta , 128);
+    Mix_PlayChannel(1 , pgCarta, 0);
 }
