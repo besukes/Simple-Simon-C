@@ -26,13 +26,9 @@ int cartaColocavel(int cartaDeBaixo,int cartaDeCima){
     return((valorCarta(cartaDeBaixo)-valorCarta(cartaDeCima))==1);
 }
 
-int dentroDoBotao(SDL_Event e,SDL2Bases * args,float offsetX,float offsetY,float posX,float posY){
-    offsetX=offsetX*(args->resolucaoX)/1600,
-    offsetY=offsetY*(args->resolucaoY)/900,
-    posX=posX*(args->resolucaoX)/1600,
-    posY=posY*(args->resolucaoY)/900;
+int dentroDoBotao(SDL_Event e,SDL2Bases * args,float width,float height,float posX,float posY){
     int x=e.button.x,y=e.button.y;
-    return ( (posX-offsetX<=x && posX+offsetX>=x) && (posY-offsetY<=y && posY+offsetY>=y));
+    return ( (posX<=x && posX+width>=x) && (posY<=y && posY+height>=y));
 }
 
 int ePosicaoMatriz(int l,int c){
