@@ -48,6 +48,7 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2
 void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]);
 void tocaCartaPega(void);
 void desenhaMenu(SDL2Bases * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
+void UndoSFX(void);
 
 
 //modulo criarJogo.c
