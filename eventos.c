@@ -34,7 +34,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     //Clicou no botao de sair do jogo
     if (dentroDoBotao(event, args, 100, 50, 400, 1000)) {
-        args->jogada = sair;
+        args->screen = menu;
     }
     //Clicou no botao de desfazer a jogada
     else if (dentroDoBotao(event, args, 100, 50, 1000, 1000)) {
