@@ -62,12 +62,12 @@ int valorCarta(int carta);
 int verificaVitoria(int matrizCartasJogo[10][21]);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
+void resetArgs(SDL2Bases * args);
 
 
 //modulo eventos.c
 void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * images[10][21]);
-void efetuaEventoMotion(int matrizCartasJogo[10][21], SDL2Bases * args);
 int dentroDoBotao(SDL_Event e, SDL2Bases * args, float offsetX, float offsetY, float posX, float posY);
 int ePosicaoMatriz(int l, int c);
 

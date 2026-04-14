@@ -63,7 +63,7 @@ void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 }
 
 
-void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args){
+void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
@@ -82,7 +82,7 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
     desenhaFundo(args, imagensJogo);
-    desenhaCartas(matrizJogo,imagensCartas,args);
+    desenharCartas(matrizJogo,imagensCartas,args);
     botoes(args,imagensJogo);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {

@@ -35,3 +35,9 @@ int ePosicaoMatriz(int l,int c){
     return (l>=0 && l<10 && c>=0 && c<21);
 }
 
+void resetArgs(SDL2Bases * args){
+    args->filaSelecionada=(-1);
+    args->numCartasSelecionadas=0;
+    args->jogada=valido;
+    args->mouseButtonDown=0;
+}

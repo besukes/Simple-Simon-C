@@ -1,15 +1,7 @@
 #include "simpleSimon.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-// remover depois
-#include <stdio.h>
 
-void resetArgs(SDL2Bases * args){
-    args->filaSelecionada=(-1);
-    args->numCartasSelecionadas=0;
-    args->jogada=valido;
-    args->mouseButtonDown=0;
-}
 
 int calculaPosXClique(float posX){
     float i=75;
