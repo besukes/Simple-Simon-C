@@ -4,7 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 
 
-void handleGameplay(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,
+void handleGameplay(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,
 SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
@@ -21,7 +21,7 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21]){
     }
 }
 
-void handlemenu (SDL2Bases * args, SDL_Event event){
+void handlemenu (UserBase * args, SDL_Event event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
             efetuaEventoCliqueMenu(args,event);
@@ -36,14 +36,33 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
 }
 
 
-void telaMenu (SDL2Bases * args,SDL_Texture * imagensJogo[], SDL_Event event){
+void telaMenu (UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     desenhaMenu(args , imagensJogo , event);
     handlemenu(args,event);
 }
 
+void jogadorPrecisaDica(UserBase * args){
+    if(args->dica.querDica==1){
+        if(args->dica.timeout==0){
+            args->dica.querDica=0;
+            args->dica.numDicas=0;
+        }
+        else args->dica.timeout --;
+    }
+}
 
 void interfaceJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
-SDL_Texture * imagensJogo[],SDL2Bases * args){
+SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event){
+    desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event);
+    handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
+    verificaVitoria(matrizCartasJogo,args);
+    jogadorPrecisaDica(args);
+    //temos de fazer
+    if(args-> jogada == vitoria);
+}
+
+void interfaceSimpleSimon(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
+SDL_Texture * imagensJogo[],UserBase * args){
     SDL_Event event;
     inicializaTexturasJogo(imagensJogo,args->rendererBase);
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
@@ -55,10 +74,7 @@ SDL_Texture * imagensJogo[],SDL2Bases * args){
             args->mouseY = event.motion.y;
         }
         if(args->screen == jogo){
-            desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event);
-            handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
-            verificaVitoria(matrizCartasJogo,args);
-            if(args-> jogada == vitoria);
+            interfaceJogo(matrizCartasJogo,imagensCartas,imagensJogo,estadoUndoGlobal,args,event);
         }
         else telaMenu(args,imagensJogo,event);
         SDL_RenderPresent((*args).rendererBase);
@@ -76,7 +92,7 @@ void tocamusica(void){
 
             
 int main(void){
-    SDL2Bases args = sdl_initializer();
+    UserBase args = sdl_initializer();
     SDL_Texture* imagensJogo[10];
     SDL_Texture* imagensCartas[10][21];
     tocamusica();
@@ -84,7 +100,7 @@ int main(void){
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};
     criarJogo(matrizCartasJogo,imagensCartas,args.rendererBase);
-    interfaceJogo(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args);
+    interfaceSimpleSimon(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args);
     clean_sdl(matrizCartasJogo,imagensJogo,imagensCartas);
     return 0;
 }

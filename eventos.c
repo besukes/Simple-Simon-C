@@ -29,7 +29,29 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
 }
 
 
-void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,SDL2Bases *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
+boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
+    boolean b=1;
+    int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
+    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
+    if(nCartas==13 && b==1) return 1;
+    else return 0;
+}
+
+
+
+void cliqueCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21]){
+    int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
+    if(args->dica.querDica){
+        args->dica.timeout=0;
+        args->dica.querDica=0;
+        args->dica.numDicas=0;
+    }
+    if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
+        updateEstado(linhaClique, colunaClique, matrizCartasJogo, args,imagensCartas);
+    }
+}
+
+void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,UserBase *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     //Clicou no botao de sair do jogo
@@ -45,16 +67,17 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     else if (dentroDoBotao(event, args, 100, 50, 700, 1000)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
+    //Botao dica
+    else if (dentroDoBotao(event, args, 100, 50, 1300, 1000)){
+        colocaDicaUtilizador(matrizCartasJogo,args);
+    }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
-        int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
-        if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
-            updateEstado(linhaClique, colunaClique, matrizCartasJogo, args,imagensCartas);
-        }
+        cliqueCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas);
     }
 }
 
-void efetuaEventoCliqueMenu(SDL2Bases * args, SDL_Event event){
+void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     if (dentroDoBotao(event, args, 200, 50, 860, 500)) {
         args->screen = jogo;
     }
@@ -64,16 +87,7 @@ void efetuaEventoCliqueMenu(SDL2Bases * args, SDL_Event event){
 }
 
 
-boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
-    boolean b=1;
-    int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
-    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
-    if(nCartas==13 && b==1) return 1;
-    else return 0;
-}
-
-
-void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
+void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
     float posX = event.button.x , posY = event.button.y;
     int linha = calculaPosXClique(posX), coluna = calculaPosYClique(matrizCartasJogo, linha, posY);
     // boolean seria um int , 0 ou 1

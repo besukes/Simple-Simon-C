@@ -27,7 +27,7 @@ void atribuiResolucao(int * resX,int * resY,int optn){
     }
 }
 
-SDL2Bases sdl_initializer(void){
+UserBase sdl_initializer(void){
     SDL_Init(SDL_INIT_VIDEO);
     int resolution=escolhaDeResolucao(),resX,resY;
     atribuiResolucao(&resX,&resY,resolution);
@@ -36,8 +36,8 @@ SDL2Bases sdl_initializer(void){
     //para nao precisar de dar scale as imagens no ecra
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
-    SDL2Bases args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),
-        .numCartasSelecionadas=0,.cartas={},.resolucaoX=resX,.resolucaoY=resY,.jogada=valido ,.screen = menu};
+    UserBase args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),.numCartasSelecionadas=0,
+        .cartas={},.jogada=valido ,.screen = menu,.dica.querDica=0,.dica.numDicas=0,.dica.timeout=0};
     return args;
 }
 
@@ -53,12 +53,12 @@ void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * 
     SDL_Quit();
 }
 
-void desenhaFundo(SDL2Bases * args,SDL_Texture * imagensJogo[]){
+void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]){
     SDL_Rect fundo = {0, 0, 1920, 1080};
     SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
 }
 
-void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
+void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     if(args->screen == jogo) {
     SDL_Rect botaoSair = {400, 1000, 200, 50};
     SDL_Rect botaoReiniciar = {700, 1000, 200, 50};
@@ -76,7 +76,7 @@ void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 }
 
 
-void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args){
+void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
@@ -91,19 +91,22 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
     }
 }
 
-void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
+void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], UserBase *args, SDL_Event event) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
     desenhaFundo(args, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
     botoes(args,imagensJogo);
+    if(args->dica.querDica==1 && args->dica.timeout>0){
+
+    }
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args);
     }
 }
 
-void desenhaMenu(SDL2Bases * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     desenhaFundo(args , imagensJogo);
@@ -111,7 +114,7 @@ void desenhaMenu(SDL2Bases * args , SDL_Texture *imagensJogo[] ,  SDL_Event even
 }
 
 
-void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
+void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args) {
     int cartaW = 140, cartaH = 190, passo = 32;
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
         SDL_Rect dest;

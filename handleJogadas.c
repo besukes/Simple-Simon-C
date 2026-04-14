@@ -56,7 +56,7 @@ int desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_
     }
 }
 
-void adicionaJogadaUndoMove(int matrizCartasJogo[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal,
+void adicionaJogadaUndoMove(int matrizCartasJogo[10][21],int pos,UserBase * args,undoMove * estadoUndoGlobal,
 SDL_Texture * imagensCartas[10][21],boolean filaCompleta){
     if(filaCompleta){
         rowCompleta(matrizCartasJogo,imagensCartas,pos,args,estadoUndoGlobal);
@@ -68,7 +68,7 @@ SDL_Texture * imagensCartas[10][21],boolean filaCompleta){
     }
 }
 
-void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
+void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,UserBase * args,undoMove * estadoUndoGlobal){
     int isp = estadoUndoGlobal->isp;
     estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
     estadoUndoGlobal->ultimasJogadas[isp].novaPos = pos;
@@ -80,7 +80,7 @@ void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,SDL2Bases * a
     }
 }
 
-void rowNaoCompleta(int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
+void rowNaoCompleta(int pos,UserBase * args,undoMove * estadoUndoGlobal){
     int numCartasJogadas=args->numCartasSelecionadas , isp = estadoUndoGlobal->isp;
     estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
     estadoUndoGlobal->ultimasJogadas[isp].novaPos = pos;
@@ -92,7 +92,7 @@ void rowNaoCompleta(int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
     }
 }
 
-void reeniciaJogo(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,
+void reeniciaJogo(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,
 SDL_Texture * imagensCartas[10][21]){
     estadoUndoGlobal->isp=0;
     args->filaSelecionada=(-1);
@@ -104,7 +104,7 @@ SDL_Texture * imagensCartas[10][21]){
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 
-void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imagens[10][21]) {
+void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], UserBase * args,SDL_Texture * imagens[10][21]) {
     args->filaSelecionada = linhaClique;
     args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
     args->jogada = valido;
@@ -118,7 +118,7 @@ void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21
 }
 
 
-int colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha){
+int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture * imagensCartas[10][21],int linha){
     int numCartas = args->numCartasSelecionadas;
     int contacartas = matrizCartasJogo[linha][0];
     for (int i = 1; i <=numCartas; i++) {
@@ -131,7 +131,7 @@ int colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture 
     return b;
 }
 
-void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,SDL2Bases * args,SDL_Texture * imagens[10][21]){
+void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,UserBase * args,SDL_Texture * imagens[10][21]){
     int filaCarta = args->filaSelecionada, tam= mcj[filaCarta][0];
     for(int i=0;i<args->numCartasSelecionadas;i++){
         mcj[filaCarta][tam+i+1] = args->cartas[i];
