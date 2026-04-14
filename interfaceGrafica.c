@@ -101,16 +101,16 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     {
         dragCartas(matrizJogo, imagensCartas, args);
     }
-    SDL_RenderPresent(args->rendererBase);
 }
+
 void desenhaMenu(SDL2Bases * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     desenhaFundo(args , imagensJogo);
-    botoes(args , imagensJogo);
-    SDL_RenderPresent(args->rendererBase);
-    
+    botoes(args , imagensJogo); 
 }
+
+
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
     int cartaW = 140, cartaH = 190, passo = 32;
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
@@ -123,10 +123,13 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2
     }
     tocaCartaPega();
 }
+
+
 void tocaCartaPega (void)
 {
     Mix_Chunk* pgCarta = NULL;
     pgCarta = Mix_LoadWAV("sfx/CardDrop.mp3");
     Mix_VolumeChunk(pgCarta , 128);
     Mix_PlayChannel(1 , pgCarta, 0);
+    Mix_FreeChunk(pgCarta);
 }

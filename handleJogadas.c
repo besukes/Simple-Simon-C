@@ -97,6 +97,9 @@ SDL_Texture * imagensCartas[10][21]){
     args->filaSelecionada=(-1);
     args->numCartasSelecionadas=0;
     SDL_RenderClear(args->rendererBase);
+    for(int i=0;i<10;i++){
+        for(int j=1;j<=matrizCartasJogo[i][0];j++) SDL_DestroyTexture(imagensCartas[i][j]);
+    }
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 

@@ -20,6 +20,7 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21]){
         }
     }
 }
+
 void handlemenu (SDL2Bases * args, SDL_Event event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){

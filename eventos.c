@@ -58,7 +58,7 @@ void efetuaEventoCliqueMenu(SDL2Bases * args, SDL_Event event){
         args->screen = jogo;
     }
     if (dentroDoBotao(event, args, 200, 50, 860, 600)) {
-        SDL_Quit();
+        args->jogada = sair;
     }
 }
 
