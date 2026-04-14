@@ -6,6 +6,7 @@
 void verificaVitoria(int m[10][21],SDL2Bases * args){
     int n=0;
     for(int i=0;i<10;i++) n+=m[i][0];
+    n+= args->numCartasSelecionadas;
     //O jogo acabou se nao houverem cartas em nenhuma das 10 pilhas
     if(!n) args->jogada=vitoria;
 }
