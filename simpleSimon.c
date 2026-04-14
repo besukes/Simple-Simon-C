@@ -33,7 +33,8 @@ SDL_Texture * imagensJogo[],SDL2Bases * args){
     SDL_Event event;
     inicializaTexturasJogo(imagensJogo,args->rendererBase);
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
-    while(event.type != SDL_QUIT && (*args).jogada!=sair){
+    tipoJogada jogada = (*args).jogada;
+    while(event.type != SDL_QUIT && jogada!= sair && jogada != vitoria){
         SDL_PollEvent(&event);
         if(event.type == SDL_MOUSEMOTION){
             args->mouseX = event.motion.x;
@@ -43,7 +44,10 @@ SDL_Texture * imagensJogo[],SDL2Bases * args){
         desenharJogo(matrizCartasJogo,imagensCartas,imagensJogo,args,event);
         SDL_RenderPresent((*args).rendererBase);
         handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
+        verificaVitoria(matrizCartasJogo,args);
     }
+    //TEMOS DE FAZER
+    if(jogada==vitoria) ;
 }
 
 void tocamusica(void){
@@ -52,7 +56,6 @@ void tocamusica(void){
     balatro = Mix_LoadMUS("musica/balatro.mp3");
     Mix_PlayMusic(balatro, -1); 
     Mix_VolumeMusic(64);
-
 }
 
 int main(void){

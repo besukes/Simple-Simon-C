@@ -4,7 +4,7 @@
 typedef int numCarta;
 typedef int filaEscolhida;
 typedef int boolean;
-typedef enum {invalida,sair,valido} tipoJogada;
+typedef enum {invalida,sair,valido,vitoria} tipoJogada;
 
 typedef struct ultimaJogada{
     numCarta cartas[13];
@@ -59,7 +59,7 @@ void preset(int cartas[]);
 int valorCarta(int carta);
 
 //modulo funcoesBase.c
-int verificaVitoria(int matrizCartasJogo[10][21]);
+int verificaVitoria(int matrizCartasJogo[10][21],SDL2Bases * args);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
 void resetArgs(SDL2Bases * args);
