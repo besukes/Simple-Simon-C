@@ -43,15 +43,15 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     printf("linha = %d , coluna = %d\n", linhaClique, colunaClique);
     //Clicou no botao de sair do jogo
-    if (dentroDoBotao(event, args, 100, 50, 400, 20)) {
+    if (dentroDoBotao(event, args, 100, 50, 400, 1000)) {
         args->jogada = sair;
     }
     //Clicou no botao de desfazer a jogada
-    else if (dentroDoBotao(event, args, 100, 50, 1500, 500)) {
+    else if (dentroDoBotao(event, args, 100, 50, 1000, 1000)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
     }
     //Clicou no botao de reeniciar o jogo
-    else if (dentroDoBotao(event, args, 100, 50, 700, 20)) {
+    else if (dentroDoBotao(event, args, 100, 50, 700, 1000)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
     //Verificar se clicou dentro da matriz
@@ -66,18 +66,28 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
 
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL2Bases * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
     float posX = event.button.x , posY = event.button.y;
-    int linha= calculaPosXClique(posX), coluna = calculaPosYClique(matrizCartasJogo, linha, posY);
+    int linha = calculaPosXClique(posX), coluna = calculaPosYClique(matrizCartasJogo, linha, posY);
     // boolean seria um int , 0 ou 1
     // eventoRelevante de soltar , seria um evento onde o utilizador soltou o rato numa coluna de cartas
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas,
+<<<<<<< HEAD
             cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) || 
                                     matrizCartasJogo[linha][0]==0;
     if(eventoRelevante && cartaPodeSeColocar){
         colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
         adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas);
         resetArgs(args);
+=======
+            cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]);
+    if(eventoRelevante){
+        if(cartaPodeSeColocar){
+            colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
+            adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas);
+            resetArgs(args);
+        }
+        else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args);
+>>>>>>> f778baafa4dbdf5c325aaf28960b80e8ed57503f
     }
-    else jogadaNaoRealizada(matrizCartasJogo,eventoRelevante,cartaPodeSeColocar,args);
 }
 
 

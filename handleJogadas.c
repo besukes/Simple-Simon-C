@@ -21,28 +21,37 @@ void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlob
     }
 }
 
-void desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
-    int isp = -- (estadoUndoGlobal->isp);
-    //SE a fila tiver sido completa nesta jogada entao e um caso especial , que deve ser tratado a parte..
-    if(estadoUndoGlobal->ultimasJogadas[isp].filaPreenchida){
-        desfazerFilaCompleta(matrizCartasJogo,estadoUndoGlobal,imagensCartas);
+void desfazJogadaBasica(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
+    //Inicilizamos todas as variaveis que precisamos para desfazer a jogada , para facilitar a leitura
+    int isp = estadoUndoGlobal->isp;
+    int linhaAtual = estadoUndoGlobal->ultimasJogadas[isp].novaPos,
+        linhaAntiga = estadoUndoGlobal->ultimasJogadas[isp].antigaPos,
+        numCartas = estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas,
+        numCLantiga = matrizCartasJogo[linhaAntiga][0] + 1;
+    int * arrayCartas=estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas;
+    //Para facilitar a leitura criamos uma variavel que e um apontador de memoria de uma posicao onde esta um apontador de memoria
+    SDL_Texture * * images= (estadoUndoGlobal->ultimasJogadas[isp]).imgs;
+    //A fila nao se completou com a jogada , ao desfazer a jogada simplesmente retiramos as cartas e pomos na outra fila
+    matrizCartasJogo[linhaAtual][0]-=numCartas;
+    for(int i=0;i<numCartas;i++){
+        matrizCartasJogo[linhaAntiga][numCLantiga+i] = arrayCartas[i];
+        imagensCartas[linhaAntiga][numCLantiga+i] = images[i];
+        matrizCartasJogo[linhaAntiga][0]++;
     }
-    else{
-        //Inicilizamos todas as variaveis que precisamos para desfazer a jogada , para facilitar a leitura
-        int linhaAtual = estadoUndoGlobal->ultimasJogadas[isp].novaPos,
-            linhaAntiga = estadoUndoGlobal->ultimasJogadas[isp].antigaPos,
-            numCartas = estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas,
-            numCLantiga = matrizCartasJogo[linhaAntiga][0];
-        int * arrayCartas=estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas;
-        //Para facilitar a leitura criamos uma variavel que e um apontador de memoria de uma posicao onde esta um apontador de memoria
-        SDL_Texture * * images= (estadoUndoGlobal->ultimasJogadas[--estadoUndoGlobal->isp]).imgs;
-        //A fila nao se completou com a jogada , ao desfazer a jogada simplesmente retiramos as cartas e pomos na outra fila
-        matrizCartasJogo[linhaAtual][0]-=numCartas;
-        for(int i=0;i<numCartas;i++){
-            matrizCartasJogo[linhaAntiga][numCLantiga+i] = arrayCartas[i];
-            imagensCartas[linhaAntiga][numCLantiga+i] = images[i];
-            matrizCartasJogo[linhaAntiga][0]++;
-        }
+}
+
+
+int desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
+    if(estadoUndoGlobal->isp==0) return 1;
+    else estadoUndoGlobal->isp --;
+    //SE a fila tiver sido completa nesta jogada entao e um caso especial , que deve ser tratado a parte..
+    if(estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].filaPreenchida){
+        desfazerFilaCompleta(matrizCartasJogo,estadoUndoGlobal,imagensCartas);
+        return 0;
+    }
+    else{ 
+        desfazJogadaBasica(matrizCartasJogo,estadoUndoGlobal,imagensCartas);
+        return 0;
     }
 }
 
@@ -95,17 +104,19 @@ SDL_Texture * imagensCartas[10][21]){
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 
-void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imgs[10][21]) {
+void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], SDL2Bases * args,SDL_Texture * imagens[10][21]) {
     args->filaSelecionada = linhaClique;
     args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
     args->jogada = valido;
-    int numC= matrizCartasJogo[linhaClique][0];
-    for(int i=0;i<args->numCartasSelecionadas; i++){
-        args->cartas[i] = matrizCartasJogo[linhaClique][numC];
-        args->imgs[i] = imgs[linhaClique][numC--];
+    int numC = matrizCartasJogo[linhaClique][0];
+    int NumSelecionadas = args->numCartasSelecionadas;
+    for(int i=0;i < NumSelecionadas; i++,numC--){
+        args->cartas[NumSelecionadas - i -1] = matrizCartasJogo[linhaClique][numC];
+        args->imgs[NumSelecionadas -i -1] = imagens[linhaClique][numC];
     }
     matrizCartasJogo[linhaClique][0]-= args->numCartasSelecionadas;
 }
+
 
 void colocaArrayCartas(int matrizCartasJogo[10][21],SDL2Bases * args,SDL_Texture * imagensCartas[10][21],int linha){
     int numCartas = args->numCartasSelecionadas;
