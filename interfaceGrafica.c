@@ -67,7 +67,7 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoReiniciar);
     SDL_RenderCopy(args->rendererBase, imagensJogo[3], NULL, &botaoDesfazer);
     }
-    if (args->screen == menu) {
+    else if(args->screen == menu) {
         SDL_Rect botaoJogar = {860, 500, 200, 50};
         SDL_Rect botaoSair = {860, 600, 200, 50};
         SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoJogar);
@@ -124,17 +124,19 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
         dest.h = cartaH;
         SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
     }
-    tocaCartaPega();
+    //memory leak
+    Mix_Chunk * p = tocaCartaPega();
+    Mix_FreeChunk(p);
 }
 
 
-void tocaCartaPega (void)
+Mix_Chunk * tocaCartaPega (void)
 {
-    Mix_Chunk* pgCarta = NULL;
+    Mix_Chunk * pgCarta = NULL;
     pgCarta = Mix_LoadWAV("sfx/CardDrop.mp3");
     Mix_VolumeChunk(pgCarta , 128);
     Mix_PlayChannel(1 , pgCarta, 0);
-    
+    return pgCarta;
 }
 
 void UndoSFX (void)
@@ -143,5 +145,5 @@ void UndoSFX (void)
     undoSFX = Mix_LoadWAV("sfx/undo.mp3");
     Mix_VolumeChunk(undoSFX , 128);
     Mix_PlayChannel(1 , undoSFX, 0);
-    
+    Mix_FreeChunk(undoSFX);
 }

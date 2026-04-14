@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 typedef int numCarta;
 typedef int filaEscolhida;
@@ -53,7 +54,7 @@ void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event);
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args);
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
-void tocaCartaPega(void);
+Mix_Chunk * tocaCartaPega(void);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
 void UndoSFX(void);
 
