@@ -22,12 +22,10 @@ int calculaPosXClique(float posX){
 }
 
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
-    if (posX < 0) return (-1);
     int numC = matrizCartasJogo[posX][0];
     if(numC==0 && 112 <= posY && posY <= 112 + 190) return 0;
     for (int n = 1; n <= numC; n++) {
-        float topoC = 112 + (n - 1) * 32; 
-        float fundoC;
+        float topoC = 112 + (n - 1) * 32, fundoC; 
         if (n == numC) {
             fundoC = topoC + 190;  
         } else {
