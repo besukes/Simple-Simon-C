@@ -63,10 +63,7 @@ void botoes(SDL2Bases * args,SDL_Texture * imagensJogo[]){
 }
 
 
-void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
-    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
-    // Fundo
-    desenhaFundo(args, imagensJogo);
+void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
@@ -76,24 +73,21 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
             dest.y = offsetY + row * passo; 
             dest.w = cartaW;
             dest.h = cartaH;
-            // aumentar a carta
-            /*if (col == args->filaSelecionada) {
-                int primeiraCartaSelecionada = matrizJogo[col][0] - args->numCartasSelecionadas + 1;
-                if (row >= primeiraCartaSelecionada) {
-                    int escala = 10;
-                    dest.x += escala;
-                    dest.w += escala;
-                    dest.h += escala;
-                }
-            }*/
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
+}
+
+void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], SDL2Bases *args, SDL_Event event) {
+    SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
+    // Fundo
+    desenhaFundo(args, imagensJogo);
+    desenhaCartas(matrizJogo,imagensCartas,args);
+    botoes(args,imagensJogo);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args);
     }
-    botoes(args,imagensJogo);
     SDL_RenderPresent(args->rendererBase);
 }
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], SDL2Bases *args) {
