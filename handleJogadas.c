@@ -12,8 +12,8 @@ void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlob
     int i,m = matrizCartasJogo[linhaAnterior][0];
     matrizCartasJogo[linhaCompleta][0] = 13-numCartasColocadas;
     for(i=1;i<=13-numCartasColocadas;i++){
-        matrizCartasJogo[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i];
-        imagensCartas[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i];
+        matrizCartasJogo[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i-1];
+        imagensCartas[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i-1];
     }
     matrizCartasJogo[linhaAnterior][0]+=numCartasColocadas;
     for(int j=1;i<13;i++,j++){
@@ -69,10 +69,11 @@ SDL_Texture * imagensCartas[10][21],boolean filaCompleta){
 }
 
 void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,SDL2Bases * args,undoMove * estadoUndoGlobal){
-    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].antigaPos = args->filaSelecionada;
-    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].novaPos = pos;
-    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartasMovidas = args->numCartasSelecionadas;
-    estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].filaPreenchida = 1;
+    int isp = estadoUndoGlobal->isp;
+    estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
+    estadoUndoGlobal->ultimasJogadas[isp].novaPos = pos;
+    estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas = args->numCartasSelecionadas;
+    estadoUndoGlobal->ultimasJogadas[isp].filaPreenchida = 1;
      for(int i=0;i<13;i++){
         estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].cartas[i] = mcj[pos][i+1];
         estadoUndoGlobal->ultimasJogadas[estadoUndoGlobal->isp].imgs[i] = img[pos][i+1];
