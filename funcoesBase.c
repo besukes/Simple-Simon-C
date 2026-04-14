@@ -32,6 +32,6 @@ int dentroDoBotao(SDL_Event e,SDL2Bases * args,float width,float height,float po
 }
 
 int ePosicaoMatriz(int l,int c){
-    return (l>=0 && l<10 && c>=0 && c<20);
+    return (l>=0 && l<10 && c>=0 && c<21);
 }
 
