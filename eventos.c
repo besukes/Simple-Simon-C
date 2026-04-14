@@ -70,7 +70,8 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     // boolean seria um int , 0 ou 1
     // eventoRelevante de soltar , seria um evento onde o utilizador soltou o rato numa coluna de cartas
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas,
-            cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]);
+            cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) ||
+                matrizCartasJogo[linha][0]==0;
     if(eventoRelevante){
         if(cartaPodeSeColocar){
             colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
