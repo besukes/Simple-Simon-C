@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 
+
 /*Dado um numero de 1-52 retorna o valor real de 1-13 da carta*/
 int valorCarta(int carta){
         for(;carta>13;carta-=13);

@@ -1,7 +1,33 @@
 #include "simpleSimon.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include<stdlib.h>
+#include<time.h>
 
+
+////////////////////////////////////Funções Importadas do GOLF/////////////////////////////////////////////////////////
+/*Dado um numero de 1-52 retorna o valor real de 1-13 da carta*/
+int valorCarta(int carta){
+        for(;carta>13;carta-=13);
+        return carta;
+}
+
+
+/*Dado um array com as cartas distribuidas de 1-52 baralha as cartas entre si*/
+void shuffleCartas(int cartas[]){
+	srand(time(NULL));
+        for(int i=0;i<52;i++){
+                int j=rand()%52;
+                int temp = cartas[i];
+                cartas[i]=cartas[j];
+                cartas[j]=temp;
+        }
+}
+
+/*Inicializa o array cartas para ser de 1-52*/
+void preset(int cartas[]){
+        for(int i=0;i<52;i++) cartas[i]=i+1;
+}
 
 void verificaVitoria(int m[10][21],UserBase * args){
     int n=0;
@@ -10,6 +36,7 @@ void verificaVitoria(int m[10][21],UserBase * args){
     //O jogo acabou se nao houverem cartas em nenhuma das 10 pilhas
     if(!n) args->jogada=vitoria;
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
