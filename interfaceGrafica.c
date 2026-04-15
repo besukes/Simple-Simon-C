@@ -132,12 +132,12 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
 
 void tocaPegaCarta (Mix_Chunk * arraySom[])
 {
-    Mix_VolumeChunk(arraySom[0] , 128);
     Mix_PlayChannel(1 , arraySom[0], 0);
+    Mix_VolumeChunk(arraySom[0] , 128);
 }
 
 void undoSFX (Mix_Chunk * arraySom[])
 {
-    Mix_VolumeChunk(arraySom[1] , 128);
     Mix_PlayChannel(1 , arraySom[1], 0);
+    Mix_VolumeChunk(arraySom[1] , 128);
 }
