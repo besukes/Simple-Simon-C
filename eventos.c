@@ -51,7 +51,7 @@ void cliqueCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,U
     }
 }
 
-void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,UserBase *args, SDL_Event event, SDL_Texture *imagensCartas[10][21]) {
+void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,UserBase *args, SDL_Event event, SDL_Texture *imagensCartas[10][21],Mix_Chunk * arraySom[]) {
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     //Clicou no botao de sair do jogo
@@ -61,7 +61,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botao de desfazer a jogada
     else if (dentroDoBotao(event, args, 100, 50, 1000, 1000)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
-        UndoSFX();
+        undoSFX(arraySom);
     }
     //Clicou no botao de reeniciar o jogo
     else if (dentroDoBotao(event, args, 100, 50, 700, 1000)) {

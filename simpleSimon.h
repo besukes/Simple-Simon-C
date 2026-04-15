@@ -51,12 +51,13 @@ void atribuiResolucao(int * resX,int * resY,int optn);
 UserBase sdl_initializer(void);
 void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]);
 void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]);
-void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event);
-void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args);
+void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom[]);
+void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]);
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
-Mix_Chunk * tocaCartaPega(void);
+void tocaCartaPega(Mix_Chunk * arraySom[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
-void UndoSFX(void);
+void UndoSFX(Mix_Chunk * arraySom[]);
+void playPegaCarta(void);
 
 
 //modulo criarJogo.c
@@ -85,7 +86,7 @@ int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCart
 
 
 //modulo eventos.c
-void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,SDL_Event event , SDL_Texture * images[10][21]);
+void efetuaEventoClique(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,SDL_Event event , SDL_Texture * images[10][21],Mix_Chunk * arraySom[]);
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,SDL_Event event , SDL_Texture * images[10][21]);
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
 int calculaPosXClique(float posX);

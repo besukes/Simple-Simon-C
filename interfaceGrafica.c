@@ -89,7 +89,7 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
     }
 }
 
-void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], UserBase *args, SDL_Event event) {
+void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], UserBase *args, SDL_Event event,Mix_Chunk * arraySom[]) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
     desenhaFundo(args, imagensJogo);
@@ -103,7 +103,7 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     }
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
-        dragCartas(matrizJogo, imagensCartas, args);
+        dragCartas(matrizJogo, imagensCartas, args,arraySom);
     }
 }
 
@@ -115,7 +115,7 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
 }
 
 
-void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args) {
+void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]) {
     int cartaW = 140, cartaH = 190, passo = 32;
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
         SDL_Rect dest;
@@ -125,26 +125,19 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
         dest.h = cartaH;
         SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
     }
-    //memory leak
-    Mix_Chunk * p = tocaCartaPega();
-    Mix_FreeChunk(p);
+    tocaPegaCarta(arraySom);
 }
 
 
-Mix_Chunk * tocaCartaPega (void)
+
+void tocaCartaPega (Mix_Chunk * arraySom[])
 {
-    Mix_Chunk * pgCarta = NULL;
-    pgCarta = Mix_LoadWAV("sfx/CardDrop.mp3");
-    Mix_VolumeChunk(pgCarta , 128);
-    Mix_PlayChannel(1 , pgCarta, 0);
-    return pgCarta;
+    Mix_VolumeChunk(arraySom[0] , 128);
+    Mix_PlayChannel(1 , arraySom[0], 0);
 }
 
-void UndoSFX (void)
+void UndoSFX (Mix_Chunk * arraySom[])
 {
-    Mix_Chunk* undoSFX = NULL;
-    undoSFX = Mix_LoadWAV("sfx/undo.mp3");
-    Mix_VolumeChunk(undoSFX , 128);
-    Mix_PlayChannel(1 , undoSFX, 0);
-    Mix_FreeChunk(undoSFX);
+    Mix_VolumeChunk(arraySom[1] , 128);
+    Mix_PlayChannel(1 , arraySom[1], 0);
 }

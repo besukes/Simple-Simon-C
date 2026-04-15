@@ -5,11 +5,11 @@
 
 
 void handleGameplay(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,
-SDL_Event event,SDL_Texture* imagensCartas[10][21]){
+SDL_Event event,SDL_Texture* imagensCartas[10][21],Mix_Chunk * arraySom[]){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
             (*args).mouseButtonDown = 1;
-            efetuaEventoClique(matrizCartasJogo,estadoUndoGlobal,args,event , imagensCartas);
+            efetuaEventoClique(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas,arraySom);
         }
     }
     else if(event.type == SDL_MOUSEBUTTONUP){
@@ -55,9 +55,9 @@ void jogadorPrecisaDica(UserBase * args){
 }
 
 void interfaceJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
-SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event){
-    desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event);
-    handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas);
+SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom[]){
+    desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event,arraySom);
+    handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas,arraySom);
     verificaVitoria(matrizCartasJogo,args);
     jogadorPrecisaDica(args);
     //temos de fazer
@@ -65,7 +65,7 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event){
 }
 
 void interfaceSimpleSimon(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
-SDL_Texture * imagensJogo[],UserBase * args){
+SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
     SDL_Event event;
     inicializaTexturasJogo(imagensJogo,args->rendererBase);
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
@@ -77,7 +77,7 @@ SDL_Texture * imagensJogo[],UserBase * args){
             args->mouseY = event.motion.y;
         }
         if(args->screen == jogo){
-            interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event);
+            interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event,arraySom);
         }
         else telaMenu(args,imagensJogo,event);
         SDL_RenderPresent((*args).rendererBase);
@@ -93,17 +93,23 @@ void tocamusica(void){
     Mix_VolumeMusic(64);
 }
 
+void inicializaArraySom(Mix_Chunk * arraySom[]){
+    arraySom[0] = Mix_LoadWAV("sfx/CardDrop.mp3");
+    arraySom[1] = Mix_LoadWAV("sfx/undo.mp3");
+}
             
 int main(void){
     UserBase args = sdl_initializer();
     SDL_Texture* imagensJogo[10];
     SDL_Texture* imagensCartas[10][21];
+    Mix_Chunk * arraySom[10];
+    inicializaArraySom(arraySom);
     tocamusica();
     //o limite máximo teórico numa fila de cartas seria 21
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};
     criarJogo(matrizCartasJogo,imagensCartas,args.rendererBase);
-    interfaceSimpleSimon(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args);
+    interfaceSimpleSimon(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args,arraySom);
     clean_sdl(matrizCartasJogo,imagensJogo,imagensCartas);
     return 0;
 }
