@@ -61,9 +61,15 @@ int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCart
 
 
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
-    boolean b=1;
+    boolean bool=1;
     int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
-    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
-    if(nCartas==13 && b==1) return 1;
-    else return 0;
+    int naipe = (ultCartaFila - 1)/13;
+    for(int i=nCartas-1;i>0 && bool;i--){
+        if((matrizCartasJogo[linha][i] - 1 )/13 != naipe || !(cartaColocavel(matrizCartasJogo[linha][i],ultCartaFila))){
+            bool=0;
+        }  
+        ultCartaFila=matrizCartasJogo[linha][i];
+    }
+    if(nCartas==13 && bool==1) return 1;
+    return 0;
 }
