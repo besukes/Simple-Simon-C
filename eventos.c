@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-
+/*Função que calcula a posição X de onde o utilizador clicou , em termos da matriz do Jogo*/
 int calculaPosXClique(float posX){
     float i=75;
     int n;
@@ -13,7 +13,8 @@ int calculaPosXClique(float posX){
     return (-1);
 }
 
-
+/*Função que calcula a posição Y de onde o utilizador clicou , em termos da matriz do Jogo , e da posição do X(Esta última é necessária pois precisamos saber
+quantas cartas existem na linha)*/
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
     int numC = matrizCartasJogo[posX][0];
     if(numC==0 && 112 <= posY && posY <= 112 + 190) return 0;
@@ -29,46 +30,56 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
     return (-1);
 }
 
-
-void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21]){
+/*Função que verifica se o utilizador clicou numa carta que pode pegar e , se o tiver feito , então atualiza o estado args para representar a jogada efetuada.
+Também contém uma funcionalidade , esta função , de parar de mostrar dica de cartas , pois o utilizador ja clicou numa carta*/
+void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21],undoMove *estadoUndoGlobal){
     int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
+    //Muda o estado de args->dica para não mostrar mais dicas
     if(args->dica.querDica){
         args->dica.timeout=0;
         args->dica.querDica=0;
         args->dica.numDicas=0;
     }
-    if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
-        updateEstado(linhaClique, colunaClique, matrizCartasJogo, args,imagensCartas);
+    //Se o utilizador tiver 250 o array estadoUndoGlobal enche , portanto pede ao utilizador para tentar outras rotas
+    if(estadoUndoGlobal->isp==250) args->jogada=tooLarge;
+    else{//Se a carta for pegável, atualiza o estado
+        if (cartaPegavel(cartaClique, linhaClique, matrizCartasJogo)) {
+            updateEstado(linhaClique, colunaClique, matrizCartasJogo, args,imagensCartas);
+        }   
     }
+
 }
 
+/*  Função responsável por efetuar os eventos de clique do utilizador.
+    É chamada quando o utilizador clica com o botão esquerdo no ecrã , e faz um monte de verificações para descobrir se a posição onde o utilizador clicou
+é relevante , e , se for , então executa a respectiva instrução*/
 void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,UserBase *args, SDL_Event event, SDL_Texture *imagensCartas[10][21],Mix_Chunk * arraySom[]) {
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
-    //Clicou no botao de sair do jogo
+    //Clicou no botão de sair do jogo
     if (dentroDoBotao(event, args, 100, 50, 450, 1000)) {
         args->screen = menu;
     }
-    //Clicou no botao de desfazer a jogada
+    //Clicou no botão de desfazer a jogada
     else if (dentroDoBotao(event, args, 150, 50, 1050, 1000)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
         undoSFX(arraySom);
     }
-    //Clicou no botao de reeniciar o jogo
+    //Clicou no botão de reeniciar o jogo
     else if (dentroDoBotao(event, args, 150, 50, 725, 1000)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
-    //Botao dica
+    //Clicou no botão de pedir dica
     else if (dentroDoBotao(event, args, 200, 50, 1300, 1000) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
-        clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas);
+        clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas,estadoUndoGlobal);
     }
 }
 
-
+/*Função responsável pelos eventos de clique na tela do Menu inicial*/
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     if (dentroDoBotao(event, args, 200, 50, 860, 500)) {
         args->screen = jogo;
@@ -79,15 +90,22 @@ void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     }
 }
 
-
+/*  Função responsável pelos eventos de soltar o rato.
+    Semelhante à função de clique , esta também calcula a posição onde o utilizador tem o rato , mais precisamente , onde soltou o botão esquerdo e , 
+se for um evento relevante(Soltou o rato numa posição da matriz e tinha cartas selecionadas) e poder colocar a carta na posição onde soltou , então altera o estado
+respectivamente , caso contrário desfaz oque o clique fez (Coloca as cartas que estão a ser arrastadas de volta na posição da matriz e altera o args de modo a
+representar um estado parado).
+ */
 void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,SDL_Event event , SDL_Texture * imagensCartas[10][21]){
     float posX = event.button.x , posY = event.button.y;
+    //Calculamos a posição onde o utilizador soltou o rato em termos da matriz
     int linha = calculaPosXClique(posX), coluna = calculaPosYClique(matrizCartasJogo, linha, posY);
     // boolean seria um int , 0 ou 1
     // eventoRelevante de soltar , seria um evento onde o utilizador soltou o rato numa coluna de cartas
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas,
             cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) 
                 || (ePosicaoMatriz(linha,coluna) && matrizCartasJogo[linha][0]==0);
+    //Se for um evento relevante e a carta puder ser colocada , então atualiza o estado e a matrizJogo , caso contrario desfaz oque o clique fez
     if(eventoRelevante && cartaPodeSeColocar){
         boolean b = colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
         adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas,b);

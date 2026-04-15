@@ -38,7 +38,7 @@ void verificaVitoria(int m[10][21],UserBase * args){
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*Verifica se uma carta é pegável,i.e., se existem cartas por debaixo dessa mesma , então todas têm o mesmo naipe e valores consecutivos decrescentes*/
 int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
     int i;
     if (cartaClique == (-1)) return 0;
@@ -49,20 +49,23 @@ int cartaPegavel(int cartaClique, int linha, int mcj[10][21]) {
     return (mcj[linha][i] == cartaClique);
 }
 
-//Pode se colocar uma carta em cima de outra caso 
+/*Verifica se uma carta é colocável em cima da outra (O valor da carta que se vai colocar é imediatamente abaixo daquela onde vamos colocar)*/
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima){
     return((valorCarta(cartaDeBaixo)-valorCarta(cartaDeCima))==1);
 }
 
+/*Verifica se uma posição está dentro do botão , tendo em conta a coordenada esquerda superior do botao em termos de X e Y , como também os tamanhos do botão*/
 int dentroDoBotao(SDL_Event e,UserBase * args,float width,float height,float posX,float posY){
     int x=e.button.x,y=e.button.y;
     return ( (posX<=x && posX+width>=x) && (posY<=y && posY+height>=y));
 }
 
+/*Uma posição (l,c) está dentro da matriz jogo se estiver entre os limites da matriz respectiva*/
 int ePosicaoMatriz(int l,int c){
     return (l>=0 && l<10 && c>=0 && c<21);
 }
 
+/*Reseta as informações do usuário que estão guardadas em args , de modo a representar um estado parado*/
 void resetArgs(UserBase * args){
     args->filaSelecionada=(-1);
     args->numCartasSelecionadas=0;
@@ -70,12 +73,15 @@ void resetArgs(UserBase * args){
     args->mouseButtonDown=0;
 }
 
+/*Transforma o args para passar a informar às outras funções de desenhar que o utilizador não quer mais dicas*/
 void resetDicaArgs(UserBase * args){
     args->dica.querDica=0;
     args->dica.numDicas=0;
     args->dica.timeout=0;
 }
 
+/*Calcula a última carta que o utilizador pode pegar numa fila , para isso todas as cartas até essa têm de ser imediatamente 1 valor inferior à seguinte e têm de 
+ser do mesmo naipe*/
 int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCartas){
     if(numCartas==0) return (-1);
     int cartaFinal=matrizCartasJogo[linha][numCartas];
@@ -86,7 +92,7 @@ int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCart
     return cartaFinal;
 }
 
-
+/*Uma fila está completa se todas as cartas nela estiverem na ordem correta de K-Ás e forem todas do mesmo naipe*/
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
     boolean bool=1;
     int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];

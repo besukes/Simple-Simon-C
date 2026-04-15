@@ -4,6 +4,9 @@
 #include <stdio.h>
 
 
+/*Esta função desfaz uma jogada , se esta jogada anteriormente realizada tiver completado uma fila , pois é um caso especial
+Neste cenário , temos que restaurar as cartas que estavam na fila onde colocamos cartas e que foi completada , como também colocar as cartas que arrastamos
+nas respectivas posições , e também aumentar os valores dos índices 0 nessas linhas da matriz , para representar o estado anterior*/
 void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
     int isp = estadoUndoGlobal->isp,
         linhaCompleta = estadoUndoGlobal->ultimasJogadas[isp].novaPos,
@@ -25,6 +28,9 @@ void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlob
     }
 }
 
+
+/*Neste caso menos especial apenas temos de pegar na posição de onde as cartas foram arrastadas e colocá-las nesse mesmo sítio, diminuindo o índice 0 da matriz que
+guarda o número de cartas nessa linha , no número de cartas que foram arrastadas , e também fazer o mesmo para a linha de onde as cartas vieram , mas agora incrementando*/
 void desfazJogadaBasica(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
     //Inicilizamos todas as variaveis que precisamos para desfazer a jogada , para facilitar a leitura
     int isp = estadoUndoGlobal->isp;
@@ -44,7 +50,8 @@ void desfazJogadaBasica(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     }
 }
 
-
+/*Função intermediária que verifica se é possível desfazer a última jogada , ou seja , o utilizador efetuou jogadas anterior a estas , e , se esse for o caso ,
+verifica qual foi o tipo de jogada realizada anteriormente , pois existem nuances que devem ser atendidas respectivamente*/
 int desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21]){
     if(estadoUndoGlobal -> isp==0) return 1;
     else estadoUndoGlobal -> isp --;
@@ -59,6 +66,7 @@ int desfazerJogada(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,SDL_
     }
 }
 
+/*Função que adiciona uma jogada ao histórico de jogadas que podem ser desfeitas , tendo em conta o tipo de jogada que foi realizada*/
 void adicionaJogadaUndoMove(int matrizCartasJogo[10][21],int pos,UserBase * args,undoMove * estadoUndoGlobal,
 SDL_Texture * imagensCartas[10][21],boolean filaCompleta){
     if(filaCompleta){
@@ -71,6 +79,9 @@ SDL_Texture * imagensCartas[10][21],boolean filaCompleta){
     }
 }
 
+/*Se a fila tiver sido completada nesta jogada , então adicionamos todas as cartas da linha ao array do estadoUndoGlobal responsável por guardar as cartas e as
+imagens , como também informamos que a fila foi preenchida , guardamos a fila de onde as cartas vieram e onde foram colocadas(fila que foi completada) e , depois
+também dizemos quantas cartas é que pegamos da fila e arrastamos até à fila que foi completada*/
 void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,UserBase * args,undoMove * estadoUndoGlobal){
     int isp = estadoUndoGlobal->isp;
     estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
@@ -83,6 +94,9 @@ void rowCompleta(int mcj[10][21],SDL_Texture * img[10][21],int pos,UserBase * ar
     }
 }
 
+
+/*Se a fila não tiver sido completada nesta jogada , então simplesmente informamos que a fila não foi preenchida , e guardamos as informações sobre a jogada, como
+a nova posição das cartas , quantas cartas foram postas nessa nova posição , a posição antiga e também guardamos as próprias cartas e texturas*/
 void rowNaoCompleta(int pos,UserBase * args,undoMove * estadoUndoGlobal){
     int numCartasJogadas=args->numCartasSelecionadas , isp = estadoUndoGlobal->isp;
     estadoUndoGlobal->ultimasJogadas[isp].antigaPos = args->filaSelecionada;
@@ -95,7 +109,8 @@ void rowNaoCompleta(int pos,UserBase * args,undoMove * estadoUndoGlobal){
     }
 }
 
-
+/*Função que reenicia o jogo , simplesmente randomizando todas as cartas no baralho , executando a função criarJogo , como também dando clear ao renderer , destruindo as 
+texturas que foram criadas (pois vão ser novamente criadas no criarJogo) , e também reeniciamos o args de modo a representar um estado inicial*/
 void reeniciaJogo(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,
 SDL_Texture * imagensCartas[10][21]){
     estadoUndoGlobal->isp=0;
@@ -109,6 +124,9 @@ SDL_Texture * imagensCartas[10][21]){
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 
+/*Função executada quando o utilizador clica numa carta que pode pegar.
+Oque esta função faz é indicar a linha onde o utilizador clicou e o número de cartas selecionadas pelo mesmo , como também colocando essas cartas e
+imagens nos respectivos arrays do args , responsáveis por guardar essas informações*/
 void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], UserBase * args,SDL_Texture * imagens[10][21]) {
     args->filaSelecionada = linhaClique;
     args->numCartasSelecionadas = matrizCartasJogo[linhaClique][0] - colunaClique + 1;
@@ -122,7 +140,10 @@ void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21
     matrizCartasJogo[linhaClique][0]-= args->numCartasSelecionadas;
 }
 
-
+/*Esta função executa quando o utilizador arrasta uma carta para uma nova posição e esta jogada é válida.
+Nesse sentido , coloca as cartas nessa nova posição da matriz , atualizando-a , como também faz isso mesmo para a matriz das texturas.
+Também incrementamos o número de cartas nessa nova posição.
+Se a fila tiver sido completada então a linha simplesmente "limpa-se" , ou apaga-se . Caso contrário mantemos o estado como está.*/
 int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture * imagensCartas[10][21],int linha){
     int numCartas = args->numCartasSelecionadas;
     int contacartas = matrizCartasJogo[linha][0];
@@ -136,6 +157,10 @@ int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture *
     return b;
 }
 
+/*Se a jogada não for válida (Por exemplo o utilizador tenta arrastar cartas para fora da janela ou para uma posição onde não há cartas , ou até
+mesmo uma posição onde colocar as cartas é inválido) , então temos que retornar as cartas arrastadas à posição de origem ,incrementar o número de cartas dessa
+posição de origem , e resetar o args , de modo a representar um estado parado.
+Se a jogada for valida então guarda no args , se não guarda jogada inválida , caso contrário.*/
 void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,UserBase * args,SDL_Texture * imagens[10][21]){
     int filaCarta = args->filaSelecionada, tam= mcj[filaCarta][0];
     for(int i=0;i<args->numCartasSelecionadas;i++){

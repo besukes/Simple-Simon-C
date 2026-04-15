@@ -4,10 +4,16 @@
 
 typedef int numCarta;
 typedef int filaEscolhida;
+//Uma forma mais sugestiva de representar valores logicos , no fundo apenas sao inteiros que representam 0 ou 1
 typedef int boolean;
-typedef enum {invalida,sair,valido,vitoria} tipoJogada;
+//TipoJogada representa se o utilizador ganhou , saiu , realizou uma jogada válida ou inválida
+typedef enum {invalida,sair,valido,vitoria,tooLarge} tipoJogada;
+//Representa a tela atual do utilizador
 typedef enum {menu , jogo} UserScreen;
 
+
+/*O struct ultimaJogada guarda informações sobre a última jogada realizada pelo jogador , como os números das cartas e suas respectivas texturas que ele moveu, 
+a antiga posição dessas cartas , como também a nova , o número de cartas movidas e também uma informação se a fila foi ou não completa nessa jogada*/
 typedef struct ultimaJogada{
     numCarta cartas[13];
     SDL_Texture * imgs[13];
@@ -16,11 +22,16 @@ typedef struct ultimaJogada{
     numCarta cartasMovidas;
     boolean filaPreenchida;
 }lastMove;
+
+/*Um Estado Undo guarda um isp que indica quantas jogadas é que já foram realizadas , e também um array de lastMove , onde guarda as informações da
+jogada anterior*/
 typedef struct reverterJogada{
     int isp;
     lastMove ultimasJogadas[250];
 }undoMove;
 
+/*Este struct type guarda um "boolean" que informa se o jogador pretende ou não ter uma dica , guarda o número de dicas disponíveis ,as filas em que estão
+presentes cartas jogáveis , como também um timer que informa o tempo restante para aparecer a dica no ecrã*/
 typedef struct dicaUtilizador{
     int numDicas;
     boolean querDica;
@@ -28,10 +39,14 @@ typedef struct dicaUtilizador{
     int timeout;
 } DicaStruct;
 
+
+/*Struct type importantissímo que guarda o renderer(onde colocamos as imagens antes de as apresentar na tela) , a informação se o rato está pressionado , se o
+jogador quer uma dica( e se sim todas as informações de cartas que o podem ajudar a continuar a jogar), guarda também a fila selecionada pelo utilizador,
+(por default , se o utilizador não estiver com uma fila selecionada então seria -1) guarda também o número de cartas que ele tem selecionado , se tiver , como
+também as imagens dessas mesmas cartas e os seus números em dois arrays diferentes.
+Consegue ainda guardar qual o tipo da jogada do utilizador , a tela onde está , e a posição do rato em X e em Y , caso seja relevante*/
 typedef struct sdl2graphics{
     SDL_Renderer * rendererBase;
-    //int resolucaoX;
-    //int resolucaoY;
     boolean mouseButtonDown;
     DicaStruct dica;
     filaEscolhida filaSelecionada;
