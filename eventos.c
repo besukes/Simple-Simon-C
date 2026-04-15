@@ -13,6 +13,7 @@ int calculaPosXClique(float posX){
     return (-1);
 }
 
+
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
     int numC = matrizCartasJogo[posX][0];
     if(numC==0 && 112 <= posY && posY <= 112 + 190) return 0;
@@ -29,17 +30,7 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
 }
 
 
-boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
-    boolean b=1;
-    int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
-    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
-    if(nCartas==13 && b==1) return 1;
-    else return 0;
-}
-
-
-
-void cliqueCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21]){
+void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21]){
     int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
     if(args->dica.querDica){
         args->dica.timeout=0;
@@ -68,14 +59,15 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
     //Botao dica
-    else if (dentroDoBotao(event, args, 100, 50, 1300, 1000)){
+    else if (dentroDoBotao(event, args, 200, 50, 1300, 1000) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
-        cliqueCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas);
+        clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas);
     }
 }
+
 
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     if (dentroDoBotao(event, args, 200, 50, 860, 500)) {

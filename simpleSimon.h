@@ -54,9 +54,7 @@ void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom[]);
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]);
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
-void tocaPegaCarta(Mix_Chunk * arraySom[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
-void undoSFX(Mix_Chunk * arraySom[]);
 
 
 //modulo criarJogo.c
@@ -82,6 +80,8 @@ int ePosicaoMatriz(int l,int c);
 void resetArgs(UserBase * args);
 void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args);
 int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCartas);
+void resetDicaArgs(UserBase * args);
+boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
 
 
 //modulo eventos.c
@@ -104,3 +104,16 @@ void reeniciaJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, Use
 void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21], UserBase * args,SDL_Texture * imagensCartas[10][21]);
 int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture * imagensCartas[10][21],int linha);
 void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar, UserBase * args,SDL_Texture * imagensCata[10][21]);
+
+
+//modulo dicas.c
+void jogadorPrecisaDica(UserBase * args,int linha);
+void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args);
+void atualizaEstadoDica(UserBase * args);
+
+
+//modulo audio.c
+void tocamusica(void);
+void inicializaArraySom(Mix_Chunk * arraySom[]);
+void tocaPegaCarta (Mix_Chunk * arraySom[]);
+void undoSFX (Mix_Chunk * arraySom[]);

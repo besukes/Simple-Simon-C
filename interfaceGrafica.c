@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
+/*Pergunta inicialmente ao utilizador a resolução que pretende utilizar no seu jogo*/
 int escolhaDeResolucao(void){
     printf("Introduza o número da resolução que pretende utilizar\n(1)-1280x720;\n(2)-1600x900\n(3)-1920x1080\n");
     int u;
@@ -10,6 +11,7 @@ int escolhaDeResolucao(void){
     return u;
 }
 
+/*Função que dado uma opção de resolução atribui os valores de largura e altura da janela*/
 void atribuiResolucao(int * resX,int * resY,int optn){
     switch(optn){
         case 1:
@@ -27,6 +29,8 @@ void atribuiResolucao(int * resX,int * resY,int optn){
     }
 }
 
+/*Função que inicializa o SDL e cria a janela do jogo, tal como criar um tipo UserBase args e retorná-lo.
+    Este UserBase contém toda a informação importante e necessária para o funcionamento do jogo e das suas funcionalidades*/
 UserBase sdl_initializer(void){
     SDL_Init(SDL_INIT_VIDEO);
     int resolution=escolhaDeResolucao(),resX,resY;
@@ -41,6 +45,7 @@ UserBase sdl_initializer(void){
     return args;
 }
 
+/*No final da execução do programa, liberta a memória alocada para as texturas e apaga a window criada*/
 void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     //temos que apagar a imagem da memoria da gpu
     for(int i=0;i<10;i++){
@@ -54,11 +59,13 @@ void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * 
     SDL_Quit();
 }
 
+/*Função que desenha o fundo do nosso jogo*/
 void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]){
     SDL_Rect fundo = {0, 0, 1920, 1080};
     SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
 }
 
+/*Função que desenha os diversos botões do jogo*/
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     if(args->screen == jogo) {
         for(int i=1;i<5;i++){
@@ -74,7 +81,8 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     }
 }
 
-
+/*Função que dado uma posição na matriz de uma carta e no seu respectivo valor, desenha a na janela do jogo , desenhando para todas as linhas e desde o indice 1
+ate ao indice matrizJogo[col][0] que seria o número de cartas nessa mesma fila*/
 void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
     for (int col = 0; col < 10; col++) {
@@ -90,24 +98,38 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
     }
 }
 
+/*Função que desenha um retângulo azul em cima das cartas que podem ser movidas para outras filas, se o utilizador quiser uma dica*/
+void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
+    //SDL_SetRenderDrawColor(args->rendererBase, 0, 0 , 255, 255);
+    SDL_SetRenderDrawBlendMode(args->rendererBase, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(args->rendererBase, 0, 0 , 255, 67);
+    for(int i=0;i<args->dica.numDicas;i++){
+        int linha = args->dica.filas[i];
+        int numC = matrizJogo[linha][0];
+        SDL_Rect b = {75+178*(linha),112+32*(numC-1),140,190};
+        SDL_RenderFillRect(args->rendererBase,&b);
+    }
+}
+
+/*Função principal do módulo interfaceGrafica, que desenha o jogo consoante todas as nuances do mesmo , como se o jogador quiser uma dica, se o utilizador estiver
+a segurar cartas, etc..*/
 void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], UserBase *args, SDL_Event event,Mix_Chunk * arraySom[]) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     // Fundo
     desenhaFundo(args, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
     botoes(args,imagensJogo);
-    if(args->dica.querDica==1 && args->dica.timeout>0){
-        for(int i=0;i<args->dica.numDicas;i++){
-            SDL_Rect b = {75+178*i,112+32*matrizJogo[i][matrizJogo[i][0]],140,190};
-            //queremos colocar aqui a cena por cima das cartas;
-        }
-    }
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args,arraySom);
     }
+    if(args->dica.querDica && args->dica.timeout>0){
+        desenhaDicasJogador(matrizJogo,args);
+        SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
+    }
 }
 
+/*Função que desenha o menu inicial do jogo*/
 void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
@@ -115,7 +137,8 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
-
+/*Função que desenha as cartas que estão a ser arrastadas pelo utilizador utilizando o UserBase e as cartas que lá estão guardadas (apenas executa se
+o args->mouseButtonDown ==1,i.e, o utilizador está a segurar o mouse , e se tiver uma fila selecionada(args->filaSelecionada != -1))*/
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]) {
     int cartaW = 140, cartaH = 190, passo = 32;
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
@@ -127,20 +150,4 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
         SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
     }
     tocaPegaCarta(arraySom);
-}
-
-
-
-void tocaPegaCarta (Mix_Chunk * arraySom[])
-{
-    Mix_Chunk * p = arraySom[0];
-    Mix_VolumeChunk(p , 128);
-    Mix_PlayChannel(1 , p, 0);
-}
-
-void undoSFX (Mix_Chunk * arraySom[])
-{
-    Mix_Chunk * p = arraySom[1];
-    Mix_VolumeChunk(p , 128);
-    Mix_PlayChannel(1 , p , 0);
 }

@@ -10,11 +10,14 @@ void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlob
         linhaAnterior = estadoUndoGlobal->ultimasJogadas[isp].antigaPos,
         numCartasColocadas = estadoUndoGlobal->ultimasJogadas[isp].cartasMovidas;
     int i,m = matrizCartasJogo[linhaAnterior][0];
+    //O numero da fila aumenta de 0 para 13 menos o numero de cartas que foram arrastadas
     matrizCartasJogo[linhaCompleta][0] = 13-numCartasColocadas;
+    //Estas cartas sao as cartas que estavam na fila completa antes de ser completada
     for(i=1;i<=13-numCartasColocadas;i++){
         matrizCartasJogo[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i-1];
         imagensCartas[linhaCompleta][i] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i-1];
     }
+    //Estas são as cartas que foram arrastadas ate à fila completa
     matrizCartasJogo[linhaAnterior][0]+=numCartasColocadas;
     for(int j=1;i<13;i++,j++){
         matrizCartasJogo[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i];
@@ -92,6 +95,7 @@ void rowNaoCompleta(int pos,UserBase * args,undoMove * estadoUndoGlobal){
     }
 }
 
+
 void reeniciaJogo(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal,UserBase * args,
 SDL_Texture * imagensCartas[10][21]){
     estadoUndoGlobal->isp=0;
@@ -101,6 +105,7 @@ SDL_Texture * imagensCartas[10][21]){
     for(int i=0;i<10;i++){
         for(int j=1;j<=matrizCartasJogo[i][0];j++) SDL_DestroyTexture(imagensCartas[i][j]);
     }
+    resetDicaArgs(args);
     criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
 }
 

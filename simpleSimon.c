@@ -28,14 +28,14 @@ void handlemenu (UserBase * args, SDL_Event event){
         }
     }
 }
+
+
 void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
     //imagensJogo[0] = IMG_LoadTexture(renderer,"assets/fundo.png")
-    imagensJogo[1] = IMG_LoadTexture(renderer,"assets/quit.png");
-    imagensJogo[2] = IMG_LoadTexture(renderer,"assets/NG.png");
-    imagensJogo[3] = IMG_LoadTexture(renderer,"assets/undo.png");
-    //botao dica
-    imagensJogo[4] = IMG_LoadTexture(renderer,"assets/undo.png");
-    imagensJogo[5] = IMG_LoadTexture(renderer,"assets/dica.png");
+    imagensJogo[1] = IMG_LoadTexture(renderer,"assets/Botoes/quit.png");
+    imagensJogo[2] = IMG_LoadTexture(renderer,"assets/Botoes/NG.png");
+    imagensJogo[3] = IMG_LoadTexture(renderer,"assets/Botoes/undo.png");
+    imagensJogo[4] = IMG_LoadTexture(renderer,"assets/Botoes/dica.png");
 }
 
 
@@ -44,22 +44,13 @@ void telaMenu (UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     handlemenu(args,event);
 }
 
-void jogadorPrecisaDica(UserBase * args){
-    if(args->dica.querDica==1){
-        if(args->dica.timeout==0){
-            args->dica.querDica=0;
-            args->dica.numDicas=0;
-        }
-        else args->dica.timeout --;
-    }
-}
 
 void interfaceJogo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],
 SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom[]){
+    atualizaEstadoDica(args);
     desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event,arraySom);
     handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas,arraySom);
     verificaVitoria(matrizCartasJogo,args);
-    jogadorPrecisaDica(args);
     //temos de fazer
     if(args-> jogada == vitoria);
 }
@@ -85,18 +76,6 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
 
 }
 
-void tocamusica(void){
-    Mix_Music *balatro = NULL;
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-    balatro = Mix_LoadMUS("musica/balatro.mp3");
-    Mix_PlayMusic(balatro, -1); 
-    Mix_VolumeMusic(67);
-}
-
-void inicializaArraySom(Mix_Chunk * arraySom[]){
-    arraySom[0] = Mix_LoadWAV("sfx/CardDrop.mp3");
-    arraySom[1] = Mix_LoadWAV("sfx/undo.mp3");
-}
             
 int main(void){
     UserBase args = sdl_initializer();

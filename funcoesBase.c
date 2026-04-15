@@ -43,26 +43,27 @@ void resetArgs(UserBase * args){
     args->mouseButtonDown=0;
 }
 
+void resetDicaArgs(UserBase * args){
+    args->dica.querDica=0;
+    args->dica.numDicas=0;
+    args->dica.timeout=0;
+}
+
 int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCartas){
     if(numCartas==0) return (-1);
     int cartaFinal=matrizCartasJogo[linha][numCartas];
-    for(int i=numCartas;i>0 && (matrizCartasJogo[linha][i] - 1)/13 == (cartaFinal - 1)/13;i--){
+    for(int i=numCartas-1;i>0 && (matrizCartasJogo[linha][i] - 1)/13 == (cartaFinal - 1)/13 
+    && (matrizCartasJogo[linha][i] - cartaFinal == 1);i--){
         cartaFinal = matrizCartasJogo[linha][i];
     }
     return cartaFinal;
 }
 
 
-void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args){
-    for(int i=0;i<10;i++){
-        int cartaP = calculaUltimaCartaPegavel(matrizCartasJogo,i,matrizCartasJogo[i][0]);
-        for(int j=0;j<10;j++){
-            int cartaN= calculaUltimaCartaPegavel(matrizCartasJogo,j,matrizCartasJogo[i][0]);
-            if(cartaColocavel(cartaN,cartaP)){
-                args->dica.filas[args->dica.numDicas] = i;
-                args->dica.numDicas++;
-                args->dica.timeout=10;
-            }
-        }
-    }
+boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
+    boolean b=1;
+    int nCartas=matrizCartasJogo[linha][0],ultCartaFila=matrizCartasJogo[linha][nCartas];
+    for(int i=nCartas;i>1;i--) if(!(ultCartaFila/13 == (matrizCartasJogo[linha][i-1] - 1 )/13)) b=0;
+    if(nCartas==13 && b==1) return 1;
+    else return 0;
 }
