@@ -55,16 +55,16 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     //Clicou no botao de sair do jogo
-    if (dentroDoBotao(event, args, 100, 50, 400, 1000)) {
+    if (dentroDoBotao(event, args, 100, 50, 450, 1000)) {
         args->screen = menu;
     }
     //Clicou no botao de desfazer a jogada
-    else if (dentroDoBotao(event, args, 100, 50, 1000, 1000)) {
+    else if (dentroDoBotao(event, args, 150, 50, 1050, 1000)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
         undoSFX(arraySom);
     }
     //Clicou no botao de reeniciar o jogo
-    else if (dentroDoBotao(event, args, 100, 50, 700, 1000)) {
+    else if (dentroDoBotao(event, args, 150, 50, 725, 1000)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
     //Botao dica
@@ -81,8 +81,9 @@ void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     if (dentroDoBotao(event, args, 200, 50, 860, 500)) {
         args->screen = jogo;
     }
-    if (dentroDoBotao(event, args, 200, 50, 860, 600)) {
+    if (dentroDoBotao(event, args, 150, 50, 880, 600)) {
         args->jogada = sair;
+        
     }
 }
 
