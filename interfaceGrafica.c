@@ -41,13 +41,14 @@ UserBase sdl_initializer(void){
     return args;
 }
 
-void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21]){
+void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     //temos que apagar a imagem da memoria da gpu
     for(int i=0;i<10;i++){
         SDL_DestroyTexture(image[i]);
         for(int j=1;j<=matrizCartasJogo[i][0];j++){
             SDL_DestroyTexture(imagensCartas[i][j]);
         }
+        Mix_FreeChunk(arraySom[i]);
     }
     IMG_Quit(); //informar a gpu que ja nao é preciso criar uma window
     SDL_Quit();
@@ -132,12 +133,14 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
 
 void tocaPegaCarta (Mix_Chunk * arraySom[])
 {
-    Mix_PlayChannel(1 , arraySom[0], 0);
-    Mix_VolumeChunk(arraySom[0] , 128);
+    Mix_Chunk * p = arraySom[0];
+    Mix_VolumeChunk(p , 128);
+    Mix_PlayChannel(1 , p, 0);
 }
 
 void undoSFX (Mix_Chunk * arraySom[])
 {
-    Mix_PlayChannel(1 , arraySom[1], 0);
-    Mix_VolumeChunk(arraySom[1] , 128);
+    Mix_Chunk * p = arraySom[1];
+    Mix_VolumeChunk(p , 128);
+    Mix_PlayChannel(1 , p , 0);
 }
