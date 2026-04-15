@@ -130,7 +130,7 @@ void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], User
 
 
 
-void tocaCartaPega (Mix_Chunk * arraySom[])
+void tocaPegaCarta (Mix_Chunk * arraySom[])
 {
     Mix_VolumeChunk(arraySom[0] , 128);
     Mix_PlayChannel(1 , arraySom[0], 0);
