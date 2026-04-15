@@ -136,7 +136,7 @@ void tocaPegaCarta (Mix_Chunk * arraySom[])
     Mix_PlayChannel(1 , arraySom[0], 0);
 }
 
-void UndoSFX (Mix_Chunk * arraySom[])
+void undoSFX (Mix_Chunk * arraySom[])
 {
     Mix_VolumeChunk(arraySom[1] , 128);
     Mix_PlayChannel(1 , arraySom[1], 0);

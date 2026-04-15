@@ -54,10 +54,9 @@ void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom[]);
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]);
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
-void tocaCartaPega(Mix_Chunk * arraySom[]);
+void tocaPegaCarta(Mix_Chunk * arraySom[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
-void UndoSFX(Mix_Chunk * arraySom[]);
-void playPegaCarta(void);
+void undoSFX(Mix_Chunk * arraySom[]);
 
 
 //modulo criarJogo.c
