@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
+
 typedef int numCarta;
 typedef int filaEscolhida;
 //Uma forma mais sugestiva de representar valores logicos , no fundo apenas sao inteiros que representam 0 ou 1
