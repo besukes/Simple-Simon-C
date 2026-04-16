@@ -50,11 +50,13 @@ void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,U
 
 }
 
+/*Função responsável por reduzir instruções na função efetuaEventoClique e para isso realiza as funções que tratam de anular uma jogada*/
 void efetuaBotaoUndo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
     undoSFX(arraySom);
 }
 
+/*Função responsável por reduzir instruções na função efetuaEventoClique que realiza as funções respectivas para reeniciar o jogo*/
 void efetuaBotaoReeniciar(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, UserBase * args, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     ngSFX(arraySom);
@@ -108,6 +110,7 @@ void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
     }
 }
 
+/*Função responsável pelos eventos de clique na tela do Menu de escolher Temas*/
 void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event){
         SDL_Point pontoMouse = {args->mouseX, args->mouseY};
         SDL_Rect balatrob = {400, 100, 500, 300};

@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 
+
+/*Função que carrega as texturas das cartas do estilo Isoladas para a matriz de texturas*/
 void loadIsoladas(SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21],int cartas[],int l,int * i){
     for(int u=1;u<9;u++){
         char str[30];
@@ -12,6 +14,7 @@ void loadIsoladas(SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,in
     }
 }
 
+/*Função que carrega as texturas das cartas do estilo Solitaire para a matriz de texturas*/
 void loadSolitaire(SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21],int cartas[],int l,int * i){
     for(int u=1;u<9;u++){
         char str[30];

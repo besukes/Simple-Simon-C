@@ -122,7 +122,7 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
 }
 
 /* Função que desenha o logo do jogo no ecrã */
-void desenhaHand(UserBase *args, SDL_Texture *logo) {
+void desenhaBotoesCartas(UserBase *args, SDL_Texture *logo) {
     SDL_Rect dest;
     dest.w = 1500;   
     dest.h = 1024;   
@@ -138,7 +138,7 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     desenhaFundo(args, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
-    desenhaHand(args, imagensJogo[6]);
+    desenhaBotoesCartas(args, imagensJogo[6]);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args,arraySom);
@@ -151,10 +151,13 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
 
 
 double calculoAngulo (int tempo , double freq , double amp){
+    //Nao fazemos o tempo absoluto em termos da duracao dos ciclos para ter um efeito mais aleatorio
     double oscilacao = tempo /1000.0;
+    //Precisamos do seno para a onda estar entre -1 e 1 e depois multiplicar por 3.5(constante fixa)
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
+
 // Tciclos é o tempo em segundos por ciclo
 double tempoloop(int tempo , double ciclos , double TCiclo){
     // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
@@ -174,9 +177,9 @@ void desenhaLogo(UserBase *args, SDL_Texture *logo) {
     int offset;
     double ang = calculoAngulo(tempoatual, 2.5 ,10);
     if (t < 1.0) {
-        offset = (int)(t * 75); // pixeis q sobe e desce = 75 ,podes alterar.
+        offset = (t * 75); // pixeis q sobe e desce = 75 ,podes alterar.
     } else {
-        offset = (int)((2-t) * 75);
+        offset = ((2-t) * 75);
     }
     dest.y = 100 + offset;
     SDL_RenderCopyEx(args->rendererBase, logo, NULL, &dest, ang, NULL, SDL_FLIP_NONE);
@@ -191,12 +194,15 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
+/*Função que desenha o menu dos temas utilizando outras funções*/
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     desenhaFundo(args, imagensJogo);
     desenhaEstilos(args , imagensJogo , event);
     botoes(args , imagensJogo); 
 }
+
+/*Função que desenha todos os estilos de cartas presentes no jogo e deixam o utilizador escolher um deles*/
 void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_Rect balatrob = {400, 100, 500, 300};

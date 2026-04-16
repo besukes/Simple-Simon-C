@@ -16,6 +16,8 @@ void inicializaArraySom(Mix_Chunk * arraySom[]){
     arraySom[1] = Mix_LoadWAV("sfx/undo1.mp3");
     arraySom[2] = Mix_LoadWAV("sfx/ng.mp3");
 }
+
+/*Função que toca o som de reeniciar o jogo*/
 void ngSFX (Mix_Chunk * arraySom[])
 {
     Mix_Chunk * p = arraySom[2];

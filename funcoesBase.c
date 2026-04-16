@@ -29,6 +29,7 @@ void preset(int cartas[]){
         for(int i=0;i<52;i++) cartas[i]=i+1;
 }
 
+/*Função que verifica se o jogador venceu o jogo(O jogador vence se em todas as filas não existirem cartas)*/
 void verificaVitoria(int m[10][21],UserBase * args){
     int n=0;
     for(int i=0;i<10;i++) n+=m[i][0];

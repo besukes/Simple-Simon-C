@@ -23,7 +23,7 @@ SDL_Event event,SDL_Texture* imagensCartas[10][21],Mix_Chunk * arraySom[]){
     }
 }
 
-/*Se o utilizador tiver clicado no botão esquerdo do rato no menu , então efetua a respectiva jogada*/
+/*Se o utilizador tiver clicado no botão esquerdo do rato no menu inicial , então efetua a respectiva jogada*/
 void handlemenu (UserBase * args, SDL_Event event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
@@ -32,6 +32,7 @@ void handlemenu (UserBase * args, SDL_Event event){
     }
 }
 
+/*Se o utilizador tiver clicado no botão esquerdo do rato no menu temas , então efetua a respectiva jogada*/
 void handletemas(UserBase * args, SDL_Event event){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
@@ -63,6 +64,8 @@ void telaMenu (UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     desenhaMenu(args , imagensJogo , event);
     handlemenu(args,event);
 }
+
+/*Se o utilizador estiver no menu de temas então desenha o menu dos temas e as suas respectivas texturas como também verifica os eventos do clique nessa tela*/
 void telaTemas(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     desenhaTemas(args , imagensJogo , event);
     handletemas(args,event);
@@ -80,7 +83,7 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom
     if(args-> jogada == vitoria);
 }
 
-
+/*Função responsável por verificar o estado da tela e chamar a função apropriada à mesma*/
 void verificaEstadoTela(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
 UserBase * args,SDL_Event event,Mix_Chunk *arraySom[]){
     if(args->screen == jogo){
