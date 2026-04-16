@@ -32,6 +32,14 @@ void handlemenu (UserBase * args, SDL_Event event){
     }
 }
 
+void handletemas(UserBase * args, SDL_Event event){
+    if(event.type==SDL_MOUSEBUTTONDOWN){
+        if(event.button.button == SDL_BUTTON_LEFT){
+            efetuaEventoCliqueTemas(args,event);
+        }
+    }
+}
+
 /*Função responsável por inicializar as texturas dos botões do jogo*/
 void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
     imagensJogo[0] = IMG_LoadTexture(renderer,"assets/background.jpg");
@@ -42,9 +50,12 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[5] = IMG_LoadTexture(renderer,"assets/Logo.png");
     imagensJogo[6] = IMG_LoadTexture(renderer,"assets/Cards.png");
     imagensJogo[7] = IMG_LoadTexture(renderer,"assets/mesa.png");
-
-
-
+    imagensJogo[8] = IMG_LoadTexture(renderer,"assets/Botoes/themes.png");
+    imagensJogo[9] = IMG_LoadTexture(renderer,"assets/CardsAll.png");
+    imagensJogo[10] = IMG_LoadTexture(renderer,"assets/all_cards.png");
+    imagensJogo[11] = IMG_LoadTexture(renderer,"assets/Botoes/YTI.png");
+    imagensJogo[12] = IMG_LoadTexture(renderer,"assets/Botoes/balatroTheme.png");
+    imagensJogo[13] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
 }
 
 /*Se o utilizador estiver no menu , copia para o renderer as imagens do menu e verifica o que é que o usuário pretende fazer dependendo dos cliques do mesmo*/
@@ -52,7 +63,10 @@ void telaMenu (UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     desenhaMenu(args , imagensJogo , event);
     handlemenu(args,event);
 }
-
+void telaTemas(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
+    desenhaTemas(args , imagensJogo , event);
+    handletemas(args,event);
+}
 /*Caso o utilizador esteja na tela do jogo em si , o programa verifica se o utilizador pretende que lhe seja mostrado uma dica , coloca no renderer todas as
 imagens necessárias , realiza os eventos que o utilizador realiza ao longo do jogo , e , por fim , também verifica se o jogo foi vencido e , se for , 
 mostra um mensagem de vitória*/
@@ -88,7 +102,12 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
         if(args->screen == jogo){
             interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event,arraySom);
         }
-        else telaMenu(args,imagensJogo,event);
+        else if(args->screen == menu ){
+            telaMenu(args,imagensJogo,event);
+        }
+        else if(args->screen == temas){
+            telaTemas(args,imagensJogo,event);
+        }
         SDL_RenderPresent((*args).rendererBase);
     }
 
@@ -98,7 +117,7 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
 como também inicializa a janela , executa as funções que rodam o jogo e , por fim , apaga as texturas todas que criou e encerra o jogo*/
 int main(void){
     UserBase args = sdl_initializer();
-    SDL_Texture* imagensJogo[10];
+    SDL_Texture* imagensJogo[20];
     SDL_Texture* imagensCartas[10][21];
     tocamusica();
     Mix_Chunk * arraySom[10];

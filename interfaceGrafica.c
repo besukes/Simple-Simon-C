@@ -65,7 +65,7 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
 
     SDL_Rect fundo = {0, 0, 1920, 1080};
 
-    if (args->screen == menu) {
+    if (args->screen == menu || args->screen == temas) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
     }
     else {
@@ -83,9 +83,11 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     }
     else if(args->screen == menu) {
         SDL_Rect botaoJogar = {860, 500, 200, 50};
-        SDL_Rect botaoSair = {860, 600, 200, 50};
+        SDL_Rect botaoTemas = {860, 600, 200, 50};
+        SDL_Rect botaoSair = {860, 700, 200, 50};
         SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoJogar);
         SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[8], NULL, &botaoTemas);
     }
 }
 
@@ -187,6 +189,33 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     desenhaFundo(args, imagensJogo);
     desenhaLogo(args, imagensJogo[5]);
     botoes(args , imagensJogo); 
+}
+
+void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+{
+    desenhaFundo(args, imagensJogo);
+    desenhaEstilos(args , imagensJogo , event);
+    botoes(args , imagensJogo); 
+}
+void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+{
+    SDL_Rect balatrob = {400, 100, 500, 300};
+    SDL_Rect solitaireb = {1000, 100, 500, 300};
+    SDL_Rect menu = {100 , 900 , 200 ,200};
+    SDL_Rect YTI = {675 , 600 , 600 ,200};
+    SDL_Rect estilo = {675 , 800 , 600 ,200};
+    SDL_RenderCopy(args->rendererBase, imagensJogo[9], NULL, &balatrob);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[10], NULL, &solitaireb);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[11], NULL, &YTI);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &menu);
+    if (args -> estilo == balatro)
+    {
+        SDL_RenderCopy(args->rendererBase, imagensJogo[12], NULL, &estilo);
+    }
+    else if (args -> estilo == solitaire)
+    {
+        SDL_RenderCopy(args->rendererBase, imagensJogo[13], NULL, &estilo);
+    } 
 }
 
 /*Função que desenha as cartas que estão a ser arrastadas pelo utilizador utilizando o UserBase e as cartas que lá estão guardadas (apenas executa se

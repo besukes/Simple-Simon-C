@@ -10,7 +10,7 @@ typedef int boolean;
 //TipoJogada representa se o utilizador ganhou , saiu , realizou uma jogada válida ou inválida
 typedef enum {invalida,sair,valido,vitoria,tooLarge} tipoJogada;
 //Representa a tela atual do utilizador
-typedef enum {menu , jogo} UserScreen;
+typedef enum {menu , jogo ,temas} UserScreen;
 // representa o estilo de carta do utilizador
 typedef enum {balatro , solitaire} estiloCarta;
 
@@ -75,6 +75,8 @@ void desenharJogo(int matrizJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]);
 void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
+void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
+void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 
 
 //modulo criarJogo.c
@@ -111,6 +113,7 @@ boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
 int calculaPosXClique(float posX);
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY);
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event);
+void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event);
 
 
 //modulo handleJogadas.c
@@ -137,3 +140,4 @@ void tocamusica(void);
 void inicializaArraySom(Mix_Chunk * arraySom[]);
 void tocaPegaCarta (Mix_Chunk * arraySom[]);
 void undoSFX (Mix_Chunk * arraySom[]);
+void ngSFX (Mix_Chunk * arraySom[]);

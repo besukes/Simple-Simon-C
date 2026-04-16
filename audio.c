@@ -13,9 +13,15 @@ void tocamusica(void){
 /*Função que inicializa o array de sons*/
 void inicializaArraySom(Mix_Chunk * arraySom[]){
     arraySom[0] = Mix_LoadWAV("sfx/CardDrop.mp3");
-    arraySom[1] = Mix_LoadWAV("sfx/undo.mp3");
+    arraySom[1] = Mix_LoadWAV("sfx/undo1.mp3");
+    arraySom[2] = Mix_LoadWAV("sfx/ng.mp3");
 }
-
+void ngSFX (Mix_Chunk * arraySom[])
+{
+    Mix_Chunk * p = arraySom[2];
+    Mix_VolumeChunk(p , 128);
+    Mix_PlayChannel(1 , p, 0);
+}
 /*Função que toca o som de pegar uma carta*/
 void tocaPegaCarta (Mix_Chunk * arraySom[])
 {

@@ -73,6 +73,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botão de reeniciar o jogo
     else if (SDL_PointInRect(&pontoMouse, &botaoNG)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
+        ngSFX(arraySom);
     }
     //Clicou no botão de pedir dica
     else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){
@@ -86,12 +87,33 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
 
 /*Função responsável pelos eventos de clique na tela do Menu inicial*/
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
-    if (dentroDoBotao(event, args, 200, 50, 860, 500)) {
+        SDL_Point pontoMouse = {args->mouseX, args->mouseY};
+        SDL_Rect botaoJogar = {860, 500, 200, 50};
+        SDL_Rect botaoTemas = {860, 600, 200, 50};
+        SDL_Rect botaoSair = {860, 700, 200, 50};
+    if (SDL_PointInRect(&pontoMouse, &botaoJogar)) {
         args->screen = jogo;
     }
-    if (dentroDoBotao(event, args, 150, 50, 880, 600)) {
+    if (SDL_PointInRect(&pontoMouse, &botaoTemas)) {
+        args->screen = temas;
+    }
+    if (SDL_PointInRect(&pontoMouse, &botaoSair)) {
         args->jogada = sair;
         
+    }
+}
+
+void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event){
+        SDL_Point pontoMouse = {args->mouseX, args->mouseY};
+        SDL_Rect balatrob = {400, 100, 500, 300};
+        SDL_Rect solitaireb = {1000, 100, 500, 300};
+        SDL_Rect menu1 = {100 , 900 , 200 ,200};
+    if (SDL_PointInRect(&pontoMouse, &balatrob)) 
+        args->estilo = balatro;
+    else if (SDL_PointInRect(&pontoMouse, &solitaireb)) 
+        args->estilo = solitaire;
+    else if (SDL_PointInRect(&pontoMouse, &menu1)) {
+        args->screen = menu;
     }
 }
 
