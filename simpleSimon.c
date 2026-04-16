@@ -56,7 +56,19 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[10] = IMG_LoadTexture(renderer,"assets/all_cards.png");
     imagensJogo[11] = IMG_LoadTexture(renderer,"assets/Botoes/YTI.png");
     imagensJogo[12] = IMG_LoadTexture(renderer,"assets/Botoes/balatroTheme.png");
-    imagensJogo[13] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
+    imagensJogo[13] = IMG_LoadTexture(renderer,"assets/Carta1.png");
+    imagensJogo[14] = IMG_LoadTexture(renderer,"assets/Carta2.png");
+    imagensJogo[15] = IMG_LoadTexture(renderer,"assets/Carta3.png");
+    imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
+    imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
+
+
+
+
+
+
+
+
 }
 
 /*Se o utilizador estiver no menu , copia para o renderer as imagens do menu e verifica o que é que o usuário pretende fazer dependendo dos cliques do mesmo*/

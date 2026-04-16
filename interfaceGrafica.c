@@ -69,7 +69,7 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
     }
     else {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[17], NULL, &fundo);
     }
 }
 
@@ -122,14 +122,35 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
 }
 
 /* Função que desenha o logo do jogo no ecrã */
-void desenhaBotoesCartas(UserBase *args, SDL_Texture *logo) {
-    SDL_Rect dest;
-    dest.w = 1500;   
-    dest.h = 1024;   
-    dest.x = (1920 - dest.w) / 2; 
-    dest.y = 600;   
-    SDL_Point argsP = {args->mouseX, args->mouseY};
-    SDL_RenderCopyEx(args->rendererBase, logo, NULL, &dest, 0.5, &argsP, SDL_FLIP_NONE);
+void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
+    int cardW = 379;
+    int cardH = 529;
+    int spacing = (-30);
+    int totalWidth = numCards * cardW + (numCards - 1) * spacing;
+    int startX = (1920 - totalWidth) / 2;
+    int startY = 1080 - cardH + 250; 
+
+    for (int i = 0; i < numCards; i++) {
+        int x = startX + i * (cardW + spacing);
+        int y = startY;
+        int w = cardW;
+        int h = cardH;
+
+        int hovered = (args->mouseX >= x && args->mouseX <= x + w &&
+                       args->mouseY >= y && args->mouseY <= y + h);
+
+        if (hovered) {
+            int scaleExtra = 40;
+            w += scaleExtra;
+            h += scaleExtra;
+            x -= scaleExtra / 2;
+            y -= scaleExtra; 
+        }
+
+        SDL_Rect dest = {x, y, w, h};
+        SDL_Point center = {w / 2, h / 2};
+        SDL_RenderCopyEx(args->rendererBase, cards[i], NULL, &dest, 0, &center, SDL_FLIP_NONE);
+    }
 }
 
 /*Função principal do módulo interfaceGrafica, que desenha o jogo consoante todas as nuances do mesmo , como se o jogador quiser uma dica, se o utilizador estiver
@@ -138,7 +159,13 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     desenhaFundo(args, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
-    desenhaBotoesCartas(args, imagensJogo[6]);
+    SDL_Texture *hand[4] = {
+        imagensJogo[13],
+        imagensJogo[14],
+        imagensJogo[15],
+        imagensJogo[16]
+    };
+    desenhaHandRow(args, hand, 4);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args,arraySom);
