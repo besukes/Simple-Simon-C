@@ -18,7 +18,7 @@ void atualizaEstadoDica(UserBase * args){
 void jogadorQuerDica(UserBase * args,int linha){
     args->dica.querDica=1;
     args->dica.filas[(args->dica.numDicas)++] = linha;
-    args->dica.timeout=20000;
+    args->dica.timeout=10000;
 }
 
 /*Função que percorre a matriz do jogo e , caso encontre uma posição onde o jogador possa jogar, chama a função jogadorQuerDica para atualizar os argumentos 

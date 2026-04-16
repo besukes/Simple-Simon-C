@@ -56,27 +56,32 @@ void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,U
 void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal,UserBase *args, SDL_Event event, SDL_Texture *imagensCartas[10][21],Mix_Chunk * arraySom[]) {
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
+    SDL_Point pontoMouse = {args->mouseX, args->mouseY};
+    SDL_Rect botaoQuit = {275, 825, 325, 300};
+    SDL_Rect botaoNG = {625, 825, 335, 300};
+    SDL_Rect botaoUndo = {1000, 825, 330, 300};
+    SDL_Rect botaoDica = {1350, 850, 330, 300};
     //Clicou no botão de sair do jogo
-    if (dentroDoBotao(event, args, 100, 50, 450, 1000)) {
+    if (SDL_PointInRect(&pontoMouse, &botaoQuit)) {
         args->screen = menu;
     }
     //Clicou no botão de desfazer a jogada
-    else if (dentroDoBotao(event, args, 150, 50, 1050, 1000)) {
+    else if (SDL_PointInRect(&pontoMouse, &botaoUndo)) {
         desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
         undoSFX(arraySom);
     }
     //Clicou no botão de reeniciar o jogo
-    else if (dentroDoBotao(event, args, 150, 50, 725, 1000)) {
+    else if (SDL_PointInRect(&pontoMouse, &botaoNG)) {
         reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
     }
     //Clicou no botão de pedir dica
-    else if (dentroDoBotao(event, args, 200, 50, 1300, 1000) && !(args->dica.querDica)){
+    else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
         clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas,estadoUndoGlobal);
-    }
+    }  
 }
 
 /*Função responsável pelos eventos de clique na tela do Menu inicial*/

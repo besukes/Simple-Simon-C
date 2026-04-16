@@ -139,7 +139,6 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     desenhaFundo(args, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
     desenhaHand(args, imagensJogo[6]);
-    botoes(args,imagensJogo);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
         dragCartas(matrizJogo, imagensCartas, args,arraySom);
@@ -149,24 +148,29 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
         SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     }
 }
-double calculoAngulo (int x)
-{
-    double oscilação = x /1000.0;
-    double onda = sin(oscilação * 2.5);
-    return onda * 10;
+double calculoAngulo (int tempo , double freq , double amp){
+     double oscilacao = tempo /1000.0;
+    double onda = sin(oscilacao* freq);
+    return onda * amp;
 }
+// Tciclos é o tempo em segundos por ciclo
+double tempoloop(int tempo , double ciclos , double TCiclo){
+    // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
+    //https://www.tutorialspoint.com/c_standard_library/c_function_fmod.htm
+   int tempopassado = fmod(tempo, 1000.0 * TCiclo);
+   return tempopassado / ((1000.0 * TCiclo) / ciclos);
+}
+
 /* Função que desenha o logo do jogo no ecrã */
 void desenhaLogo(UserBase *args, SDL_Texture *logo) {
-    SDL_Rect dest;
+    SDL_Rect dest ;
     dest.w = 800;
     dest.h = 400;
     dest.x = (1920 - dest.w) / 2;
-    int tempoatual = SDL_GetTicks();
-    // Tempo é em Ms , 2500 = 2,5 segundos
-    int tempopassado = tempoatual % 2500;
-    double t = tempopassado / 1250.0; 
+    int tempoatual = args->tempo;
+    double t = tempoloop(tempoatual, 2.0, 2.5);
     int offset;
-    double ang = calculoAngulo(tempoatual);
+    double ang = calculoAngulo(tempoatual, 2.5 ,10);
     if (t < 1.0) {
         offset = (int)(t * 75); // pixeis q sobe e desce = 75 ,podes alterar.
     } else {
@@ -189,13 +193,14 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
 o args->mouseButtonDown ==1,i.e, o utilizador está a segurar o mouse , e se tiver uma fila selecionada(args->filaSelecionada != -1))*/
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]) {
     int cartaW = 140, cartaH = 190, passo = 32;
+    double ang = calculoAngulo(args->tempo , 10 , 20);
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
         SDL_Rect dest;
         dest.x = args->mouseX - 70;
         dest.y = args->mouseY + i * passo - 65;
         dest.w = cartaW;
         dest.h = cartaH;
-        SDL_RenderCopy(args->rendererBase, args->imgs[i], NULL, &dest);
+        SDL_RenderCopyEx(args->rendererBase, args->imgs[i], NULL, &dest , ang, NULL, SDL_FLIP_NONE);
     }
     tocaPegaCarta(arraySom);
 }

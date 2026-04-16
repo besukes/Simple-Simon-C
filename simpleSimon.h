@@ -58,6 +58,7 @@ typedef struct sdl2graphics{
     int mouseX;
     int mouseY;
     UserScreen screen;
+    int tempo;
 }UserBase;
 
 

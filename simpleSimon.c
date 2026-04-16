@@ -79,6 +79,7 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
     //enquanto o utilizador nao clicar no botao para sair ele continua no jogo
     while(event.type != SDL_QUIT && args->jogada!= sair){
         SDL_PollEvent(&event);
+        args->tempo = SDL_GetTicks();
         SDL_RenderClear((*args).rendererBase);
         if(event.type == SDL_MOUSEMOTION){
             args->mouseX = event.motion.x;
