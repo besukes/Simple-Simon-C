@@ -124,14 +124,12 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
 /* Função que desenha o logo do jogo no ecrã */
 void desenhaHand(UserBase *args, SDL_Texture *logo) {
     SDL_Rect dest;
-
     dest.w = 1500;   
     dest.h = 1024;   
     dest.x = (1920 - dest.w) / 2; 
     dest.y = 600;   
-
     SDL_Point argsP = {args->mouseX, args->mouseY};
-    SDL_RenderCopyEx(args->rendererBase, logo, NULL, &dest, 0.3, &argsP, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(args->rendererBase, logo, NULL, &dest, 0.5, &argsP, SDL_FLIP_NONE);
 }
 
 /*Função principal do módulo interfaceGrafica, que desenha o jogo consoante todas as nuances do mesmo , como se o jogador quiser uma dica, se o utilizador estiver
@@ -150,8 +148,10 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
         SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
     }
 }
+
+
 double calculoAngulo (int tempo , double freq , double amp){
-     double oscilacao = tempo /1000.0;
+    double oscilacao = tempo /1000.0;
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
@@ -170,7 +170,7 @@ void desenhaLogo(UserBase *args, SDL_Texture *logo) {
     dest.h = 400;
     dest.x = (1920 - dest.w) / 2;
     int tempoatual = args->tempo;
-    double t = tempoloop(tempoatual, 2.0, 3);
+    double t = tempoloop(tempoatual, 2.0, 3.5);
     int offset;
     double ang = calculoAngulo(tempoatual, 2.5 ,10);
     if (t < 1.0) {
@@ -222,7 +222,7 @@ void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event ev
 o args->mouseButtonDown ==1,i.e, o utilizador está a segurar o mouse , e se tiver uma fila selecionada(args->filaSelecionada != -1))*/
 void dragCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args,Mix_Chunk * arraySom[]) {
     int cartaW = 140, cartaH = 190, passo = 32;
-    double ang = calculoAngulo(args->tempo , 10 , 20);
+    double ang = calculoAngulo(args->tempo , 5 , 15);
     for (int i = 0; i < args->numCartasSelecionadas; i++) {
         SDL_Rect dest;
         dest.x = args->mouseX - 70;

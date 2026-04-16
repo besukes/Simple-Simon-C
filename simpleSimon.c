@@ -81,6 +81,19 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom
 }
 
 
+void verificaEstadoTela(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal,SDL_Texture * imagensCartas[10][21],SDL_Texture * imagensJogo[],
+UserBase * args,SDL_Event event,Mix_Chunk *arraySom[]){
+    if(args->screen == jogo){
+        interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event,arraySom);
+    }
+    else if(args->screen == menu ){
+        telaMenu(args,imagensJogo,event);
+    }
+    else if(args->screen == temas){
+        telaTemas(args,imagensJogo,event);
+    }
+}
+
 /*Esta é a função responsável por controlar o fluxo do jogo.
 Até o utilizador desejar sair seja pelo X na janela ou pelo botão de sair , este continua no jogo num ciclo que capta as interações deste mesmo com a janela
 do jogo , e executa as respectivas funções tendo em conta a tela do utilizador.
@@ -99,15 +112,7 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
             args->mouseX = event.motion.x;
             args->mouseY = event.motion.y;
         }
-        if(args->screen == jogo){
-            interfaceJogo(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event,arraySom);
-        }
-        else if(args->screen == menu ){
-            telaMenu(args,imagensJogo,event);
-        }
-        else if(args->screen == temas){
-            telaTemas(args,imagensJogo,event);
-        }
+        verificaEstadoTela(matrizCartasJogo,estadoUndoGlobal,imagensCartas,imagensJogo,args,event,arraySom);
         SDL_RenderPresent((*args).rendererBase);
     }
 

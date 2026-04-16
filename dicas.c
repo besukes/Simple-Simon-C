@@ -5,12 +5,9 @@
 Caso o utilizador tenha clicado no botão de dica e ja tiver ultrapassado o tempo limite entao passa o bool querDicapara 0.
 Caso o utilizador tenha clicado no botão de dica e ainda não tenha ultrapassado o tempo limite entao decrementa o timeout.*/
 void atualizaEstadoDica(UserBase * args){
-    if(args->dica.querDica){
-        if(args->dica.timeout==0){
+    if(args->dica.querDica && SDL_GetTicks() >= args->dica.timeout){
             args->dica.querDica=0;
             args->dica.numDicas=0;
-        }
-        else args->dica.timeout --;
     }
 }
 
@@ -18,7 +15,7 @@ void atualizaEstadoDica(UserBase * args){
 void jogadorQuerDica(UserBase * args,int linha){
     args->dica.querDica=1;
     args->dica.filas[(args->dica.numDicas)++] = linha;
-    args->dica.timeout=10000;
+    args->dica.timeout=SDL_GetTicks() + 5000;
 }
 
 /*Função que percorre a matriz do jogo e , caso encontre uma posição onde o jogador possa jogar, chama a função jogadorQuerDica para atualizar os argumentos 

@@ -50,6 +50,16 @@ void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,U
 
 }
 
+void efetuaBotaoUndo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
+    desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
+    undoSFX(arraySom);
+}
+
+void efetuaBotaoReeniciar(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, UserBase * args, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
+    reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
+    ngSFX(arraySom);
+}
+
 /*  Função responsável por efetuar os eventos de clique do utilizador.
     É chamada quando o utilizador clica com o botão esquerdo no ecrã , e faz um monte de verificações para descobrir se a posição onde o utilizador clicou
 é relevante , e , se for , então executa a respectiva instrução*/
@@ -57,23 +67,18 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     SDL_Point pontoMouse = {args->mouseX, args->mouseY};
-    SDL_Rect botaoQuit = {275, 825, 325, 300};
-    SDL_Rect botaoNG = {625, 825, 335, 300};
-    SDL_Rect botaoUndo = {1000, 825, 330, 300};
-    SDL_Rect botaoDica = {1350, 850, 330, 300};
+    SDL_Rect botaoQuit = {275, 825, 325, 300},botaoNG = {625, 825, 335, 300},botaoUndo = {1000, 825, 330, 300},botaoDica = {1350, 850, 330, 300};
     //Clicou no botão de sair do jogo
     if (SDL_PointInRect(&pontoMouse, &botaoQuit)) {
         args->screen = menu;
     }
     //Clicou no botão de desfazer a jogada
     else if (SDL_PointInRect(&pontoMouse, &botaoUndo)) {
-        desfazerJogada(matrizCartasJogo, estadoUndoGlobal, imagensCartas);
-        undoSFX(arraySom);
+        efetuaBotaoUndo(matrizCartasJogo, estadoUndoGlobal, imagensCartas,arraySom);
     }
     //Clicou no botão de reeniciar o jogo
     else if (SDL_PointInRect(&pontoMouse, &botaoNG)) {
-        reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
-        ngSFX(arraySom);
+        efetuaBotaoReeniciar(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas,arraySom);
     }
     //Clicou no botão de pedir dica
     else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){

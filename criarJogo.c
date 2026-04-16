@@ -3,32 +3,36 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 
+void loadIsoladas(SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21],int cartas[],int l,int * i){
+    for(int u=1;u<9;u++){
+        char str[30];
+        sprintf(str,"assets/Isoladas/%d.jpg",cartas[*i]);
+        imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
+        matrizCartasJogo[l][u]=cartas[(*i)++];
+    }
+}
+
+void loadSolitaire(SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21],int cartas[],int l,int * i){
+    for(int u=1;u<9;u++){
+        char str[30];
+        sprintf(str,"assets/solitaire/%d.png",cartas[*i]);
+        imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
+        matrizCartasJogo[l][u]=cartas[(*i)++];
+    }
+}
 
 /*Função que inicializa as matrizes de cartas e texturas das primeiras 3 linhas (8 cartas cada)*/
 int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21], UserBase * args){
     int i=0;
     for(int l=0;l<3;l++){
         matrizCartasJogo[l][0] = 8;
-        if (args->estilo == balatro)
-        {
-          for(int u=1;u<9;u++){
-          char str[30];
-          sprintf(str,"assets/Isoladas/%d.jpg",cartas[i]);
-          imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
-          matrizCartasJogo[l][u]=cartas[i++];
-          }
+        if (args->estilo == balatro){
+            loadIsoladas(imagensCartas,renderer,matrizCartasJogo,cartas,l,&i);
         }
         else if (args->estilo == solitaire)
         {
-          for(int u=1;u<9;u++){
-          char str[30];
-          sprintf(str,"assets/solitaire/%d.png",cartas[i]);
-          imagensCartas[l][u]= IMG_LoadTexture(renderer,str);
-          matrizCartasJogo[l][u]=cartas[i++];
-          }
-        }
-        
-        
+          loadSolitaire(imagensCartas,renderer,matrizCartasJogo,cartas,l,&i);
+        } 
     }
     return i;
 }
