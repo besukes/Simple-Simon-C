@@ -170,7 +170,7 @@ void desenhaLogo(UserBase *args, SDL_Texture *logo) {
     dest.h = 400;
     dest.x = (1920 - dest.w) / 2;
     int tempoatual = args->tempo;
-    double t = tempoloop(tempoatual, 2.0, 2.5);
+    double t = tempoloop(tempoatual, 2.0, 3);
     int offset;
     double ang = calculoAngulo(tempoatual, 2.5 ,10);
     if (t < 1.0) {
