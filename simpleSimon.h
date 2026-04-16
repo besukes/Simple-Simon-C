@@ -11,6 +11,8 @@ typedef int boolean;
 typedef enum {invalida,sair,valido,vitoria,tooLarge} tipoJogada;
 //Representa a tela atual do utilizador
 typedef enum {menu , jogo} UserScreen;
+// representa o estilo de carta do utilizador
+typedef enum {balatro , solitaire} estiloCarta;
 
 
 /*O struct ultimaJogada guarda informações sobre a última jogada realizada pelo jogador , como os números das cartas e suas respectivas texturas que ele moveu, 
@@ -59,6 +61,7 @@ typedef struct sdl2graphics{
     int mouseY;
     UserScreen screen;
     int tempo;
+    estiloCarta estilo;
 }UserBase;
 
 
@@ -75,10 +78,10 @@ void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event)
 
 
 //modulo criarJogo.c
-void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer);
-int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]);
-int proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int i,int fila,int matrizCartasJogo[10][21]);
-void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21]);
+void criarJogo(int matrizCartasJogo[10][21],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer, UserBase * args);
+int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21], UserBase * args);
+int proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int i,int fila,int matrizCartasJogo[10][21], UserBase * args);
+void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21], UserBase * args);
 
 
 //modulo funcoesFundamentais.c

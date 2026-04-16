@@ -106,7 +106,7 @@ int main(void){
     //o limite máximo teórico numa fila de cartas seria 21
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};
-    criarJogo(matrizCartasJogo,imagensCartas,args.rendererBase);
+    criarJogo(matrizCartasJogo,imagensCartas,args.rendererBase, &args);
     interfaceSimpleSimon(matrizCartasJogo,&estadoUndoGlobal,imagensCartas,imagensJogo,&args,arraySom);
     clean_sdl(matrizCartasJogo,imagensJogo,imagensCartas,arraySom);
     return 0;

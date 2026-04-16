@@ -121,7 +121,7 @@ SDL_Texture * imagensCartas[10][21]){
         for(int j=1;j<=matrizCartasJogo[i][0];j++) SDL_DestroyTexture(imagensCartas[i][j]);
     }
     resetDicaArgs(args);
-    criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase);
+    criarJogo(matrizCartasJogo,imagensCartas,args->rendererBase , args);
 }
 
 /*Função executada quando o utilizador clica numa carta que pode pegar.
