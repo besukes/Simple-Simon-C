@@ -34,11 +34,17 @@ void handlemenu (UserBase * args, SDL_Event event){
 
 /*Função responsável por inicializar as texturas dos botões do jogo*/
 void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
-    //imagensJogo[0] = IMG_LoadTexture(renderer,"assets/fundo.png")
+    imagensJogo[0] = IMG_LoadTexture(renderer,"assets/background.jpg");
     imagensJogo[1] = IMG_LoadTexture(renderer,"assets/Botoes/quit.png");
     imagensJogo[2] = IMG_LoadTexture(renderer,"assets/Botoes/NG.png");
     imagensJogo[3] = IMG_LoadTexture(renderer,"assets/Botoes/undo.png");
     imagensJogo[4] = IMG_LoadTexture(renderer,"assets/Botoes/dica.png");
+    imagensJogo[5] = IMG_LoadTexture(renderer,"assets/Logo.png");
+    imagensJogo[6] = IMG_LoadTexture(renderer,"assets/Cards.png");
+    imagensJogo[7] = IMG_LoadTexture(renderer,"assets/mesa.png");
+
+
+
 }
 
 /*Se o utilizador estiver no menu , copia para o renderer as imagens do menu e verifica o que é que o usuário pretende fazer dependendo dos cliques do mesmo*/

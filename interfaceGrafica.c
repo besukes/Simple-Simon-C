@@ -59,10 +59,17 @@ void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * 
     SDL_Quit();
 }
 
-/*Função que desenha o fundo do nosso jogo*/
-void desenhaFundo(UserBase * args,SDL_Texture * imagensJogo[]){
+/* Função que desenha o fundo do jogo ou menu */
+void desenhaFundo(UserBase *args, int stage, SDL_Texture *imagensJogo[]) {
+
     SDL_Rect fundo = {0, 0, 1920, 1080};
-    SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
+
+    if (stage == 0) {
+        SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
+    }
+    else {
+        SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
+    }
 }
 
 /*Função que desenha os diversos botões do jogo*/
@@ -111,13 +118,25 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
     }
 }
 
+/* Função que desenha o logo do jogo no ecrã */
+void desenhaHand(UserBase *args, SDL_Texture *logo) {
+    SDL_Rect dest;
+
+    dest.w = 1500;   
+    dest.h = 1024;   
+    dest.x = (1920 - dest.w) / 2; 
+    dest.y = 600;   
+
+    SDL_RenderCopy(args->rendererBase, logo, NULL, &dest);
+}
+
 /*Função principal do módulo interfaceGrafica, que desenha o jogo consoante todas as nuances do mesmo , como se o jogador quiser uma dica, se o utilizador estiver
 a segurar cartas, etc..*/
 void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL_Texture *imagensJogo[], UserBase *args, SDL_Event event,Mix_Chunk * arraySom[]) {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
-    // Fundo
-    desenhaFundo(args, imagensJogo);
+    desenhaFundo(args, 1, imagensJogo);
     desenharCartas(matrizJogo,imagensCartas,args);
+    desenhaHand(args, imagensJogo[6]);
     botoes(args,imagensJogo);
     if (args->filaSelecionada != -1 && args->numCartasSelecionadas > 0)
     {
@@ -129,11 +148,24 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     }
 }
 
+/* Função que desenha o logo do jogo no ecrã */
+void desenhaLogo(UserBase *args, SDL_Texture *logo) {
+    SDL_Rect dest;
+
+    dest.w = 800;   
+    dest.h = 400;   
+    dest.x = (1920 - dest.w) / 2; 
+    dest.y = 200;   
+
+    SDL_RenderCopy(args->rendererBase, logo, NULL, &dest);
+}
+
 /*Função que desenha o menu inicial do jogo*/
 void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_SetRenderDrawColor(args->rendererBase, 0, 120, 0, 255);
-    desenhaFundo(args , imagensJogo);
+    desenhaFundo(args, 0, imagensJogo);
+    desenhaLogo(args, imagensJogo[5]);
     botoes(args , imagensJogo); 
 }
 
