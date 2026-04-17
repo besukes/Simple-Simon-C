@@ -2,6 +2,8 @@ simpleSimon.o:simpleSimon.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c simpleSimon.c
 audio.o:audio.c
 	gcc -Wall -ggdb -lSDL2_mixer -c audio.c
+loadAssets.o:loadAssets.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -lSDL2_mixer -c loadAssets.c
 dicas.o:dicas.c
 	gcc -Wall -ggdb -c dicas.c
 handleJogadas.o:handleJogadas.c 
@@ -14,10 +16,10 @@ funcoesBase.o:funcoesBase.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c funcoesBase.c
 criarJogo.o:criarJogo.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c criarJogo.c 
-simpleSimon:simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o eventos.o handleJogadas.o audio.o dicas.o
+simpleSimon:simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o eventos.o handleJogadas.o audio.o dicas.o loadAssets.o
 	gcc -ggdb $^ -o $@ -lSDL2 -lSDL2_image -lSDL2_mixer -lm -lSDL2_ttf
 clean:
-	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o simpleSimon eventos.o handleJogadas.o audio.o dicas.o
+	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o simpleSimon eventos.o handleJogadas.o audio.o dicas.o loadAssets.o
 check:
 
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }

@@ -10,13 +10,6 @@ void tocamusica(void){
     Mix_VolumeMusic(67);
 }
 
-/*Função que inicializa o array de sons*/
-void inicializaArraySom(Mix_Chunk * arraySom[]){
-    arraySom[0] = Mix_LoadWAV("sfx/CardDrop.mp3");
-    arraySom[1] = Mix_LoadWAV("sfx/undo1.mp3");
-    arraySom[2] = Mix_LoadWAV("sfx/ng.mp3");
-}
-
 /*Função que toca o som de reeniciar o jogo*/
 void ngSFX (Mix_Chunk * arraySom[])
 {
