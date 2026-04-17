@@ -12,7 +12,21 @@ int escolhaDeResolucao(void){
     scanf("%d",&u);
     return u;
 }
-
+// offsetloop retorna um valor entre 0 e dist que sobe e desce ciclicamente.
+// P.E : No logo do jogo preciso que ele desca e suba 
+// Tciclo serve para dizer a duração da interação toda , ou seja , se for 2 segundos e 2 ciclos então demora 1 segundo por cada ciclo.
+double offsetloop(int tempo , double TCiclo, int dist){
+    // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
+    //https://www.tutorialspoint.com/c_standard_library/c_function_fmod.htm
+   int tempopassado = fmod(tempo, 1000.0 * TCiclo);
+   double t = tempopassado / ((1000.0 * TCiclo) / 2);
+    if (t  < 1.0) {
+         return t * dist;
+    }
+    else {
+        return (2 - t) * dist;
+    }
+}
 /*Função que dado uma opção de resolução atribui os valores de largura e altura da janela*/
 void atribuiResolucao(int * resX,int * resY,int optn){
     switch(optn){
@@ -99,27 +113,28 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
 ate ao indice matrizJogo[col][0] que seria o número de cartas nessa mesma fila*/
 void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
+    double offset = offsetloop(args->tempo, 2, 8);
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
-            SDL_Rect dest;
+            SDL_Rect dest = {(offsetX + col * espacoX), (offsetY + row * passo), cartaW, cartaH};
             //A posicao dos rentangulos esta definida pelo canto esquerdo superior deste mesmo
-            dest.x = offsetX + col * espacoX;
-            dest.y = offsetY + row * passo; 
-            dest.w = cartaW;
-            dest.h = cartaH;
+
+            // SE USARMOS ISTO FICAMOS COM 20 STATEMENTS
+            //dest.x = offsetX + col * espacoX;
+            //dest.y = offsetY + row * passo; 
+            //dest.w = cartaW;
+            //dest.h = cartaH;
+            // SE USARMOS ISTO FICAMOS COM 20 STATEMENTS
+
             // roubei a ideia do coutinho para aqui
             int hovered = (args->mouseX >= dest.x && args->mouseX <= dest.x + dest.w &&
                        args->mouseY >= dest.y && args->mouseY <= dest.y + dest.h);
             // 1ª condição é para se tiveres a dar drag não dar hover effect , o resto é facil de entender
             if(args-> numCartasSelecionadas == 0 && hovered && cartaPegavel(matrizJogo[col][row], col, matrizJogo) ){
-                dest.y -= 10;
+                dest.y -= 10 + offset;
                 dest.w += 20;
                 dest.h += 30;
                 
-            }
-            else{
-                dest.w = cartaW;
-                dest.h = cartaH;
             }
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
@@ -143,6 +158,7 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
 void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
     int cardW = 379,cardH = 529,spacing = (-30),totalWidth = numCards * cardW + (numCards - 1) * spacing,
         startX = (1920 - totalWidth) / 2 ,startY = 1080 - cardH + 250; 
+    double offset = offsetloop(args->tempo,1, 10);
     for (int i = 0; i < numCards; i++) {
         int x = startX + i * (cardW + spacing),y = startY,w = cardW,h = cardH,
             hovered = (args->mouseX >= x + 30 && args->mouseX <= x -30 + w &&
@@ -152,14 +168,15 @@ void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
             w += scaleExtra;
             h += scaleExtra;
             x -= scaleExtra / 2;
-            y -= scaleExtra; 
+            y -= scaleExtra + offset;
         }
 
         SDL_Rect dest = {x, y, w, h};
-        SDL_Point center = {args->mouseX, args->mouseY};
-        SDL_RenderCopyEx(args->rendererBase, cards[i], NULL, &dest, 0 ,  &center, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(args->rendererBase, cards[i], NULL, &dest, 0 ,  NULL, SDL_FLIP_NONE);
     }
 }
+
+
 
 /*Função principal do módulo interfaceGrafica, que desenha o jogo consoante todas as nuances do mesmo , como se o jogador quiser uma dica, se o utilizador estiver
 a segurar cartas, etc..*/
@@ -184,22 +201,15 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     }
 }
 
-
+// Função que retorna angulos entre -amp e amp com uma frequência fornecida na call da função , serve para dar um efeito de balanço em certos elementos do jogo
 double calculoAngulo (int tempo , double freq , double amp){
     //Nao fazemos o tempo absoluto em termos da duracao dos ciclos para ter um efeito mais aleatorio
     double oscilacao = tempo /1000.0;
-    //Precisamos do seno para a onda estar entre -1 e 1 e depois multiplicar por 3.5(constante fixa)
+    //Precisamos do seno para a onda estar entre -1 e 1 e depois multiplicar por amplitude
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
 
-// Tciclos é o tempo em segundos por ciclo
-double tempoloop(int tempo , double ciclos , double TCiclo){
-    // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
-    //https://www.tutorialspoint.com/c_standard_library/c_function_fmod.htm
-   int tempopassado = fmod(tempo, 1000.0 * TCiclo);
-   return tempopassado / ((1000.0 * TCiclo) / ciclos);
-}
 
 /* Função que desenha o logo do jogo no ecrã */
 void desenhaLogo(UserBase *args, SDL_Texture *logo) {
@@ -208,14 +218,8 @@ void desenhaLogo(UserBase *args, SDL_Texture *logo) {
     dest.h = 400;
     dest.x = (1920 - dest.w) / 2;
     int tempoatual = args->tempo;
-    double t = tempoloop(tempoatual, 2.0, 3.5);
-    int offset;
+    double offset = offsetloop(tempoatual, 3.5, 75);
     double ang = calculoAngulo(tempoatual, 2.5 ,10);
-    if (t < 1.0) {
-        offset = (t * 75); // pixeis q sobe e desce = 75 ,podes alterar.
-    } else {
-        offset = ((2-t) * 75);
-    }
     dest.y = 100 + offset;
     SDL_RenderCopyEx(args->rendererBase, logo, NULL, &dest, ang, NULL, SDL_FLIP_NONE);
 }
