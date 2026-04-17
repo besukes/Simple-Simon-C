@@ -85,12 +85,12 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botão de pedir dica
     else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
-        //args->jogada = vitoria;
+        args->jogada = vitoria;
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique) && matrizCartasJogo[linhaClique][colunaClique] > 0) {
         clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas,estadoUndoGlobal);
-    }  
+    } 
 }
 
 /*Função responsável pelos eventos de clique na tela do Menu inicial*/
@@ -123,6 +123,20 @@ void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event){
         args->estilo = solitaire;
     else if (SDL_PointInRect(&pontoMouse, &menu1)) {
         args->screen = menu;
+    }
+}
+
+void efetuaEventoCliqueWin(UserBase * args, SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[] ){
+        SDL_Point pontoMouse = {args->mouseX, args->mouseY};
+        SDL_Rect botaoMenu = {615, 800, 335, 300},botaoNewGame = {965, 800, 330, 300};
+    if (SDL_PointInRect(&pontoMouse, &botaoMenu)) {
+        args->screen = menu;
+        
+    }
+    else if (SDL_PointInRect(&pontoMouse, &botaoNewGame)) {
+        args->screen = jogo;
+        args->jogada = valido;
+        efetuaBotaoReeniciar(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas,arraySom);
     }
 }
 

@@ -142,7 +142,7 @@ void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
         startX = (1920 - totalWidth) / 2 ,startY = 1080 - cardH + 250; 
     for (int i = 0; i < numCards; i++) {
         int x = startX + i * (cardW + spacing),y = startY,w = cardW,h = cardH,
-            hovered = (args->mouseX >= x + 35 && args->mouseX <= x + w &&
+            hovered = (args->mouseX >= x + 30 && args->mouseX <= x -30 + w &&
                        args->mouseY >= y && args->mouseY <= y + h);
         if (hovered) {
             int scaleExtra = 40;
@@ -229,18 +229,18 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
 void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     desenhaFundo(args, imagensJogo);
-    SDL_Surface* Win =  TTF_RenderText_Blended(args->fonte, "WIN!!", (SDL_Color){255, 255, 255});
     char str[30];
     sprintf(str, "Score: %d", args->score);
     SDL_Surface* Score = TTF_RenderText_Blended(args->fonte, str, (SDL_Color){255, 255, 255});
-    SDL_Texture* WinTexture= SDL_CreateTextureFromSurface(args->rendererBase, Win);
     SDL_Texture* ScoreTexture = SDL_CreateTextureFromSurface(args->rendererBase, Score);
-    SDL_Rect WinRect = {750, 0, 500, 300};
     SDL_Rect ScoreRect = {750, 300, 500, 300};
-    SDL_FreeSurface(Win);
+    SDL_Texture *hand[4] = {
+        imagensJogo[13],
+        imagensJogo[14],
+    };
+    desenhaHandRow(args, hand, 2);
     SDL_FreeSurface(Score);
     SDL_RenderCopy(args->rendererBase, ScoreTexture, NULL, &ScoreRect);
-    SDL_RenderCopy(args->rendererBase, WinTexture, NULL, &WinRect);
 }
 
 /*Função que desenha o menu dos temas utilizando outras funções*/

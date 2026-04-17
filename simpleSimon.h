@@ -118,6 +118,7 @@ int calculaPosXClique(float posX);
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY);
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event);
 void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event);
+void efetuaEventoCliqueWin(UserBase * args, SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[] );
 
 
 //modulo handleJogadas.c
@@ -145,3 +146,9 @@ void inicializaArraySom(Mix_Chunk * arraySom[]);
 void tocaPegaCarta (Mix_Chunk * arraySom[]);
 void undoSFX (Mix_Chunk * arraySom[]);
 void ngSFX (Mix_Chunk * arraySom[]);
+
+//modulo loadAssets.c
+void inicializaArraySom(Mix_Chunk * arraySom[]);
+void botoesLoad(SDL_Texture * imagensJogo[],SDL_Renderer * renderer);
+void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer);
+void inicializafonte(UserBase * args);
