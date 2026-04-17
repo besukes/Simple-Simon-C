@@ -70,7 +70,30 @@ void telaVitoria(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event , 
     desenhaVitoria(args , imagensJogo , event);
     handleVitoria(args,event,matrizCartasJogo,estadoUndoGlobal,imagensCartas,arraySom);
 }
+// Função responsável por calcular o tempo que o utilizador tem de um X jogo.
+void tempoemjogo(UserBase * args)
+{
+    int dif = (args -> tempo - args -> Vjogo);
+    args -> Vjogo = args -> tempo;
+    if (args->screen == jogo)
+    {
+        args -> Tjogo += dif / 1000.0;
+    }
 
+    
+}
+// Função responsável por apresentar a tela de vitoria e lidar com o Final Score do Utilizador.
+void handleWINcon(UserBase * args)
+{
+    args->screen = win;
+    if (args -> Tjogo <= 1)
+        args -> score = 6000;
+    else
+    args -> score = (6000 - (args -> Tjogo * 10));
+    if (args -> score < 0)
+        args -> score = 0;
+}
+    
 
 /*Caso o utilizador esteja na tela do jogo em si , o programa verifica se o utilizador pretende que lhe seja mostrado uma dica , coloca no renderer todas as
 imagens necessárias , realiza os eventos que o utilizador realiza ao longo do jogo , e , por fim , também verifica se o jogo foi vencido e , se for , 
@@ -83,7 +106,7 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom
     verificaVitoria(matrizCartasJogo,args);
     //temos de fazer
     if(args-> jogada == vitoria)
-    args->screen = win;
+        handleWINcon(args);
 }
 
 /*Função responsável por verificar o estado da tela e chamar a função apropriada à mesma*/
@@ -116,6 +139,7 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
     while(event.type != SDL_QUIT && args->jogada!= sair){
         SDL_PollEvent(&event);
         args->tempo = SDL_GetTicks();
+        tempoemjogo(args);
         SDL_RenderClear((*args).rendererBase);
         if(event.type == SDL_MOUSEMOTION){
             args->mouseX = event.motion.x;

@@ -65,6 +65,8 @@ typedef struct sdl2graphics{
     estiloCarta estilo;
     TTF_Font * fonte;
     int score;
+    double Vjogo;
+    double Tjogo;
 }UserBase;
 
 

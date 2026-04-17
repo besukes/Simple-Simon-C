@@ -59,6 +59,7 @@ void efetuaBotaoUndo(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, 
 /*Função responsável por reduzir instruções na função efetuaEventoClique que realiza as funções respectivas para reeniciar o jogo*/
 void efetuaBotaoReeniciar(int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, UserBase * args, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     reeniciaJogo(matrizCartasJogo, estadoUndoGlobal, args, imagensCartas);
+    args->Tjogo = 0;
     ngSFX(arraySom);
 }
 
