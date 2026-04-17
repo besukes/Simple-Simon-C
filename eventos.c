@@ -88,7 +88,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
         //args->jogada = vitoria;
     }
     //Verificar se clicou dentro da matriz
-    else if (ePosicaoMatriz(linhaClique, colunaClique)) {
+    else if (ePosicaoMatriz(linhaClique, colunaClique) && matrizCartasJogo[linhaClique][colunaClique] > 0) {
         clicouCarta(matrizCartasJogo,linhaClique,colunaClique,args,imagensCartas,estadoUndoGlobal);
     }  
 }
