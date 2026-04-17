@@ -93,7 +93,8 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom
     handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas,arraySom);
     verificaVitoria(matrizCartasJogo,args);
     //temos de fazer
-    if(args-> jogada == vitoria);
+    if(args-> jogada == vitoria)
+    args->screen = win;
 }
 
 /*Função responsável por verificar o estado da tela e chamar a função apropriada à mesma*/
