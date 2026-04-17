@@ -85,8 +85,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botão de pedir dica
     else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
-        args->jogada = vitoria;
-        args->screen = win;
+        //args->jogada = vitoria;
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {
