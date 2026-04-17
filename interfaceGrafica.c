@@ -113,29 +113,41 @@ ate ao indice matrizJogo[col][0] que seria o número de cartas nessa mesma fila*
 void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32;
     double offset = offsetloop(args->tempo, 2, 8);
+
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
-            SDL_Rect dest = {(offsetX + col * espacoX), (offsetY + row * passo), cartaW, cartaH};
-            //A posicao dos rentangulos esta definida pelo canto esquerdo superior deste mesmo
 
-            // SE USARMOS ISTO FICAMOS COM 20 STATEMENTS
-            //dest.x = offsetX + col * espacoX;
-            //dest.y = offsetY + row * passo; 
-            //dest.w = cartaW;
-            //dest.h = cartaH;
-            // SE USARMOS ISTO FICAMOS COM 20 STATEMENTS
+            SDL_Rect dest = {
+                offsetX + col * espacoX,
+                offsetY + row * passo,
+                cartaW,
+                cartaH
+            };
 
-            // roubei a ideia do coutinho para aqui
-            int hovered = (args->mouseX >= dest.x && args->mouseX <= dest.x + dest.w &&
-                       args->mouseY >= dest.y && args->mouseY <= dest.y + dest.h);
-            // 1ª condição é para se tiveres a dar drag não dar hover effect , o resto é facil de entender
-            if(args-> numCartasSelecionadas == 0 && hovered && cartaPegavel(matrizJogo[col][row], col, matrizJogo) ){
-                dest.y -= 10 + offset;
-                dest.w += 20;
-                dest.h += 30;
-                
+            int hovered = (
+                args->mouseX >= dest.x && args->mouseX <= dest.x + dest.w &&
+                args->mouseY >= dest.y && args->mouseY <= dest.y + dest.h
+            );
+
+            double ang = 0;
+
+            if(args->numCartasSelecionadas == 0 && hovered && 
+               cartaPegavel(matrizJogo[col][row], col, matrizJogo)){
+
+                int extraW = 20;
+                int extraH = 30;
+
+                dest.x -= extraW / 2;
+                dest.y -= extraH / 2 + offset;
+
+                dest.w += extraW;
+                dest.h += extraH;
+
+                // TILT FIXO para a direita
+                ang = 10;
             }
-            SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
+
+            SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, ang, NULL, SDL_FLIP_NONE);
         }
     }
 }
