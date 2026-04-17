@@ -57,6 +57,9 @@ void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * 
         }
         Mix_FreeChunk(arraySom[i]);
     }
+    for(int i=10;i<19;i++){
+        SDL_DestroyTexture(image[i]);
+    }
     IMG_Quit(); //informar a gpu que ja nao é preciso criar uma window
     SDL_Quit();
 }
@@ -226,6 +229,7 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
+/*Função que desenha a tela de vitória e todas as imagens associadas*/
 void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     desenhaFundo(args, imagensJogo);

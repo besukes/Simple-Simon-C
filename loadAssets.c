@@ -11,6 +11,7 @@ void inicializaArraySom(Mix_Chunk * arraySom[]){
     arraySom[2] = Mix_LoadWAV("sfx/ng.mp3");
 }
 
+/*Função que carrega as texturas dos botões para um array de texturas de imagens do jogo*/
 void botoesLoad(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
     imagensJogo[1] = IMG_LoadTexture(renderer,"assets/Botoes/quit.png");
     imagensJogo[2] = IMG_LoadTexture(renderer,"assets/Botoes/NG.png");
@@ -37,6 +38,8 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
 }
+
+/*TEMOS DE FAZER*/
 void inicializafonte(UserBase * args){
     TTF_Init();
     args->fonte = TTF_OpenFont("assets/TTF/m6x11plus.ttf", 24);

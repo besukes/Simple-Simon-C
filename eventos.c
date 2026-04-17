@@ -126,13 +126,17 @@ void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event){
     }
 }
 
+/*Na tela de vitória , o utilizador pode clicar nos botões para voltar ao menu ou iniciar um novo jogo.
+Esta função verifica os eventos de clique nessa tela e efetua as respectivas instruções relativamente à opção do jogador*/
 void efetuaEventoCliqueWin(UserBase * args, SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[] ){
         SDL_Point pontoMouse = {args->mouseX, args->mouseY};
         SDL_Rect botaoMenu = {615, 800, 335, 300},botaoNewGame = {965, 800, 330, 300};
+    //Ciclou no botão de voltar ao menu
     if (SDL_PointInRect(&pontoMouse, &botaoMenu)) {
         args->screen = menu;
         
     }
+    //Clicou no botão de reeniciar o jogo
     else if (SDL_PointInRect(&pontoMouse, &botaoNewGame)) {
         args->screen = jogo;
         args->jogada = valido;

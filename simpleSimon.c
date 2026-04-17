@@ -40,6 +40,9 @@ void handletemas(UserBase * args, SDL_Event event){
         }
     }
 }
+
+/*Quando o utilizador vencer o jogo e estiver na tela de vitória, então a função verifica se o utilizador clicou no botão esquerdo do rato e realiza a respectiva
+jogada */
 void handleVitoria(UserBase * args, SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     if(event.type==SDL_MOUSEBUTTONDOWN){
         if(event.button.button == SDL_BUTTON_LEFT){
@@ -61,10 +64,14 @@ void telaTemas(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
     desenhaTemas(args , imagensJogo , event);
     handletemas(args,event);
 }
+
+/*Se o utilizador estiver na tela de vitória então desenha a tela de vitória e verifica os eventos do clique nessa tela*/
 void telaVitoria(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     desenhaVitoria(args , imagensJogo , event);
     handleVitoria(args,event,matrizCartasJogo,estadoUndoGlobal,imagensCartas,arraySom);
 }
+
+
 /*Caso o utilizador esteja na tela do jogo em si , o programa verifica se o utilizador pretende que lhe seja mostrado uma dica , coloca no renderer todas as
 imagens necessárias , realiza os eventos que o utilizador realiza ao longo do jogo , e , por fim , também verifica se o jogo foi vencido e , se for , 
 mostra um mensagem de vitória*/
