@@ -61,6 +61,7 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[15] = IMG_LoadTexture(renderer,"assets/Carta3.png");
     imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
+    imagensJogo[18] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
 
 
 
@@ -69,6 +70,10 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
 
 
 
+}
+void inicializafonte(UserBase * args){
+    TTF_Init();
+    args->fonte = TTF_OpenFont("assets/TTF/m6x11plus.ttf", 24);
 }
 
 /*Se o utilizador estiver no menu , copia para o renderer as imagens do menu e verifica o que é que o usuário pretende fazer dependendo dos cliques do mesmo*/
@@ -107,6 +112,10 @@ UserBase * args,SDL_Event event,Mix_Chunk *arraySom[]){
     else if(args->screen == temas){
         telaTemas(args,imagensJogo,event);
     }
+    else if(args->screen == win){
+        desenhaVitoria(args,imagensJogo,event);
+       // handleVitoria(args,event);
+    }   
 }
 
 /*Esta é a função responsável por controlar o fluxo do jogo.
@@ -142,6 +151,7 @@ int main(void){
     tocamusica();
     Mix_Chunk * arraySom[10];
     inicializaArraySom(arraySom);
+    inicializafonte(&args);
     //o limite máximo teórico numa fila de cartas seria 21
     int matrizCartasJogo[10][21];
     undoMove estadoUndoGlobal = {0,{}};

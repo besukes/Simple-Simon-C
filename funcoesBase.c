@@ -35,7 +35,8 @@ void verificaVitoria(int m[10][21],UserBase * args){
     for(int i=0;i<10;i++) n+=m[i][0];
     n+= args->numCartasSelecionadas;
     //O jogo acabou se nao houverem cartas em nenhuma das 10 pilhas
-    if(!n) args->jogada=vitoria;
+    if(!n) {args->jogada=vitoria ; args->screen=win;}
+
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 
 typedef int numCarta;
@@ -10,7 +11,7 @@ typedef int boolean;
 //TipoJogada representa se o utilizador ganhou , saiu , realizou uma jogada válida ou inválida
 typedef enum {invalida,sair,valido,vitoria,tooLarge} tipoJogada;
 //Representa a tela atual do utilizador
-typedef enum {menu , jogo ,temas} UserScreen;
+typedef enum {menu , jogo ,temas , win} UserScreen;
 // representa o estilo de carta do utilizador
 typedef enum {balatro , solitaire} estiloCarta;
 
@@ -62,6 +63,8 @@ typedef struct sdl2graphics{
     UserScreen screen;
     int tempo;
     estiloCarta estilo;
+    TTF_Font * fonte;
+    int score;
 }UserBase;
 
 
@@ -77,6 +80,7 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
+void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 
 
 //modulo criarJogo.c

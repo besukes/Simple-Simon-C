@@ -69,7 +69,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     SDL_Point pontoMouse = {args->mouseX, args->mouseY};
-    SDL_Rect botaoQuit = {275, 825, 325, 300},botaoNG = {625, 825, 335, 300},botaoUndo = {1000, 825, 330, 300},botaoDica = {1350, 850, 330, 300};
+    SDL_Rect botaoQuit = {275, 800, 325, 325},botaoNG = {625, 800, 335, 300},botaoUndo = {975, 800, 330, 300},botaoDica = {1325, 800, 330, 300};
     //Clicou no botão de sair do jogo
     if (SDL_PointInRect(&pontoMouse, &botaoQuit)) {
         args->screen = menu;
@@ -85,6 +85,8 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     //Clicou no botão de pedir dica
     else if (SDL_PointInRect(&pontoMouse, &botaoDica) && !(args->dica.querDica)){
         colocaDicaUtilizador(matrizCartasJogo,args);
+        args->jogada = vitoria;
+        args->screen = win;
     }
     //Verificar se clicou dentro da matriz
     else if (ePosicaoMatriz(linhaClique, colunaClique)) {

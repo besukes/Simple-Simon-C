@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 #include <math.h>
 
 /*Pergunta inicialmente ao utilizador a resolução que pretende utilizar no seu jogo*/
@@ -42,7 +43,7 @@ UserBase sdl_initializer(void){
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
     UserBase args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),.numCartasSelecionadas=0,
-        .cartas={},.jogada=valido ,.screen = menu,.dica.querDica=0,.dica.numDicas=0,.dica.timeout=0, .estilo = balatro};
+        .cartas={},.jogada=valido ,.screen = menu,.dica.querDica=0,.dica.numDicas=0,.dica.timeout=0, .estilo = balatro, .score=6000};
     return args;
 }
 
@@ -103,6 +104,20 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
             dest.y = offsetY + row * passo; 
             dest.w = cartaW;
             dest.h = cartaH;
+            // roubei a ideia do coutinho para aqui
+            int hovered = (args->mouseX >= dest.x && args->mouseX <= dest.x + dest.w &&
+                       args->mouseY >= dest.y && args->mouseY <= dest.y + dest.h);
+            // 1ª condição é para se tiveres a dar drag não dar hover effect , o resto é facil de entender
+            if(args-> numCartasSelecionadas == 0 && hovered && cartaPegavel(matrizJogo[col][row], col, matrizJogo) ){
+                dest.y -= 10;
+                dest.w += 20;
+                dest.h += 30;
+                
+            }
+            else{
+                dest.w = cartaW;
+                dest.h = cartaH;
+            }
             SDL_RenderCopy(args->rendererBase, imagensCartas[col][row], NULL, &dest);
         }
     }
@@ -127,8 +142,9 @@ void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
     int cardH = 529;
     int spacing = (-30);
     int totalWidth = numCards * cardW + (numCards - 1) * spacing;
-    int startX = (1920 - totalWidth) / 2;
+    int startX = (1920 - totalWidth) / 2 ;
     int startY = 1080 - cardH + 250; 
+    
 
     for (int i = 0; i < numCards; i++) {
         int x = startX + i * (cardW + spacing);
@@ -136,7 +152,7 @@ void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
         int w = cardW;
         int h = cardH;
 
-        int hovered = (args->mouseX >= x && args->mouseX <= x + w &&
+        int hovered = (args->mouseX >= x + 35 && args->mouseX <= x + w &&
                        args->mouseY >= y && args->mouseY <= y + h);
 
         if (hovered) {
@@ -148,8 +164,8 @@ void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
         }
 
         SDL_Rect dest = {x, y, w, h};
-        SDL_Point center = {w / 2, h / 2};
-        SDL_RenderCopyEx(args->rendererBase, cards[i], NULL, &dest, 0, &center, SDL_FLIP_NONE);
+        SDL_Point center = {args->mouseX, args->mouseY};
+        SDL_RenderCopyEx(args->rendererBase, cards[i], NULL, &dest, 0 ,  &center, SDL_FLIP_NONE);
     }
 }
 
@@ -221,6 +237,23 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
+void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+{
+    desenhaFundo(args, imagensJogo);
+    SDL_Surface* Win =  TTF_RenderText_Blended(args->fonte, "WIN!!", (SDL_Color){255, 255, 255});
+    char str[30];
+    sprintf(str, "Score: %d", args->score);
+    SDL_Surface* Score = TTF_RenderText_Blended(args->fonte, str, (SDL_Color){255, 255, 255});
+    SDL_Texture* WinTexture= SDL_CreateTextureFromSurface(args->rendererBase, Win);
+    SDL_Texture* ScoreTexture = SDL_CreateTextureFromSurface(args->rendererBase, Score);
+    SDL_Rect WinRect = {750, 0, 500, 300};
+    SDL_Rect ScoreRect = {750, 300, 500, 300};
+    SDL_FreeSurface(Win);
+    SDL_FreeSurface(Score);
+    SDL_RenderCopy(args->rendererBase, ScoreTexture, NULL, &ScoreRect);
+    SDL_RenderCopy(args->rendererBase, WinTexture, NULL, &WinRect);
+}
+
 /*Função que desenha o menu dos temas utilizando outras funções*/
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
@@ -247,7 +280,7 @@ void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event ev
     }
     else if (args -> estilo == solitaire)
     {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[13], NULL, &estilo);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[18], NULL, &estilo);
     } 
 }
 
