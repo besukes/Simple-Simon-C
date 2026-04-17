@@ -39,7 +39,7 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
 }
 
-/*TEMOS DE FAZER*/
+/* Função responsável por inicializar a fonte m6x11plus para ser usada pelo jogo*/
 void inicializafonte(UserBase * args){
     TTF_Init();
     args->fonte = TTF_OpenFont("assets/TTF/m6x11plus.ttf", 24);

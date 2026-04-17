@@ -12,8 +12,7 @@ int escolhaDeResolucao(void){
     scanf("%d",&u);
     return u;
 }
-// offsetloop retorna um valor entre 0 e dist que sobe e desce ciclicamente.
-// P.E : No logo do jogo preciso que ele desca e suba 
+// A Função offsetloop retorna um valor entre 0 e dist que sobe e desce ciclicamente.
 // Tciclo serve para dizer a duração da interação toda , ou seja , se for 2 segundos e 2 ciclos então demora 1 segundo por cada ciclo.
 double offsetloop(int tempo , double TCiclo, int dist){
     // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
@@ -201,7 +200,8 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     }
 }
 
-// Função que retorna angulos entre -amp e amp com uma frequência fornecida na call da função , serve para dar um efeito de balanço em certos elementos do jogo
+// Função que retorna valores entre -amp e amp com uma frequência fornecida na chamada da função 
+// Serve para dar um efeito de balanço em certos elementos do jogo
 double calculoAngulo (int tempo , double freq , double amp){
     //Nao fazemos o tempo absoluto em termos da duracao dos ciclos para ter um efeito mais aleatorio
     double oscilacao = tempo /1000.0;
