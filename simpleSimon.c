@@ -41,35 +41,31 @@ void handletemas(UserBase * args, SDL_Event event){
     }
 }
 
-/*Função responsável por inicializar as texturas dos botões do jogo*/
-void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
-    imagensJogo[0] = IMG_LoadTexture(renderer,"assets/background.jpg");
+void botoesLoad(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
     imagensJogo[1] = IMG_LoadTexture(renderer,"assets/Botoes/quit.png");
     imagensJogo[2] = IMG_LoadTexture(renderer,"assets/Botoes/NG.png");
     imagensJogo[3] = IMG_LoadTexture(renderer,"assets/Botoes/undo.png");
     imagensJogo[4] = IMG_LoadTexture(renderer,"assets/Botoes/dica.png");
+    imagensJogo[8] = IMG_LoadTexture(renderer,"assets/Botoes/themes.png");
+    imagensJogo[11] = IMG_LoadTexture(renderer,"assets/Botoes/YTI.png");
+    imagensJogo[12] = IMG_LoadTexture(renderer,"assets/Botoes/balatroTheme.png");
+    imagensJogo[18] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
+}
+
+/*Função responsável por inicializar as texturas dos botões do jogo*/
+void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
+    imagensJogo[0] = IMG_LoadTexture(renderer,"assets/background.jpg");
+    botoesLoad(imagensJogo,renderer);
     imagensJogo[5] = IMG_LoadTexture(renderer,"assets/Logo.png");
     imagensJogo[6] = IMG_LoadTexture(renderer,"assets/Cards.png");
     imagensJogo[7] = IMG_LoadTexture(renderer,"assets/mesa.png");
-    imagensJogo[8] = IMG_LoadTexture(renderer,"assets/Botoes/themes.png");
     imagensJogo[9] = IMG_LoadTexture(renderer,"assets/CardsAll.png");
     imagensJogo[10] = IMG_LoadTexture(renderer,"assets/all_cards.png");
-    imagensJogo[11] = IMG_LoadTexture(renderer,"assets/Botoes/YTI.png");
-    imagensJogo[12] = IMG_LoadTexture(renderer,"assets/Botoes/balatroTheme.png");
     imagensJogo[13] = IMG_LoadTexture(renderer,"assets/Carta1.png");
     imagensJogo[14] = IMG_LoadTexture(renderer,"assets/Carta2.png");
     imagensJogo[15] = IMG_LoadTexture(renderer,"assets/Carta3.png");
     imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
-    imagensJogo[18] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
-
-
-
-
-
-
-
-
 }
 void inicializafonte(UserBase * args){
     TTF_Init();

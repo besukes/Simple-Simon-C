@@ -138,23 +138,12 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
 
 /* Função que desenha o logo do jogo no ecrã */
 void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
-    int cardW = 379;
-    int cardH = 529;
-    int spacing = (-30);
-    int totalWidth = numCards * cardW + (numCards - 1) * spacing;
-    int startX = (1920 - totalWidth) / 2 ;
-    int startY = 1080 - cardH + 250; 
-    
-
+    int cardW = 379,cardH = 529,spacing = (-30),totalWidth = numCards * cardW + (numCards - 1) * spacing,
+        startX = (1920 - totalWidth) / 2 ,startY = 1080 - cardH + 250; 
     for (int i = 0; i < numCards; i++) {
-        int x = startX + i * (cardW + spacing);
-        int y = startY;
-        int w = cardW;
-        int h = cardH;
-
-        int hovered = (args->mouseX >= x + 35 && args->mouseX <= x + w &&
+        int x = startX + i * (cardW + spacing),y = startY,w = cardW,h = cardH,
+            hovered = (args->mouseX >= x + 35 && args->mouseX <= x + w &&
                        args->mouseY >= y && args->mouseY <= y + h);
-
         if (hovered) {
             int scaleExtra = 40;
             w += scaleExtra;

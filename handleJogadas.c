@@ -23,8 +23,8 @@ void desfazerFilaCompleta(int matrizCartasJogo[10][21],undoMove * estadoUndoGlob
     //Estas são as cartas que foram arrastadas ate à fila completa
     matrizCartasJogo[linhaAnterior][0]+=numCartasColocadas;
     for(int j=1;i<13;i++,j++){
-        matrizCartasJogo[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i];
-        imagensCartas[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i];
+        matrizCartasJogo[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].cartas[i-1];
+        imagensCartas[linhaAnterior][m+j] = estadoUndoGlobal->ultimasJogadas[isp].imgs[i-1];
     }
 }
 
