@@ -118,6 +118,7 @@ int calculaPosXClique(float posX);
 int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY);
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event);
 void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event);
+void efetuaEventoCliqueWin(UserBase * args, SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[] );
 
 
 //modulo handleJogadas.c
