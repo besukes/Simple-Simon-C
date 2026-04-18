@@ -37,6 +37,8 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[15] = IMG_LoadTexture(renderer,"assets/Carta3.png");
     imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
+    imagensJogo[18] = IMG_LoadTexture(renderer,"assets/theme.png");
+
 }
 
 /* Função responsável por inicializar a fonte m6x11plus para ser usada pelo jogo*/

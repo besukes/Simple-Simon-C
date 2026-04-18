@@ -84,11 +84,14 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
 
     SDL_Rect fundo = {0, 0, 1920, 1080};
 
-    if (args->screen == menu || args->screen == temas) {
+    if (args->screen == menu) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
     }
+    else if (args->screen == temas) {
+        SDL_RenderCopy(args->rendererBase, imagensJogo[18], NULL, &fundo); 
+    }
     else {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[17], NULL, &fundo);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
 }
 
@@ -326,7 +329,6 @@ void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[], SDL_Event event)
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     desenhaFundo(args, imagensJogo);
-    desenhaEstilos(args , imagensJogo , event);
     botoes(args , imagensJogo); 
 }
 
