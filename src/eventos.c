@@ -97,9 +97,9 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
 /*Função responsável pelos eventos de clique na tela do Menu inicial*/
 void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
         SDL_Point pontoMouse = {args->mouseX, args->mouseY};
-        SDL_Rect botaoJogar = {860, 500, 200, 50};
-        SDL_Rect botaoTemas = {860, 600, 200, 50};
-        SDL_Rect botaoSair = {860, 700, 200, 50};
+        SDL_Rect botaoJogar = { 810, 600, 300, 80 };
+        SDL_Rect botaoTemas = { 810, 720, 300, 80 };
+        SDL_Rect botaoSair  = { 810, 840, 300, 80 };
     if (SDL_PointInRect(&pontoMouse, &botaoJogar)) {
         args->screen = jogo;
     }
