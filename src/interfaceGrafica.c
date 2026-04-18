@@ -274,60 +274,53 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
-/*Função que desenha a tela de vitória e todas as imagens associadas*/
-void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
+/* Renders text centred on x=960 with drop-shadow */
+static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
+                                const char *txt, SDL_Color cor,
+                                int y, int escala)
 {
-    desenhaFundo(args, imagensJogo);
-
-    SDL_Texture *hand[2] = { imagensJogo[13], imagensJogo[14] };
-    desenhaHandRow(args, hand, 2);
-
-    SDL_SetRenderDrawBlendMode(args->rendererBase, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(args->rendererBase, 0, 0, 0, 160);
-    SDL_Rect barra = {260, 260, 1400, 480};
-    SDL_RenderFillRect(args->rendererBase, &barra);
-
-    SDL_SetRenderDrawColor(args->rendererBase, 255, 215, 0, 220);
-    SDL_Rect bordaTop   = {260, 260, 1400,   4};
-    SDL_Rect bordaBot   = {260, 736, 1400,   4};
-    SDL_Rect bordaLeft  = {260, 260,    4, 480};
-    SDL_Rect bordaRight = {1656, 260,   4, 480};
-    SDL_RenderFillRect(args->rendererBase, &bordaTop);
-    SDL_RenderFillRect(args->rendererBase, &bordaBot);
-    SDL_RenderFillRect(args->rendererBase, &bordaLeft);
-    SDL_RenderFillRect(args->rendererBase, &bordaRight);
-
-    SDL_Surface* titulo = TTF_RenderText_Blended(args->fonte, "YOU WIN!", (SDL_Color){255, 215, 0, 255});
-    SDL_Texture* tituloTex = SDL_CreateTextureFromSurface(args->rendererBase, titulo);
-    int tW = titulo->w * 3, tH = titulo->h * 3;
-    SDL_FreeSurface(titulo);
-    SDL_Rect tituloSombra = {960 - tW/2 + 5, 285, tW, tH};
-    SDL_Rect tituloRect   = {960 - tW/2,     280, tW, tH};
-    SDL_SetTextureColorMod(tituloTex, 80, 60, 0);
-    SDL_RenderCopy(args->rendererBase, tituloTex, NULL, &tituloSombra);
-    SDL_SetTextureColorMod(tituloTex, 255, 215, 0);
-    SDL_RenderCopy(args->rendererBase, tituloTex, NULL, &tituloRect);
-    SDL_DestroyTexture(tituloTex);
-
-    SDL_SetRenderDrawColor(args->rendererBase, 255, 215, 0, 100);
-    SDL_Rect linha = {320, 540, 1280, 3};
-    SDL_RenderFillRect(args->rendererBase, &linha);
-
-    char str[30];
-    sprintf(str, "Score: %d", args->score);
-    SDL_Surface* score = TTF_RenderText_Blended(args->fonte, str, (SDL_Color){255, 255, 255, 255});
-    SDL_Texture* scoreTex = SDL_CreateTextureFromSurface(args->rendererBase, score);
-    int sW = score->w * 3, sH = score->h * 3;
-    SDL_FreeSurface(score);
-    SDL_Rect scoreSombra = {960 - sW/2 + 4, 564, sW, sH};
-    SDL_Rect scoreRect   = {960 - sW/2,     560, sW, sH};
-    SDL_SetTextureColorMod(scoreTex, 50, 50, 50);
-    SDL_RenderCopy(args->rendererBase, scoreTex, NULL, &scoreSombra);
-    SDL_SetTextureColorMod(scoreTex, 255, 255, 255);
-    SDL_RenderCopy(args->rendererBase, scoreTex, NULL, &scoreRect);
-    SDL_DestroyTexture(scoreTex);
+    SDL_Surface *s = TTF_RenderText_Blended(f, txt, cor);
+    SDL_Texture *tx = SDL_CreateTextureFromSurface(r, s);
+    int w = s->w * escala, h = s->h * escala;
+    SDL_FreeSurface(s);
+    SDL_Rect sombra = {960 - w / 2 + 5, y + 5, w, h};
+    SDL_Rect rect = {960 - w / 2, y, w, h};
+    SDL_SetTextureColorMod(tx, 60, 45, 0);
+    SDL_RenderCopy(r, tx, NULL, &sombra);
+    SDL_SetTextureColorMod(tx, cor.r, cor.g, cor.b);
+    SDL_RenderCopy(r, tx, NULL, &rect);
+    SDL_DestroyTexture(tx);
 }
 
+/* Fills a rect with the given colour */
+static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
+                      Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+    SDL_SetRenderDrawColor(ren, r, g, b, a);
+    SDL_RenderFillRect(ren, &rc);
+}
+
+/* Draws the victory screen */
+void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[], SDL_Event event)
+{
+    SDL_Renderer *ren = args->rendererBase;
+    desenhaFundo(args, imagensJogo);
+    SDL_Texture *hand[2] = {imagensJogo[13], imagensJogo[14]};
+    desenhaHandRow(args, hand, 2);
+    SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
+    retangulo(ren, (SDL_Rect){260, 260, 1400, 480}, 0, 0, 0, 160);
+    retangulo(ren, (SDL_Rect){260, 260, 1400, 4}, 255, 215, 0, 220);
+    retangulo(ren, (SDL_Rect){260, 736, 1400, 4}, 255, 215, 0, 220);
+    retangulo(ren, (SDL_Rect){260, 260, 4, 480}, 255, 215, 0, 220);
+    retangulo(ren, (SDL_Rect){1656, 260, 4, 480}, 255, 215, 0, 220);
+    renderTextoCentrado(ren, args->fonte, "YOU WIN!",
+                        (SDL_Color){255, 215, 0, 255}, 280, 3);
+    retangulo(ren, (SDL_Rect){320, 540, 1280, 3}, 255, 215, 0, 100);
+    char str[30];
+    sprintf(str, "Score: %d", args->score);
+    renderTextoCentrado(ren, args->fonte, str,
+                        (SDL_Color){255, 255, 255, 255}, 560, 3);
+}
 
 /*Função que desenha o menu dos temas utilizando outras funções*/
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
