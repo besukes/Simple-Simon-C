@@ -65,13 +65,14 @@ UserBase sdl_initializer(void){
 void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
     //temos que apagar a imagem da memoria da gpu
     for(int i=0;i<10;i++){
-        SDL_DestroyTexture(image[i]);
         for(int j=1;j<=matrizCartasJogo[i][0];j++){
             SDL_DestroyTexture(imagensCartas[i][j]);
         }
         Mix_FreeChunk(arraySom[i]);
     }
-    for(int i=10;i<19;i++){
+    //era mais otimizado destruir no primeiro ciclo as imagens de 0-10 e depois o resto,
+    //porem por causa das instrucoes nao podemos e portanto fica assim
+    for(int i=0;i<19;i++){
         SDL_DestroyTexture(image[i]);
     }
     IMG_Quit(); //informar a gpu que ja nao é preciso criar uma window
@@ -109,6 +110,17 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
     }
 }
 
+
+void cartaHovered(SDL_Rect * dest,int offset, double * ang){
+    int extraW = 20 , extraH=30;
+    dest->x -= extraW / 2;
+    dest->y -= extraH / 2 + offset;
+    dest->w += extraW;
+    dest->h += extraH;
+    // TILT FIXO para a direita
+    *ang = 10;
+}
+
 /*Função que dado uma posição na matriz de uma carta e no seu respectivo valor, desenha a na janela do jogo , desenhando para todas as linhas e desde o indice 1
 ate ao indice matrizJogo[col][0] que seria o número de cartas nessa mesma fila*/
 void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
@@ -116,27 +128,16 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
     double offset = offsetloop(args->tempo, 2, 8);
     for (int col = 0; col < 10; col++) {
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
-            SDL_Rect dest = {
-                offsetX + col * espacoX,
-                offsetY + row * passo,
-                cartaW,
-                cartaH
-            };
+            SDL_Rect dest = {offsetX + col * espacoX,offsetY + row * passo,
+                            cartaW,cartaH};
             int hovered = (
                 args->mouseX >= dest.x && args->mouseX <= dest.x + dest.w &&
                 args->mouseY >= dest.y && args->mouseY <= dest.y + dest.h
             );
             double ang = 0;
-            if(args->numCartasSelecionadas == 0 && hovered && 
-               cartaPegavel(matrizJogo[col][row], col, matrizJogo)){
-
-                int extraW = 20 , extraH=30;
-                dest.x -= extraW / 2;
-                dest.y -= extraH / 2 + offset;
-                dest.w += extraW;
-                dest.h += extraH;
-                // TILT FIXO para a direita
-                ang = 10;
+            if(args->numCartasSelecionadas == 0 && hovered 
+            && cartaPegavel(matrizJogo[col][row], col, matrizJogo)){
+                cartaHovered(&dest,offset,&ang);
             }
 
             SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, ang, NULL, SDL_FLIP_NONE);
