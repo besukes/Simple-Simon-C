@@ -2,19 +2,16 @@
 #include <stdio.h>
 #include"simpleSimon.h"
 //CU ASSERT EQUAL
+//CU_add_teste
 
 
 int initTestes(){
-	CU_pSuite pSuite = CU_add_suite("golf_tests",NULL,NULL);
-        if(NULL == pSuite) return CU_get_error();
-        CU_add_test(pSuite, "testa_ValorCarta", /*//////////*/);
-        CU_add_test(pSuite, "testa_VerificaVitoria", /*//////////*/);
-        CU_add_test(pSuite, "testa_CartaJogavel", /*//////////*/);
-        CU_add_test(pSuite, "testa_EfetuaJogada", /*//////////*/);
-	CU_add_test(pSuite, "testa_EfetuaJogadaUndo", /*//////////*/);
-	CU_add_test(pSuite, "testa_PegaCarta", /*//////////*/);
-        CU_add_test(pSuite, "testa_busca_baralho", /*//////////*/);
-	//Não é necessário testar as funções de UNDO em si, pois estas são testadas durante o teste do efetuaJogada para o caso jogada=-1
+	CU_pSuite pSuite = CU_add_suite("simpleSimon_tests",NULL,NULL);
+    if(NULL == pSuite) return CU_get_error();
+	testaDicas(&pSuite);
+	testaEventos(&pSuite);
+	testaFBase(&pSuite);
+	testaHandleJogadas(&pSuite);
 	return CUE_SUCCESS;
 }
 

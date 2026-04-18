@@ -108,3 +108,25 @@ boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
     if(nCartas==13 && flag==1) return 1;
     return 0;
 }
+
+/*Função responsável por calcular o tempo que o utilizador tem de um X jogo.*/
+void tempoemjogo(UserBase * args)
+{
+    int dif = (args -> tempo - args -> Vjogo);
+    args -> Vjogo = args -> tempo;
+    if (args->screen == jogo)
+    {
+        args -> Tjogo += dif / 1000.0;
+    }
+}
+// Função responsável por apresentar a tela de vitoria e lidar com o Final Score do Utilizador.
+void handleWINcon(UserBase * args)
+{
+    args->screen = win;
+    if (args -> Tjogo <= 1)
+        args -> score = 6000;
+    else
+    args -> score = (6000 - (args -> Tjogo * 10));
+    if (args -> score < 0)
+        args -> score = 0;
+}

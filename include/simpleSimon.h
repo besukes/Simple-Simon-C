@@ -92,12 +92,6 @@ int proximas7Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Rendere
 void initMatrizes(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Renderer * renderer,int matrizCartasJogo[10][21], UserBase * args);
 
 
-//modulo funcoesFundamentais.c
-void shuffleCartas(int cartas[]);
-void preset(int cartas[]);
-int valorCarta(int carta);
-
-
 //modulo funcoesBase.c
 void verificaVitoria(int matrizCartasJogo[10][21],UserBase * args);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
@@ -110,6 +104,9 @@ void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args);
 int calculaUltimaCartaPegavel(int matrizCartasJogo[10][21],int linha,int numCartas);
 void resetDicaArgs(UserBase * args);
 boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
+void shuffleCartas(int cartas[]);
+void preset(int cartas[]);
+int valorCarta(int carta);
 
 
 //modulo eventos.c
