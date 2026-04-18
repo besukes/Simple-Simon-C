@@ -121,8 +121,8 @@ int eUltimaCarta ( int row , int Trow , int passo , int Altura)
 }
 //Função feita para reduzir o numero de coisas no pmccabe da função feita para reduzir o numero de coisas no pmccabe para a função desenhacartas, exótica++
 void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , double *ang){
-    *extraW = 20;
-    *extraH = 30;
+    *extraW = 5;
+    *extraH = 10;
 
     *destX -= *extraW / 2;
     *destY -= *extraH / 2 + offset;
@@ -130,7 +130,7 @@ void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW 
     *destW += *extraW;
     *destH += *extraH;
 
-    *ang = 10;
+    *ang = 0;
 
 }
 //Função feita para reduzir o número de coisas no pmccabe para a função desenhacartas, exótica
@@ -184,7 +184,6 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
 }
 /*Função que desenha um retângulo azul em cima das cartas que podem ser movidas para outras filas, se o utilizador quiser uma dica*/
 void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
-    //SDL_SetRenderDrawColor(args->rendererBase, 0, 0 , 255, 255);
     SDL_SetRenderDrawBlendMode(args->rendererBase, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(args->rendererBase, 0, 0 , 255, 67);
     for(int i=0;i<args->dica.numDicas;i++){
@@ -275,7 +274,7 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
-/* Renders text centred on x=960 with drop-shadow */
+/* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
 static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
                                 const char *txt, SDL_Color cor,
                                 int y, int escala)
@@ -293,7 +292,7 @@ static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
     SDL_DestroyTexture(tx);
 }
 
-/* Fills a rect with the given colour */
+/* Função que preenche um dado retângulo com uma cor apenas para simplificar instruções */
 static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
                       Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -301,7 +300,7 @@ static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
     SDL_RenderFillRect(ren, &rc);
 }
 
-/* Draws the victory screen */
+/* Desenha o menu de vitória para quando o utilizador vence */
 void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[], SDL_Event event)
 {
     SDL_Renderer *ren = args->rendererBase;
