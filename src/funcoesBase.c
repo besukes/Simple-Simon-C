@@ -109,7 +109,7 @@ boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha){
     return 0;
 }
 
-/*Função responsável por calcular o tempo que o utilizador tem de um X jogo.*/
+/*Função responsável por calcular o tempo que o utilizador tem em um dado jogo.*/
 void tempoemjogo(UserBase * args)
 {
     int dif = (args -> tempo - args -> Vjogo);
@@ -119,7 +119,7 @@ void tempoemjogo(UserBase * args)
         args -> Tjogo += dif / 1000.0;
     }
 }
-// Função responsável por apresentar a tela de vitoria e lidar com o Final Score do Utilizador.
+/*Função responsável por apresentar a tela de vitoria e lidar com o Final Score do Utilizador.*/
 void handleWINcon(UserBase * args)
 {
     args->screen = win;
