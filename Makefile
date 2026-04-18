@@ -21,6 +21,24 @@ clean:
 	rm -rf build
 	rm simpleSimon
 
+
+testaFBase.o:testaFBase.c
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaFBase.c
+testesMain.o:testesMain.c
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testesMain.c
+dicas.o:dicas.c
+	gcc -Wall -ggdb -c dicas.c
+handleJogadas.o:handleJogadas.c 
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c handleJogadas.c
+eventos.o:eventos.c 
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c eventos.c
+funcoesBase.o:funcoesBase.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c funcoesBase.c
+testesSimpleSimon : testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
+	gcc $^ -o $@ -lcunit
+cleant:
+	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
+
 check:
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
 	@command -v make >/dev/null 2>&1 || { echo "make not installed"; exit 1; }
