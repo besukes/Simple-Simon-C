@@ -23,7 +23,7 @@ clean:
 
 
 testaFBase.o:testaFBase.c
-	gcc -Wall -ggdb -Iinclude -c testesSimpleSimon/testaFBase.c
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaFBase.c
 testesMain.o:testesMain.c
 	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testesMain.c
 dicas.o:dicas.c
