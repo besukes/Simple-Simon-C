@@ -88,7 +88,7 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
     }
     else {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[17], NULL, &fundo);
+        SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
 }
 
