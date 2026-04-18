@@ -94,7 +94,51 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
 }
-
+int isHoveredGeral (UserBase *args ,SDL_Rect *rect)
+{
+    int hovered = (args->mouseX >= rect->x  && args->mouseX <= rect->x+ rect->w &&
+                       args->mouseY >= rect->y && args->mouseY <= rect->y + rect->h);
+        if (hovered) {
+            return 1;
+        }
+        else return 0;
+}
+void desenhaEstilosGiroB (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect *tema)
+{
+    
+    int Hovered = isHoveredGeral(args , tema);
+        args->angB += args->velB;
+        args->velB *= 0.99;
+        if(args->velB < 0.04){
+            
+            args->angB = 0;
+        }
+        else Hovered = 1;
+        if (Hovered)
+        {
+            tema->w += 60;tema->h += 60; tema->x -= 30; tema->y -= 30;
+        }
+        
+        SDL_RenderCopyEx(args->rendererBase, imagensJogo[20], NULL, tema ,args->angB , NULL , SDL_FLIP_NONE);
+}
+void desenhaEstilosGiroS (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect *tema)
+{
+    
+    int Hovered = isHoveredGeral(args , tema);
+        args->angS += args->velS;
+        args->velS *= 0.99;
+        if(args->velS < 0.04){
+            
+            args->angS = 0;
+        }
+        else Hovered = 1;
+        if (Hovered)
+        {
+            tema->w += 60;tema->h += 60; tema->x -= 30; tema->y -= 30;
+        }
+        
+        SDL_RenderCopyEx(args->rendererBase, imagensJogo[21], NULL, tema ,args->angS , NULL , SDL_FLIP_NONE);
+}
 /*Função que desenha os diversos botões do jogo*/
 void botoes(UserBase *args, SDL_Texture *imagensJogo[])
 {
@@ -112,10 +156,17 @@ void botoes(UserBase *args, SDL_Texture *imagensJogo[])
         SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
         SDL_RenderCopy(args->rendererBase, imagensJogo[8], NULL, &botaoTemas);
     }
-    else{
-        SDL_Rect botaoSair = {100 , 900 , 200 ,200};
-        SDL_RenderCopy(args->rendererBase, imagensJogo[1],NULL,&botaoSair);
+    else if (args ->screen == temas)
+    {
+        inicializaTema(args ,imagensJogo);                 
     }
+}
+void inicializaTema (UserBase *args , SDL_Texture *imagensJogo[])
+{
+        SDL_Rect balatrob = {270, 320, 375, 390};
+        SDL_Rect solitaireb = {1300, 320, 400, 390};
+        desenhaEstilosGiroB(args , imagensJogo ,&balatrob);
+        desenhaEstilosGiroS(args, imagensJogo , &solitaireb);             
 }
 
 //Função feita para a lógica do hover ter a hitbox certa para cartas acima da primeira
@@ -334,9 +385,11 @@ void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event even
 {
     desenhaFundo(args, imagensJogo);
     botoes(args , imagensJogo); 
+    SDL_Texture *hand[1] = {imagensJogo[13]};
+    desenhaHandRow(args , hand , 1);
 }
 
-/*Função que desenha todos os estilos de cartas presentes no jogo e deixam o utilizador escolher um deles*/
+/*Função que desenha todos os estilos de cartas presentes no jogo e deixam o utilizador escolher um deles
 void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
 {
     SDL_Rect balatrob = {400, 100, 500, 300};
@@ -357,6 +410,7 @@ void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event ev
         SDL_RenderCopy(args->rendererBase, imagensJogo[18], NULL, &estilo);
     } 
 }
+    */
 
 /*Função que desenha as cartas que estão a ser arrastadas pelo utilizador utilizando o UserBase e as cartas que lá estão guardadas (apenas executa se
 o args->mouseButtonDown ==1,i.e, o utilizador está a segurar o mouse , e se tiver uma fila selecionada(args->filaSelecionada != -1))*/

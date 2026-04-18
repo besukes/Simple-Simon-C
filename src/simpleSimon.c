@@ -132,7 +132,7 @@ SDL_Texture * imagensJogo[],UserBase * args,Mix_Chunk * arraySom[]){
 como também inicializa a janela , executa as funções que rodam o jogo e , por fim , apaga as texturas todas que criou e encerra o jogo*/
 int main(void){
     UserBase args = sdl_initializer();
-    SDL_Texture* imagensJogo[20];
+    SDL_Texture* imagensJogo[30];
     SDL_Texture* imagensCartas[10][21];
     tocamusica();
     Mix_Chunk * arraySom[10];

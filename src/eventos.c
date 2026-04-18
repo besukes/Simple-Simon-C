@@ -70,7 +70,7 @@ void efetuaEventoClique(int matrizCartasJogo[10][21], undoMove *estadoUndoGlobal
     float posX = event.button.x , posY = event.button.y;
     int linhaClique = calculaPosXClique(posX), colunaClique = calculaPosYClique(matrizCartasJogo, linhaClique, posY);
     SDL_Point pontoMouse = {args->mouseX, args->mouseY};
-    SDL_Rect botaoQuit = {275, 800, 325, 325},botaoNG = {625, 800, 335, 300},botaoUndo = {975, 800, 330, 300},botaoDica = {1325, 800, 330, 300};
+    SDL_Rect botaoQuit = {260, 800, 335, 325},botaoNG = {605, 800, 345, 300},botaoUndo = {955, 800, 340, 300},botaoDica = {1305, 800, 340, 300};
     //Clicou no botão de sair do jogo
     if (SDL_PointInRect(&pontoMouse, &botaoQuit)) {
         args->screen = menu;
@@ -100,6 +100,7 @@ void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
         SDL_Rect botaoJogar = { 810, 600, 300, 80 };
         SDL_Rect botaoTemas = { 810, 720, 300, 80 };
         SDL_Rect botaoSair  = { 810, 840, 300, 80 };
+    
     if (SDL_PointInRect(&pontoMouse, &botaoJogar)) {
         args->screen = jogo;
     }
@@ -113,18 +114,26 @@ void efetuaEventoCliqueMenu(UserBase * args, SDL_Event event){
 }
 
 /*Função responsável pelos eventos de clique na tela do Menu de escolher Temas*/
-void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event){
+void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event ){
         SDL_Point pontoMouse = {args->mouseX, args->mouseY};
-        SDL_Rect balatrob = {400, 100, 500, 300};
-        SDL_Rect solitaireb = {1000, 100, 500, 300};
-        SDL_Rect menu1 = {100 , 900 , 200 ,200};
-    if (SDL_PointInRect(&pontoMouse, &balatrob)) 
+        SDL_Rect balatrob = {270, 320, 375, 390};
+        SDL_Rect solitaireb = {1300, 320, 400, 390};
+        SDL_Rect menu1 = {775 , 800 , 350 ,300};
+        
+    if (SDL_PointInRect(&pontoMouse, &balatrob)) {
         args->estilo = balatro;
-    else if (SDL_PointInRect(&pontoMouse, &solitaireb)) 
+        args-> velS = 0.04;
+        args-> velB = 200.0;
+    }
+    else if (SDL_PointInRect(&pontoMouse, &solitaireb)){ 
         args->estilo = solitaire;
+        args->velB = 0.04;
+        args-> velS = 200.0;
+    }
     else if (SDL_PointInRect(&pontoMouse, &menu1)) {
         args->screen = menu;
     }
+   
 }
 
 /*Na tela de vitória , o utilizador pode clicar nos botões para voltar ao menu ou iniciar um novo jogo.

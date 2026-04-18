@@ -67,6 +67,10 @@ typedef struct sdl2graphics{
     int score;
     double Vjogo;
     double Tjogo;
+    double angB;
+    double velB;
+    double angS;
+    double velS;
 }UserBase;
 
 
@@ -83,6 +87,7 @@ void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event)
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
+void inicializaTema(UserBase * args ,SDL_Texture *imagensJogo[]);
 
 
 //modulo criarJogo.c
