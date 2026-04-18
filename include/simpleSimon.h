@@ -107,6 +107,8 @@ boolean verificaFilaCompleta(int matrizCartasJogo[10][21],int linha);
 void shuffleCartas(int cartas[]);
 void preset(int cartas[]);
 int valorCarta(int carta);
+void tempoemjogo(UserBase * args);
+void handleWINcon(UserBase * args);
 
 
 //modulo eventos.c
