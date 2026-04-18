@@ -20,7 +20,7 @@ void botoesLoad(SDL_Texture * imagensJogo[],SDL_Renderer * renderer){
     imagensJogo[8] = IMG_LoadTexture(renderer,"assets/Botoes/themes.png");
     imagensJogo[11] = IMG_LoadTexture(renderer,"assets/Botoes/YTI.png");
     imagensJogo[12] = IMG_LoadTexture(renderer,"assets/Botoes/balatroTheme.png");
-    imagensJogo[18] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
+    imagensJogo[19] = IMG_LoadTexture(renderer,"assets/Botoes/solitaireTheme.png");
 }
 
 /*Função responsável por inicializar as texturas dos botões do jogo*/

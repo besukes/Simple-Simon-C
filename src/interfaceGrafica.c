@@ -112,6 +112,10 @@ void botoes(UserBase *args, SDL_Texture *imagensJogo[])
         SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
         SDL_RenderCopy(args->rendererBase, imagensJogo[8], NULL, &botaoTemas);
     }
+    else{
+        SDL_Rect botaoSair = {100 , 900 , 200 ,200};
+        SDL_RenderCopy(args->rendererBase, imagensJogo[1],NULL,&botaoSair);
+    }
 }
 
 //Função feita para a lógica do hover ter a hitbox certa para cartas acima da primeira
