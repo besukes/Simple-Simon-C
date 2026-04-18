@@ -37,7 +37,7 @@ funcoesBase.o:funcoesBase.c
 testesSimpleSimon : testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
 	gcc $^ -o $@ -lcunit
 cleant:
-	rm testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o
+	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
 
 check:
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
