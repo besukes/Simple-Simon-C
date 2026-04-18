@@ -1,7 +1,68 @@
-  Este projeto começou dia 6 de abril de 2026.
-  O jogo foi feito em C utilizando várias partes
-da libraria SDL2 para conseguir fazer um jogo em janela 
-com gráficos.
-  O projeto utiliza texturas do jogo balatro apenas 
-como inspiração , e as texturas utilizadas são devidamente
-referidas no jogo para informar a quem pertencem.
+# Simple Simon (SDL2)
+
+Este projeto foi iniciado no dia **6 de abril de 2026** e consiste na implementação de um jogo em C inspirado no clássico *Simple Simon*.
+
+O jogo utiliza a biblioteca **SDL2** e extensões associadas para criar uma aplicação gráfica em janela, com suporte a imagens, áudio e texto.
+
+## Tecnologias Utilizadas
+
+* Linguagem: **C**
+* Bibliotecas:
+
+  * SDL2
+  * SDL2_image
+  * SDL2_mixer
+  * SDL2_ttf
+
+## Estrutura do Projeto
+```bash
+.
+├── src/        # Código fonte (.c)
+├── include/    # Headers (.h)
+├── assets/     # Imagens, áudio, fontes
+├── build/      # Ficheiros objeto (.o) (gerado automaticamente)
+├── Makefile
+├── simpleSimon # Executável final (gerado automaticamente)
+└── README.md
+```
+
+## Assets
+
+As texturas utilizadas no projeto foram inspiradas no jogo *Balatro*.
+Todos os recursos utilizados são devidamente referenciados dentro do jogo, com indicação dos respetivos autores.
+
+## Compilação
+
+Para compilar o projeto, utilize o `make simpleSimon`:
+
+```bash
+make
+```
+
+O executável gerado será:
+
+```
+simpleSimon
+```
+
+### Verificar dependências
+
+Antes de compilar, pode verificar se todas as dependências estão instaladas:
+
+```bash
+make check
+```
+
+### Limpar ficheiros compilados
+
+```bash
+make clean
+```
+
+## Execução
+
+Após compilação:
+
+```bash
+./simpleSimon
+```

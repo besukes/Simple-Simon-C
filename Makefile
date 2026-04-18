@@ -1,27 +1,27 @@
-simpleSimon.o:simpleSimon.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c simpleSimon.c
-audio.o:audio.c
-	gcc -Wall -ggdb -lSDL2_mixer -c audio.c
-loadAssets.o:loadAssets.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -lSDL2_mixer -c loadAssets.c
-dicas.o:dicas.c
-	gcc -Wall -ggdb -c dicas.c
-handleJogadas.o:handleJogadas.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c handleJogadas.c
-eventos.o:eventos.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c eventos.c
-interfaceGrafica.o:interfaceGrafica.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c interfaceGrafica.c
-funcoesBase.o:funcoesBase.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c funcoesBase.c
-criarJogo.o:criarJogo.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c criarJogo.c 
-simpleSimon:simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o eventos.o handleJogadas.o audio.o dicas.o loadAssets.o
-	gcc -ggdb $^ -o $@ -lSDL2 -lSDL2_image -lSDL2_mixer -lm -lSDL2_ttf
-clean:
-	rm simpleSimon.o interfaceGrafica.o funcoesBase.o criarJogo.o simpleSimon eventos.o handleJogadas.o audio.o dicas.o loadAssets.o
-check:
+CC = gcc
 
+CFLAGS = -Wall -ggdb -Iinclude
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+
+SRC = src/simpleSimon.c src/audio.c src/loadAssets.c src/dicas.c src/handleJogadas.c src/eventos.c src/interfaceGrafica.c src/funcoesBase.c src/criarJogo.c
+OBJ = $(SRC:src/%.c=build/%.o)
+
+TARGET = simpleSimon
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+build/%.o: src/%.c
+	mkdir -p build
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf build
+	rm simpleSimon
+
+check:
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
 	@command -v make >/dev/null 2>&1 || { echo "make not installed"; exit 1; }
 
@@ -29,6 +29,5 @@ check:
 	@pkg-config --exists SDL2_image || { echo "SDL2_image missing"; exit 1; }
 	@pkg-config --exists SDL2_mixer || { echo "SDL2_mixer missing"; exit 1; }
 	@pkg-config --exists SDL2_ttf || { echo "SDL2_ttf missing"; exit 1; }
-
 
 	@echo "All dependencies OK"
