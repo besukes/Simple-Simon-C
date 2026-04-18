@@ -93,17 +93,18 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
 }
 
 /*Função que desenha os diversos botões do jogo*/
-void botoes(UserBase * args,SDL_Texture * imagensJogo[]){
-    if(args->screen == jogo) {
-        for(int i=1;i<5;i++){
-            SDL_Rect botao = {400 + 300 *(i-1),1000,200,50};
+void botoes(UserBase *args, SDL_Texture *imagensJogo[])
+{
+    if (args->screen == jogo) {
+        for (int i = 1; i < 5; i++) {
+            SDL_Rect botao = { 350 + 330 * (i - 1), 1050, 280, 80 };
             SDL_RenderCopy(args->rendererBase, imagensJogo[i], NULL, &botao);
         }
     }
-    else if(args->screen == menu) {
-        SDL_Rect botaoJogar = {860, 500, 200, 50};
-        SDL_Rect botaoTemas = {860, 600, 200, 50};
-        SDL_Rect botaoSair = {860, 700, 200, 50};
+    else if (args->screen == menu) {
+        SDL_Rect botaoJogar = { 810, 600, 300, 80 };
+        SDL_Rect botaoTemas = { 810, 720, 300, 80 };
+        SDL_Rect botaoSair  = { 810, 840, 300, 80 };
         SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoJogar);
         SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
         SDL_RenderCopy(args->rendererBase, imagensJogo[8], NULL, &botaoTemas);
