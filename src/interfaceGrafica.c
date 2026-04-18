@@ -273,7 +273,7 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
-/* Renders text centred on x=960 with drop-shadow */
+/* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
 static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
                                 const char *txt, SDL_Color cor,
                                 int y, int escala)
@@ -291,7 +291,7 @@ static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
     SDL_DestroyTexture(tx);
 }
 
-/* Fills a rect with the given colour */
+/* Função que preenche um dado retângulo com uma cor apenas para simplificar instruções */
 static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
                       Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -299,7 +299,7 @@ static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
     SDL_RenderFillRect(ren, &rc);
 }
 
-/* Draws the victory screen */
+/* Desenha o menu de vitória para quando o utilizador vence */
 void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[], SDL_Event event)
 {
     SDL_Renderer *ren = args->rendererBase;
