@@ -18,11 +18,14 @@ O jogo utiliza a biblioteca **SDL2** e extensões associadas para criar uma apli
 ```bash
 .
 ├── src/        # Código fonte (.c)
+├── sfx/        # Ficheiros de áudio utilizados
+├── musica/     # Música que implementamos para tocar ao longo do jogo
 ├── include/    # Headers (.h)
-├── assets/     # Imagens, áudio, fontes
+├── assets/     # Imagens e fontes necessárias ao projeto
 ├── build/      # Ficheiros objeto (.o) (gerado automaticamente)
 ├── Makefile
 ├── simpleSimon # Executável final (gerado automaticamente)
+├── TestesSimpleSimon # Alguns testes de funções utilizando CUnit
 └── README.md
 ```
 
