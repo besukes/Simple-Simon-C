@@ -81,7 +81,6 @@ SDL_Texture * imagensJogo[],UserBase * args,SDL_Event event,Mix_Chunk * arraySom
     desenharJogo(matrizCartasJogo , imagensCartas , imagensJogo , args ,event,arraySom);
     handleGameplay(matrizCartasJogo,estadoUndoGlobal,args,event,imagensCartas,arraySom);
     verificaVitoria(matrizCartasJogo,args);
-    //temos de fazer
     if(args-> jogada == vitoria)
         handleWINcon(args);
 }

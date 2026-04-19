@@ -21,7 +21,7 @@ void atribuiResolucao(int * resX,int * resY,int optn){
         case 3:
             *resX=1920;*resY=1080;
         break;
-        //passivel de mudancas
+        //Resolução default será de 1920x1080 caso o utilizador insira um número que não corresponde às opções
         default:
             *resX=1920;*resY=1080;
     }
@@ -43,6 +43,7 @@ UserBase sdl_initializer(void){
     return args;
 }
 
+/*Função que liberta todos os sons que foram utilizados ao longo do jogo*/
 void freeArraySom(Mix_Chunk * arraySom[]){
     for(int i=0;i<3;i++){
         Mix_FreeChunk(arraySom[i]);

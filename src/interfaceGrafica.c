@@ -101,6 +101,17 @@ void desenhaEstilosGiroS (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect 
         
         SDL_RenderCopyEx(args->rendererBase, imagensJogo[21], NULL, tema ,args->angS , NULL , SDL_FLIP_NONE);
 }
+
+/*Função que desenha os botões do menu inicial no renderer*/
+void desenhaBotoesMenu(SDL_Renderer * renderer , SDL_Texture * imagensJogo[]){
+    SDL_Rect botaoJogar = { 810, 600, 300, 80 };
+    SDL_Rect botaoTemas = { 810, 720, 300, 80 };
+    SDL_Rect botaoSair  = { 810, 840, 300, 80 };
+    SDL_RenderCopy(renderer, imagensJogo[2], NULL, &botaoJogar);
+    SDL_RenderCopy(renderer, imagensJogo[1], NULL, &botaoSair);
+    SDL_RenderCopy(renderer, imagensJogo[8], NULL, &botaoTemas);
+}
+
 /*Função que desenha os diversos botões do jogo*/
 void botoes(UserBase *args, SDL_Texture *imagensJogo[])
 {
@@ -111,12 +122,7 @@ void botoes(UserBase *args, SDL_Texture *imagensJogo[])
         }
     }
     else if (args->screen == menu) {
-        SDL_Rect botaoJogar = { 810, 600, 300, 80 };
-        SDL_Rect botaoTemas = { 810, 720, 300, 80 };
-        SDL_Rect botaoSair  = { 810, 840, 300, 80 };
-        SDL_RenderCopy(args->rendererBase, imagensJogo[2], NULL, &botaoJogar);
-        SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &botaoSair);
-        SDL_RenderCopy(args->rendererBase, imagensJogo[8], NULL, &botaoTemas);
+        desenhaBotoesMenu(args->rendererBase,imagensJogo);
     }
     else if (args ->screen == temas)
     {
@@ -151,7 +157,7 @@ void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW 
     *destH += *extraH;
 }
 //Função feita para reduzir o número de coisas no pmccabe para a função desenhacartas, exótica
-void HoverCarta(UserBase *args, int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21] , int col , int row , int *mousenacarta , 
+void hoverCarta(UserBase *args, int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21] , int col , int row , int *mousenacarta , 
 int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , int destWvalor , int destHvalor)
 {
             int alturaCarta = eUltimaCarta(row, matrizJogo[col][0], 32, 190);
@@ -166,8 +172,7 @@ int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , 
             if (hoveredStack && cartaPegavel(matrizJogo[col][row], col, matrizJogo)) {
                 *mousenacarta = 1;
             }
-
-
+            
             if(args->numCartasSelecionadas == 0 && hovered && 
                cartaPegavel(matrizJogo[col][row], col, matrizJogo) && ( row == matrizJogo[col][0]) ){
 
@@ -189,7 +194,7 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
            int extraW = 0 , extraH = 0;
             SDL_Rect dest = {offsetX + col * espacoX,offsetY + row * passo, cartaW,cartaH};
-            HoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , &extraW , &extraH , 
+            hoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , &extraW , &extraH , 
                 &dest.x, &dest.y, &dest.w, &dest.h , offset, dest.w , dest.h);
             SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, 0, NULL, SDL_FLIP_NONE);
         }
