@@ -138,7 +138,7 @@ void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPod
 
 
 //modulo dicas.c
-void jogadorPrecisaDica(UserBase * args,int linha);
+void jogadorQuerDica(UserBase * args,int linha);
 void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args);
 void atualizaEstadoDica(UserBase * args);
 
