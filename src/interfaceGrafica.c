@@ -265,7 +265,7 @@ void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
     }
 }
 
-/* Função que desenha o logo do jogo no ecrã */
+/* Função que desenha os "botões" de sair , novo jogo , dica e de desfazer jogada , durante o jogo*/
 void desenhaHandRow(UserBase *args, SDL_Texture *cards[], int numCards) {
     int cardW = 379,cardH = 529,spacing = (-30),totalWidth = numCards * cardW + (numCards - 1) * spacing,
         startX = (1920 - totalWidth) / 2 ,startY = 1080 - cardH + 250; 
@@ -380,13 +380,11 @@ void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[])
     retangulo(ren, (SDL_Rect){260, 736, 1400, 4}, 255, 215, 0, 220);
     retangulo(ren, (SDL_Rect){260, 260, 4, 480}, 255, 215, 0, 220);
     retangulo(ren, (SDL_Rect){1656, 260, 4, 480}, 255, 215, 0, 220);
-    renderTextoCentrado(ren, args->fonte, "YOU WIN!",
-                        (SDL_Color){255, 215, 0, 255}, 280, 3);
+    renderTextoCentrado(ren, args->fonte, "YOU WIN!",(SDL_Color){255, 215, 0, 255}, 280, 3);
     retangulo(ren, (SDL_Rect){320, 540, 1280, 3}, 255, 215, 0, 100);
     char str[30];
     sprintf(str, "Score: %d", args->score);
-    renderTextoCentrado(ren, args->fonte, str,
-                        (SDL_Color){255, 255, 255, 255}, 560, 3);
+    renderTextoCentrado(ren, args->fonte, str,(SDL_Color){255, 255, 255, 255}, 560, 3);
 }
 
 /*Função que desenha o menu dos temas utilizando outras funções*/
