@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -ggdb -Iinclude
 LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 
-SRC = src/simpleSimon.c src/audio.c src/loadAssets.c src/dicas.c src/handleJogadas.c src/eventos.c src/interfaceGrafica.c src/funcoesBase.c src/criarJogo.c
+SRC = src/simpleSimon.c src/audio.c src/loadAssets.c src/dicas.c src/handleJogadas.c src/eventos.c src/interfaceGrafica.c src/funcoesBase.c src/criarJogo.c src/startAndCleanup.c
 OBJ = $(SRC:src/%.c=build/%.o)
 
 TARGET = simpleSimon
