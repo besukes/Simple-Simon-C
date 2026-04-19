@@ -31,7 +31,7 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
 }
 
 /*Função que verifica se o utilizador clicou numa carta que pode pegar e , se o tiver feito , então atualiza o estado args para representar a jogada efetuada.
-Também contém uma funcionalidade , esta função , de parar de mostrar dica de cartas , pois o utilizador ja clicou numa carta*/
+Esta função também contém uma funcionalidade de parar de mostrar dica de cartas , pois o utilizador ja clicou numa carta*/
 void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21],undoMove *estadoUndoGlobal){
     int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
     //Muda o estado de args->dica para não mostrar mais dicas
@@ -118,17 +118,19 @@ void efetuaEventoCliqueTemas(UserBase * args, SDL_Event event ){
         SDL_Rect balatrob = {270, 320, 375, 390};
         SDL_Rect solitaireb = {1300, 320, 400, 390};
         SDL_Rect menu1 = {775 , 800 , 350 ,300};
-        
+    //Clicou no tema balatro
     if (SDL_PointInRect(&pontoMouse, &balatrob)) {
         args->estilo = balatro;
         args-> velS = 0.04;
         args-> velB = 200.0;
     }
+    //Clicou no tema solitário
     else if (SDL_PointInRect(&pontoMouse, &solitaireb)){ 
         args->estilo = solitaire;
         args->velB = 0.04;
         args-> velS = 200.0;
     }
+    //Clicou no botão de QUIT
     else if (SDL_PointInRect(&pontoMouse, &menu1)) {
         args->screen = menu;
     }

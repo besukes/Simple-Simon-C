@@ -2,8 +2,7 @@
 
 
 /*Função que atualiza o estado das dicas. 
-Caso o utilizador tenha clicado no botão de dica e ja tiver ultrapassado o tempo limite entao passa o bool querDicapara 0.
-Caso o utilizador tenha clicado no botão de dica e ainda não tenha ultrapassado o tempo limite entao decrementa o timeout.*/
+Caso o utilizador tenha clicado no botão de dica e ja tiver ultrapassado o tempo limite entao passa o bool querDica para 0..*/
 void atualizaEstadoDica(UserBase * args){
     if(args->dica.querDica && SDL_GetTicks() >= args->dica.timeout){
             args->dica.querDica=0;
@@ -11,7 +10,7 @@ void atualizaEstadoDica(UserBase * args){
     }
 }
 
-/*Função que , caso encontre uma posição que pode ser jogada , atualiza os argumentos do args.dica*/
+/*Função que , caso encontre uma posição de uma carta que pode ser jogada , atualiza os argumentos do args.dica*/
 void jogadorQuerDica(UserBase * args,int linha){
     args->dica.querDica=1;
     args->dica.filas[(args->dica.numDicas)++] = linha;

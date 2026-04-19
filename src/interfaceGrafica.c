@@ -5,8 +5,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <math.h>
 
-// A Função offsetloop retorna um valor entre 0 e dist que sobe e desce ciclicamente.
-// Tciclo serve para dizer a duração da interação toda , ou seja , se for 2 segundos e 2 ciclos então demora 1 segundo por cada ciclo.
+/*A Função offsetloop retorna um valor entre 0 e dist que sobe e desce ciclicamente.
+Tciclo serve para dizer a duração da interação toda , ou seja , se for 2 segundos e 2 ciclos então demora 1 segundo por cada ciclo.*/
 double offsetloop(int tempo , double TCiclo, int dist){
     // a função fmod é para retornar o resto de divisão com float(preciso disto mas podemos dar tweak para nao usar)
     //https://www.tutorialspoint.com/c_standard_library/c_function_fmod.htm
@@ -38,12 +38,14 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
 }
-//Função feita para generalizar hovered effect
+
+/*Função feita para generalizar hovered effect*/
 int isHoveredGeral (UserBase *args ,SDL_Rect *rect)
 {
     return (args->mouseX >= rect->x  && args->mouseX <= rect->x+ rect->w 
             &&args->mouseY >= rect->y && args->mouseY <= rect->y + rect->h);
 }
+
 /* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
 static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
                                 const char *txt, SDL_Color cor,
@@ -61,8 +63,9 @@ static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
     SDL_RenderCopy(r, tx, NULL, &rect);
     SDL_DestroyTexture(tx);
 }
-//Função que faz efeito hover e efeito spin na carta de temas Balatro
-/*O cálculo do angulo aqui é um pouco diferente , como 360 = 0 , então o que faço é , no primeiro tick de clique eu digo que VelB é 200 ,
+
+/*Função que faz efeito hover e efeito spin na carta de temas Balatro
+O cálculo do angulo aqui é um pouco diferente , como 360 = 0 , então o que faço é , no primeiro tick de clique eu digo que VelB é 200 ,
 e a cada tick de jogo este 200 é multiplicado por 0.99 , quando este velB chega a 0.04- , então para de "girar" e volta para o ang = 0 q é a 
 posição inicial
 O efeito de hover é o mesmo de sempre , é aquele "boolean" */
@@ -82,7 +85,7 @@ void desenhaEstilosGiroB (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect 
         }   
         SDL_RenderCopyEx(args->rendererBase, imagensJogo[20], NULL, tema ,args->angB , NULL , SDL_FLIP_NONE);
 }
-//Função que faz efeito hover e efeito spin na carta de temas Solitaire
+/*Função que faz efeito hover e efeito spin na carta de temas Solitaire*/
 void desenhaEstilosGiroS (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect *tema)
 {
     
@@ -129,6 +132,7 @@ void botoes(UserBase *args, SDL_Texture *imagensJogo[])
         inicializaTema(args ,imagensJogo);                 
     }
 }
+/*Função que desenha a carta do balatro e do solitario do menu temas que agem como um botão*/
 void inicializaTema (UserBase *args , SDL_Texture *imagensJogo[])
 {
         SDL_Rect balatrob = {270, 320, 375, 390};
@@ -137,7 +141,7 @@ void inicializaTema (UserBase *args , SDL_Texture *imagensJogo[])
         desenhaEstilosGiroS(args, imagensJogo , &solitaireb);             
 }
 
-//Função feita para a lógica do hover ter a hitbox certa para cartas acima da primeira
+/*Função feita para a lógica do hover ter a hitbox certa para cartas acima da primeira*/
 int eUltimaCarta ( int row , int Trow , int passo , int Altura)
 {
     if ( row < Trow)
@@ -145,7 +149,8 @@ int eUltimaCarta ( int row , int Trow , int passo , int Altura)
     else
     return Altura;
 }
-//Função feita para reduzir o numero de coisas no pmccabe da função feita para reduzir o numero de coisas no pmccabe para a função desenhacartas, exótica++
+/*Função feita para reduzir instruções que cria o efeito de subida e descida e da carta ficar maior,
+quando esta a ser "hovered"*/
 void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset){
     *extraW = 5;
     *extraH = 10;
@@ -157,6 +162,10 @@ void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW 
     *destH += *extraH;
 }
 
+/*Função que calcula onde o utilizador está com o rato durante o jogo.
+Se estiver com o mouse em cima de uma carta singular retorna 2.
+Se estiver com o mouse em cima de uma carta e existirem cartas abaixo do mesmo naipe , retorna 1.
+Caso nenhum destes acontecer então retorna 0.*/
 int calculaPosHover(int mouseX,int mouseY,SDL_Rect * dest,int alturaCarta){
     int hoveredStack = (mouseX >= dest->x && mouseX <= dest->x + dest->w &&
             mouseY >= dest->y  && mouseY <= dest->y + alturaCarta);
@@ -167,7 +176,7 @@ int calculaPosHover(int mouseX,int mouseY,SDL_Rect * dest,int alturaCarta){
     else return 0;
 }
 
-//Função feita para reduzir o número de coisas no pmccabe para a função desenhacartas, exótica
+/*Função que desenha uma animação na carta caso o utilizador estiver com o rato por cima dessa mesma carta*/
 void hoverCarta(UserBase *args, int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21] , int col , int row , int *mousenacarta , 
 int *extraW , int *extraH , SDL_Rect * dest , double offset)
 {
@@ -256,8 +265,8 @@ void desenharJogo(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21],SDL
     }
 }
 
-// Função que retorna valores entre -amp e amp com uma frequência fornecida na chamada da função 
-// Serve para dar um efeito de balanço em certos elementos do jogo
+/*Função que retorna valores entre -amp e amp com uma frequência fornecida na chamada da função 
+Serve para dar um efeito de balanço em certos elementos do jogo*/
 double calculoAngulo (int tempo , double freq , double amp){
     //Nao fazemos o tempo absoluto em termos da duracao dos ciclos para ter um efeito mais aleatorio
     double oscilacao = tempo /1000.0;
@@ -265,10 +274,10 @@ double calculoAngulo (int tempo , double freq , double amp){
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
-//Funçaõ que escreve o tema selecionado e faz uma animação
+/*Funçaõ que escreve o tema selecionado no Menu Temas e faz uma animação*/
 void selecaoTema (UserBase *args , SDL_Texture *imagensJogo[] , int estilo)
 {
-    
+
     SDL_Rect dest ;
     dest.w = 500;
     dest.h = 400;
