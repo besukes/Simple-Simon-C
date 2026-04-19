@@ -22,22 +22,31 @@ clean:
 	rm simpleSimon
 
 
+
+testaEventos.o:testaEventos.c
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaEventos.c
+testaHandleJogadas.o:testaHandleJogadas.c 
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaHandleJogadas.c
+testaDicas.o:testaDicas.c
+	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaDicas.c
 testaFBase.o:testaFBase.c
 	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaFBase.c
 testesMain.o:testesMain.c
 	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testesMain.c
 dicas.o:dicas.c
-	gcc -Wall -ggdb -c dicas.c
+	gcc -Wall -ggdb -c src/dicas.c
 handleJogadas.o:handleJogadas.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c handleJogadas.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/handleJogadas.c
 eventos.o:eventos.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c eventos.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/eventos.c
 funcoesBase.o:funcoesBase.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c funcoesBase.c
-testesSimpleSimon : testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/funcoesBase.c
+testesSimpleSimon:dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o testaEventos.o
 	gcc $^ -o $@ -lcunit
 cleant:
-	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o
+	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o testaHandleJogadas.o testaEventos.o testaDicas.o
+
+
 
 check:
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
