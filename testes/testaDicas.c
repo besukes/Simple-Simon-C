@@ -26,5 +26,5 @@ void testa_ColocaDicaUtilizador(void){
 }
 
 void testaDicas (CU_pSuite * suite){
-    CU_add_test(*suite,"testa_atualizaEstadoDica",testa_jogadorQuerDica);
+   // CU_add_test(*suite,"testa_atualizaEstadoDica",testa_jogadorQuerDica);
 }

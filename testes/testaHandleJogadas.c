@@ -9,7 +9,7 @@ void testa_desfazJogadaBasica(void)
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[2][0] = 3;
-    matrizCartaJogo[5][0] = 2;
+    matrizCartaJogo[5][0] = 1;
     matrizCartaJogo[5][1] = 11;
 
     undo.isp = 0;
