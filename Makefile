@@ -23,13 +23,13 @@ clean:
 
 
 testaHandleJogadas.o:testaHandleJogadas.c 
-	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaHandleJogadas.c
+	gcc -Wall -ggdb -Iinclude -c testes/testaHandleJogadas.c
 testaDicas.o:testaDicas.c
-	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaDicas.c
+	gcc -Wall -ggdb -Iinclude -c testes/testaDicas.c
 testaFBase.o:testaFBase.c
-	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaFBase.c
+	gcc -Wall -ggdb -Iinclude -c testes/testaFBase.c
 testesMain.o:testesMain.c
-	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testesMain.c
+	gcc -Wall -ggdb -Iinclude -c testes/testesMain.c
 dicas.o:dicas.c
 	gcc -Wall -ggdb -c src/dicas.c
 handleJogadas.o:handleJogadas.c 
