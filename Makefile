@@ -27,11 +27,11 @@ testaHandleJogadas.o: testes/testaHandleJogadas.c
 testaDicas.o: testes/testaDicas.c
 	gcc -Wall -ggdb -Iinclude -c testes/testaDicas.c
 testaFBase.o: testes/testaFBase.c
-	gcc -Wall -ggdb -Iinclude -c testes/testaFBase.c
+	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c testes/testaFBase.c
 testesMain.o: testes/testesMain.c
-	gcc -Wall -ggdb -Iinclude -c testes/testesMain.c
+	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c testes/testesMain.c
 dicas.o: src/dicas.c
-	gcc -Wall -ggdb -Iinclude -c src/dicas.c
+	gcc -Wall -ggdb -lSDL2 -lSDL2_image -Iinclude -c src/dicas.c
 handleJogadas.o: src/handleJogadas.c
 	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/handleJogadas.c
 eventos.o: src/eventos.c
