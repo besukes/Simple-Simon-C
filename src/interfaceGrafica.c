@@ -156,32 +156,29 @@ void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW 
     *destW += *extraW;
     *destH += *extraH;
 }
+
+int calculaPosHover(int mouseX,int mouseY,SDL_Rect * dest,int alturaCarta){
+    int hoveredStack = (mouseX >= dest->x && mouseX <= dest->x + dest->w &&
+            mouseY >= dest->y  && mouseY <= dest->y + alturaCarta);
+    int hovered = (mouseX >= dest->x && mouseX <= dest->x + dest->w &&
+            mouseY >= dest->y && mouseY <= dest->y + dest->h);
+    if(hoveredStack) return 1;
+    else if(hovered) return 2;
+    else return 0;
+}
+
 //Função feita para reduzir o número de coisas no pmccabe para a função desenhacartas, exótica
 void hoverCarta(UserBase *args, int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21] , int col , int row , int *mousenacarta , 
-int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , int destWvalor , int destHvalor)
+int *extraW , int *extraH , SDL_Rect * dest , double offset)
 {
-            int alturaCarta = eUltimaCarta(row, matrizJogo[col][0], 32, 190);
-            int hoveredStack = (
-                args->mouseX >= *destX && args->mouseX <= *destX + destWvalor &&
-                args->mouseY >= *destY  && args->mouseY <= *destY + alturaCarta
-            );
-            int hovered = (
-                args->mouseX >= *destX && args->mouseX <= *destX + destWvalor &&
-                args->mouseY >= *destY && args->mouseY <= *destY + destHvalor
-            );
-            if (hoveredStack && cartaPegavel(matrizJogo[col][row], col, matrizJogo)) {
-                *mousenacarta = 1;
-            }
-            
-            if(args->numCartasSelecionadas == 0 && hovered && 
-               cartaPegavel(matrizJogo[col][row], col, matrizJogo) && ( row == matrizJogo[col][0]) ){
-
-               setaHover(extraW , extraH , destX , destY , destW , destH , offset);
-            }
-            else if(args->numCartasSelecionadas == 0 && cartaPegavel(matrizJogo[col][row], col, matrizJogo) && *mousenacarta ){
-        
-               setaHover(extraW , extraH , destX , destY , destW , destH , offset);
-            }
+    int alturaCarta = eUltimaCarta(row, matrizJogo[col][0], 32, 190);
+    int hoveredPos = calculaPosHover(args->mouseX,args->mouseY,dest,alturaCarta);
+    if (hoveredPos==1 && cartaPegavel(matrizJogo[col][row], col, matrizJogo))
+        *mousenacarta = 1;
+    boolean cartaValida = args->numCartasSelecionadas==0 && cartaPegavel(matrizJogo[col][row], col, matrizJogo);
+    if(cartaValida && ( (hoveredPos==2 && row==matrizJogo[col][0]) || *mousenacarta )){
+        setaHover(extraW , extraH , &dest->x , &dest->y , &dest->w , &dest->h , offset);
+    }
 }
 
 /*Função que dado uma posição na matriz de uma carta e no seu respectivo valor, desenha a na janela do jogo , desenhando para todas as linhas e desde o indice 1
@@ -194,8 +191,8 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
            int extraW = 0 , extraH = 0;
             SDL_Rect dest = {offsetX + col * espacoX,offsetY + row * passo, cartaW,cartaH};
-            hoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , &extraW , &extraH , 
-                &dest.x, &dest.y, &dest.w, &dest.h , offset, dest.w , dest.h);
+            hoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , 
+                &extraW , &extraH , &dest , offset);
             SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, 0, NULL, SDL_FLIP_NONE);
         }
     } 
