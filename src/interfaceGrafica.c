@@ -306,32 +306,18 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
 }
 
 
-/* Função que preenche um dado retângulo com uma cor apenas para simplificar instruções */
-static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
-                      Uint8 r, Uint8 g, Uint8 b, Uint8 a)
-{
-    SDL_SetRenderDrawColor(ren, r, g, b, a);
-    SDL_RenderFillRect(ren, &rc);
-}
-
 /* Desenha o menu de vitória para quando o utilizador vence */
 void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[])
 {
     SDL_Renderer *ren = args->rendererBase;
-    desenhaFundo(args, imagensJogo);
+    SDL_Rect fundo = {0, 0, 1920, 1080};
+    SDL_RenderCopy(args->rendererBase, imagensJogo[19], NULL, &fundo);
     SDL_Texture *hand[2] = {imagensJogo[13], imagensJogo[14]};
     desenhaHandRow(args, hand, 2);
     SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
-    retangulo(ren, (SDL_Rect){260, 260, 1400, 480}, 0, 0, 0, 160);
-    retangulo(ren, (SDL_Rect){260, 260, 1400, 4}, 255, 215, 0, 220);
-    retangulo(ren, (SDL_Rect){260, 736, 1400, 4}, 255, 215, 0, 220);
-    retangulo(ren, (SDL_Rect){260, 260, 4, 480}, 255, 215, 0, 220);
-    retangulo(ren, (SDL_Rect){1656, 260, 4, 480}, 255, 215, 0, 220);
-    renderTextoCentrado(ren, args->fonte, "YOU WIN!",(SDL_Color){255, 215, 0, 255}, 280, 3);
-    retangulo(ren, (SDL_Rect){320, 540, 1280, 3}, 255, 215, 0, 100);
     char str[30];
     sprintf(str, "Score: %d", args->score);
-    renderTextoCentrado(ren, args->fonte, str,(SDL_Color){255, 255, 255, 255}, 560, 3);
+    renderTextoCentrado(ren, args->fonte, str,(SDL_Color){255, 255, 255, 255}, 475, 3);
 }
 
 /*Função que desenha o menu dos temas utilizando outras funções*/

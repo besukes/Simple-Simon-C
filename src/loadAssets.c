@@ -40,6 +40,8 @@ void inicializaTexturasJogo(SDL_Texture * imagensJogo[],SDL_Renderer * renderer)
     imagensJogo[16] = IMG_LoadTexture(renderer,"assets/Carta4.png");
     imagensJogo[17] = IMG_LoadTexture(renderer,"assets/background2.jpg");
     imagensJogo[18] = IMG_LoadTexture(renderer,"assets/theme.png");
+    imagensJogo[19] = IMG_LoadTexture(renderer,"assets/winScreen.png");
+
 
 }
 
