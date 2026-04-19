@@ -2,7 +2,7 @@
 
 
 /*Função que atualiza o estado das dicas. 
-Caso o utilizador tenha clicado no botão de dica e ja tiver ultrapassado o tempo limite entao passa o bool querDica para 0..*/
+Caso o utilizador tenha clicado no botão de dica e já tiver ultrapassado o tempo limite então passa o bool querDica para 0..*/
 void atualizaEstadoDica(UserBase * args){
     if(args->dica.querDica && SDL_GetTicks() >= args->dica.timeout){
             args->dica.querDica=0;
@@ -17,8 +17,8 @@ void jogadorQuerDica(UserBase * args,int linha){
     args->dica.timeout=SDL_GetTicks() + 5000;
 }
 
-/*Função que percorre a matriz do jogo e , caso encontre uma posição onde o jogador possa jogar, chama a função jogadorQuerDica para atualizar os argumentos 
-do args.dica .
+/*Função que percorre a matriz do jogo e , caso encontre uma posição onde o jogador possa jogar, chama a função jogadorQuerDica 
+para atualizar os argumentos do args.dica .
 De modo a otimizar , se para uma linha já tiver encontrado uma jogada, não continua a procurar.
 Também é importante denotar que para cada fila pega no ultimo elemento pegável, porque é o único que pode ajudar a resolver o jogo.*/
 void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args){
