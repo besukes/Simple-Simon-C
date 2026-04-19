@@ -132,6 +132,7 @@ void botoes(UserBase *args, SDL_Texture *imagensJogo[])
         inicializaTema(args ,imagensJogo);                 
     }
 }
+
 /*Função que desenha a carta do balatro e do solitario do menu temas que agem como um botão*/
 void inicializaTema (UserBase *args , SDL_Texture *imagensJogo[])
 {
@@ -206,6 +207,7 @@ void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], 
         }
     } 
 }
+
 /*Função que desenha um retângulo azul em cima das cartas que podem ser movidas para outras filas, se o utilizador quiser uma dica*/
 void desenhaDicasJogador(int matrizJogo[10][21],UserBase * args){
     SDL_SetRenderDrawBlendMode(args->rendererBase, SDL_BLENDMODE_BLEND);
@@ -274,6 +276,7 @@ double calculoAngulo (int tempo , double freq , double amp){
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
+
 /*Funçaõ que escreve o tema selecionado no Menu Temas e faz uma animação*/
 void selecaoTema (UserBase *args , SDL_Texture *imagensJogo[] , int estilo)
 {
