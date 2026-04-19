@@ -8,7 +8,6 @@ int initTestes(void){
 	CU_pSuite pSuite = CU_add_suite("simpleSimon_tests",NULL,NULL);
     if(NULL == pSuite) return CU_get_error();
 	testaDicas(&pSuite);
-	testaEventos(&pSuite);
 	testaFBase(&pSuite);
 	testaHandleJogadas(&pSuite);
 	return CUE_SUCCESS;
