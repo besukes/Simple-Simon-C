@@ -133,15 +133,13 @@ void desenhaEstilosGiroB (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect 
         args->angB += args->velB;
         args->velB *= 0.99;
         if(args->velB < 0.04){
-            
             args->angB = 0;
         }
         else Hovered = 1;
         if (Hovered)
         {
             tema->w += 60;tema->h += 60; tema->x -= 30; tema->y -= 30;
-        }
-        
+        }   
         SDL_RenderCopyEx(args->rendererBase, imagensJogo[20], NULL, tema ,args->angB , NULL , SDL_FLIP_NONE);
 }
 //Função que faz efeito hover e efeito spin na carta de temas Solitaire
@@ -202,7 +200,7 @@ int eUltimaCarta ( int row , int Trow , int passo , int Altura)
     return Altura;
 }
 //Função feita para reduzir o numero de coisas no pmccabe da função feita para reduzir o numero de coisas no pmccabe para a função desenhacartas, exótica++
-void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , double *ang){
+void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset){
     *extraW = 5;
     *extraH = 10;
 
@@ -211,13 +209,10 @@ void setaHover(int *extraW , int *extraH , int *destX , int *destY , int *destW 
 
     *destW += *extraW;
     *destH += *extraH;
-
-    *ang = 0;
-
 }
 //Função feita para reduzir o número de coisas no pmccabe para a função desenhacartas, exótica
 void HoverCarta(UserBase *args, int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21] , int col , int row , int *mousenacarta , 
-int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , double *ang , int destWvalor , int destHvalor)
+int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , double offset , int destWvalor , int destHvalor)
 {
             int alturaCarta = eUltimaCarta(row, matrizJogo[col][0], 32, 190);
             int hoveredStack = (
@@ -236,11 +231,11 @@ int *extraW , int *extraH , int *destX , int *destY , int *destW , int *destH , 
             if(args->numCartasSelecionadas == 0 && hovered && 
                cartaPegavel(matrizJogo[col][row], col, matrizJogo) && ( row == matrizJogo[col][0]) ){
 
-               setaHover(extraW , extraH , destX , destY , destW , destH , offset , ang);
+               setaHover(extraW , extraH , destX , destY , destW , destH , offset);
             }
             else if(args->numCartasSelecionadas == 0 && cartaPegavel(matrizJogo[col][row], col, matrizJogo) && *mousenacarta ){
         
-               setaHover(extraW , extraH , destX , destY , destW , destH , offset , ang);
+               setaHover(extraW , extraH , destX , destY , destW , destH , offset);
             }
 }
 
@@ -249,18 +244,14 @@ ate ao indice matrizJogo[col][0] que seria o número de cartas nessa mesma fila*
 void desenharCartas(int matrizJogo[10][21], SDL_Texture *imagensCartas[10][21], UserBase *args){
     int cartaW = 140, cartaH = 190, offsetX = 75, espacoX = 178, offsetY = 80, passo = 32 ;
     double offset = offsetloop(args->tempo, 2, 8);
-
     for (int col = 0; col < 10; col++) {
         int mousenacarta = 0;
         for (int row = 1; row <= matrizJogo[col][0]; row++) {
            int extraW = 0 , extraH = 0;
             SDL_Rect dest = {offsetX + col * espacoX,offsetY + row * passo, cartaW,cartaH};
-
-            double ang = 0;
-            HoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , &extraW , &extraH , &dest.x, &dest.y, &dest.w, &dest.h , offset , &ang 
-                , dest.w , dest.h);
-
-            SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, ang, NULL, SDL_FLIP_NONE);
+            HoverCarta(args , matrizJogo , imagensCartas, col , row ,&mousenacarta , &extraW , &extraH , 
+                &dest.x, &dest.y, &dest.w, &dest.h , offset, dest.w , dest.h);
+            SDL_RenderCopyEx(args->rendererBase, imagensCartas[col][row], NULL, &dest, 0, NULL, SDL_FLIP_NONE);
         }
     } 
 }
