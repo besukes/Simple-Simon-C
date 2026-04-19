@@ -57,7 +57,7 @@ int cartaColocavel(int cartaDeBaixo,int cartaDeCima){
 }
 
 /*Verifica se uma posição está dentro do botão , tendo em conta a coordenada esquerda superior do botao em termos de X e Y , como também os tamanhos do botão*/
-int dentroDoBotao(SDL_Event e,UserBase * args,float width,float height,float posX,float posY){
+int dentroDoBotao(SDL_Event e,float width,float height,float posX,float posY){
     int x=e.button.x,y=e.button.y;
     return ( (posX<=x && posX+width>=x) && (posY<=y && posY+height>=y));
 }

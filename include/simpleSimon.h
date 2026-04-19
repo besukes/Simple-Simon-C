@@ -99,7 +99,7 @@ void verificaVitoria(int matrizCartasJogo[10][21],UserBase * args);
 int cartaPegavel(int cartaClique,int linhaMatriz,int matrizCartasJogo[10][21]);
 int cartaColocavel(int cartaDeBaixo,int cartaDeCima);
 void resetArgs(UserBase * args);
-int dentroDoBotao(SDL_Event e,UserBase * args,float width,float height,float posX,float posY);
+int dentroDoBotao(SDL_Event e,float width,float height,float posX,float posY);
 int ePosicaoMatriz(int l,int c);
 void resetArgs(UserBase * args);
 void colocaDicaUtilizador(int matrizCartasJogo[10][21],UserBase *args);
