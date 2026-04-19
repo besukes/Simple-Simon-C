@@ -53,7 +53,7 @@ UserBase sdl_initializer(void){
     atribuiResolucao(&resX,&resY,resolution);
     SDL_Window* window = SDL_CreateWindow("Simple Simon", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, resX, resY, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    //para nao precisar de dar scale as imagens no ecra
+    //para não precisar de dar scale às imagens no ecrã
     SDL_RenderSetLogicalSize(renderer, 1920, 1080);
     // se nao der compile usar flags -std=c99 ou -std=c11
     UserBase args={.rendererBase=renderer,.mouseButtonDown=0,.filaSelecionada=(-1),.numCartasSelecionadas=0,
@@ -72,24 +72,26 @@ void clean_sdl(int matrizCartasJogo[10][21],SDL_Texture * image[],SDL_Texture * 
     }
     //era mais otimizado destruir no primeiro ciclo as imagens de 0-10 e depois o resto,
     //porem por causa das instrucoes nao podemos e portanto fica assim
-    for(int i=0;i<19;i++){
+    for(int i=0;i<22;i++){
         SDL_DestroyTexture(image[i]);
     }
     IMG_Quit(); //informar a gpu que ja nao é preciso criar uma window
     SDL_Quit();
 }
 
-/* Função que desenha o fundo do jogo ou menu */
+/* Função que desenha o fundo da respectiva janela de onde o utilizador se encontra */
 void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
 
     SDL_Rect fundo = {0, 0, 1920, 1080};
-
+    //Desenhar o fundo do menu inicial
     if (args->screen == menu) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[0], NULL, &fundo);
     }
+    //Desenhar o fundo do menu de temas
     else if (args->screen == temas) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[18], NULL, &fundo); 
     }
+    //Desenhar o fundo da tela de jogo
     else {
         SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
