@@ -97,12 +97,8 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
 //Função feita para generalizar hovered effect
 int isHoveredGeral (UserBase *args ,SDL_Rect *rect)
 {
-    int hovered = (args->mouseX >= rect->x  && args->mouseX <= rect->x+ rect->w &&
-                       args->mouseY >= rect->y && args->mouseY <= rect->y + rect->h);
-        if (hovered) {
-            return 1;
-        }
-        else return 0;
+    return (args->mouseX >= rect->x  && args->mouseX <= rect->x+ rect->w 
+            &&args->mouseY >= rect->y && args->mouseY <= rect->y + rect->h);
 }
 /* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
 static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
