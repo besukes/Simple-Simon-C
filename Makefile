@@ -22,23 +22,23 @@ clean:
 	rm simpleSimon
 
 
-testaHandleJogadas.o:testaHandleJogadas.c 
+testaHandleJogadas.o: testes/testaHandleJogadas.c
 	gcc -Wall -ggdb -Iinclude -c testes/testaHandleJogadas.c
-testaDicas.o:testaDicas.c
+testaDicas.o: testes/testaDicas.c
 	gcc -Wall -ggdb -Iinclude -c testes/testaDicas.c
-testaFBase.o:testaFBase.c
+testaFBase.o: testes/testaFBase.c
 	gcc -Wall -ggdb -Iinclude -c testes/testaFBase.c
-testesMain.o:testesMain.c
+testesMain.o: testes/testesMain.c
 	gcc -Wall -ggdb -Iinclude -c testes/testesMain.c
-dicas.o:dicas.c
-	gcc -Wall -ggdb -c src/dicas.c
-handleJogadas.o:handleJogadas.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/handleJogadas.c
-eventos.o:eventos.c 
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/eventos.c
-funcoesBase.o:funcoesBase.c
-	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/funcoesBase.c
-testesSimpleSimon:dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o
+dicas.o: src/dicas.c
+	gcc -Wall -ggdb -Iinclude -c src/dicas.c
+handleJogadas.o: src/handleJogadas.c
+	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/handleJogadas.c
+eventos.o: src/eventos.c
+	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/eventos.c
+funcoesBase.o: src/funcoesBase.c
+	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/funcoesBase.c
+testesSimpleSimon: dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o
 	gcc $^ -o $@ -lcunit
 cleant:
 	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o testaHandleJogadas.o testaDicas.o
