@@ -22,9 +22,6 @@ clean:
 	rm simpleSimon
 
 
-
-testaEventos.o:testaEventos.c
-	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaEventos.c
 testaHandleJogadas.o:testaHandleJogadas.c 
 	gcc -Wall -ggdb -Iinclude -c TestesSimpleSimon/testaHandleJogadas.c
 testaDicas.o:testaDicas.c
@@ -41,10 +38,10 @@ eventos.o:eventos.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/eventos.c
 funcoesBase.o:funcoesBase.c
 	gcc -Wall -ggdb -lSDL2 -lSDL2_image -c src/funcoesBase.c
-testesSimpleSimon:dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o testaEventos.o
+testesSimpleSimon:dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o
 	gcc $^ -o $@ -lcunit
 cleant:
-	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o testaHandleJogadas.o testaEventos.o testaDicas.o
+	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o testaHandleJogadas.o testaDicas.o
 
 
 
