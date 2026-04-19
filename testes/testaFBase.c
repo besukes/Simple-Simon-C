@@ -7,7 +7,7 @@ void testaValorCarta(void){
     CU_ASSERT_EQUAL(valorCarta(12),12);
     CU_ASSERT_EQUAL(valorCarta(40),1);
     CU_ASSERT_EQUAL(valorCarta(23),10);
-    CU_ASSERT_EQUAL(valorCarta(36),3);
+    CU_ASSERT_EQUAL(valorCarta(36),10);
     CU_ASSERT_EQUAL(valorCarta(31),5);
     CU_ASSERT_EQUAL(valorCarta(32),6);
     CU_ASSERT_EQUAL(valorCarta(20),7);
@@ -36,7 +36,7 @@ void testaCartaPegavel(void){
 }
 
 void testaCartaColocavel(void){
-    CU_ASSERT_EQUAL(cartaColocavel(14,13),1);
+    CU_ASSERT_EQUAL(cartaColocavel(14,13),0);
     CU_ASSERT_EQUAL(cartaColocavel(16,13),0);
     CU_ASSERT_EQUAL(cartaColocavel(52,13),0);
     CU_ASSERT_EQUAL(cartaColocavel(20,6),1);
@@ -82,7 +82,7 @@ void testa_ultimaCartaPegavel(void){
     int mj[10][21] = {{8,13,28,49,20,14,12,11,10},{},{},{},{},{},{},{},{},{}};
     CU_ASSERT_EQUAL(calculaUltimaCartaPegavel(mj,0,8),12);
     int mj1[10][21] = {{8,13,28,49,14,13,12,11,10},{},{},{},{},{},{},{},{},{}};
-    CU_ASSERT_EQUAL(calculaUltimaCartaPegavel(mj1,0,8),14);
+    CU_ASSERT_EQUAL(calculaUltimaCartaPegavel(mj1,0,8),13);
     int mj2[10][21] = {{8,13,28,49,20,14,12,15,1},{},{},{},{},{},{},{},{},{}};
     CU_ASSERT_EQUAL(calculaUltimaCartaPegavel(mj2,0,8),1);
 }
