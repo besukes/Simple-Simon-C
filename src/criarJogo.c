@@ -41,8 +41,8 @@ int primeiras3Linhas(int cartas[],SDL_Texture * imagensCartas[10][21],SDL_Render
 }
 
 /* Função que inicializa as matrizes de cartas e texturas das restantes 7 linhas.
-Esta função coloca cartas do array cartas na matrizJogo e nas de textura(dá LOAD às texturas), do indice 1 até ao indice 10-fila (Resultado fácil de compreender
-ao olhar para o jogo corrido) */
+Esta função coloca cartas do array cartas na matrizJogo e nas de textura(dá LOAD às texturas), do indice 1 ,
+até ao indice 10-fila (Resultado fácil de compreender ao olhar para o jogo corrido) */
 int proximas7Linhas(int cartas[],SDL_Texture * mTexturas[10][21],SDL_Renderer * renderer,int i,int fila,int mJogo[10][21], UserBase * args){
     mJogo[fila][0]=(10-fila);
     for(int n=1;n<=(10-fila);n++){

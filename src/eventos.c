@@ -31,7 +31,7 @@ int calculaPosYClique(int matrizCartasJogo[10][21], int posX, float posY) {
 }
 
 /*Função que verifica se o utilizador clicou numa carta que pode pegar e , se o tiver feito , então atualiza o estado args para representar a jogada efetuada.
-Esta função também contém uma funcionalidade de parar de mostrar dica de cartas , pois o utilizador ja clicou numa carta*/
+Esta função também contém uma funcionalidade de parar de mostrar dica de cartas , pois o utilizador já clicou numa carta*/
 void clicouCarta(int matrizCartasJogo[10][21],int linhaClique,int colunaClique,UserBase * args,SDL_Texture *imagensCartas[10][21],undoMove *estadoUndoGlobal){
     int cartaClique = matrizCartasJogo[linhaClique][colunaClique];
     //Muda o estado de args->dica para não mostrar mais dicas
@@ -156,8 +156,8 @@ void efetuaEventoCliqueWin(UserBase * args, SDL_Event event , int matrizCartasJo
 }
 
 /*  Função responsável pelos eventos de soltar o rato.
-    Semelhante à função de clique , esta também calcula a posição onde o utilizador tem o rato , mais precisamente , onde soltou o botão esquerdo e , 
-se for um evento relevante(Soltou o rato numa posição da matriz e tinha cartas selecionadas) e poder colocar a carta na posição onde soltou , então altera o estado
+    Semelhante à função de clique , esta também calcula a posição onde o utilizador tem o rato , mais precisamente , onde soltou o botão esquerdo do mesmo , e , 
+se for um evento relevante(Soltou o rato numa posição da matriz e tinha cartas selecionadas), e poder colocar a carta na posição onde soltou , então altera o estado
 respectivamente , caso contrário desfaz oque o clique fez (Coloca as cartas que estão a ser arrastadas de volta na posição da matriz e altera o args de modo a
 representar um estado parado).
  */
@@ -170,7 +170,7 @@ void efetuaEventoSoltar(int matrizCartasJogo[10][21],undoMove * estadoUndoGlobal
     boolean eventoRelevante = ePosicaoMatriz(linha,coluna) && args->numCartasSelecionadas,
             cartaPodeSeColocar = cartaColocavel(matrizCartasJogo[linha][coluna],args->cartas[0]) 
                 || (ePosicaoMatriz(linha,coluna) && matrizCartasJogo[linha][0]==0);
-    //Se for um evento relevante e a carta puder ser colocada , então atualiza o estado e a matrizJogo , caso contrario desfaz oque o clique fez
+    //Se for um evento relevante e a carta puder ser colocada , então atualiza o estado e a matrizJogo , caso contrário desfaz oque o clique fez
     if(eventoRelevante && cartaPodeSeColocar){
         boolean b = colocaArrayCartas(matrizCartasJogo,args,imagensCartas,linha);
         adicionaJogadaUndoMove(matrizCartasJogo,linha,args,estadoUndoGlobal, imagensCartas,b);

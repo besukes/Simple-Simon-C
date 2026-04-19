@@ -119,6 +119,7 @@ void tempoemjogo(UserBase * args)
         args -> Tjogo += dif / 1000.0;
     }
 }
+
 /*Função responsável por apresentar a tela de vitoria e lidar com o Final Score do Utilizador.*/
 void handleWINcon(UserBase * args)
 {

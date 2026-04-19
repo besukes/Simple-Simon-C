@@ -141,7 +141,7 @@ void updateEstado(int linhaClique, int colunaClique, int matrizCartasJogo[10][21
 }
 
 /*Esta função executa quando o utilizador arrasta uma carta para uma nova posição e esta jogada é válida.
-Nesse sentido , coloca as cartas nessa nova posição da matriz , atualizando-a , como também faz isso mesmo para a matriz das texturas.
+Nesse sentido , coloca as cartas nessa nova posição da matriz , atualizando-a , como também faz essa mesma instrução para a matriz das texturas.
 Também incrementamos o número de cartas nessa nova posição.
 Se a fila tiver sido completada então a linha simplesmente "limpa-se" , ou apaga-se . Caso contrário mantemos o estado como está.*/
 int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture * imagensCartas[10][21],int linha){
@@ -160,7 +160,9 @@ int colocaArrayCartas(int matrizCartasJogo[10][21],UserBase * args,SDL_Texture *
 /*Se a jogada não for válida (Por exemplo o utilizador tenta arrastar cartas para fora da janela ou para uma posição onde não há cartas , ou até
 mesmo uma posição onde colocar as cartas é inválido) , então temos que retornar as cartas arrastadas à posição de origem ,incrementar o número de cartas dessa
 posição de origem , e resetar o args , de modo a representar um estado parado.
-Se a jogada for valida então guarda no args , se não guarda jogada inválida , caso contrário.*/
+Se a jogada for válida então guarda no args , se não guarda jogada inválida , caso contrário.
+(No caso de largar a carta no meio do ecrã não é considerado inválido , no entanto ,largar numa coluna da
+matriz onde não pode é)*/
 void jogadaNaoRealizada(int mcj[10][21],boolean eventoRelevante,boolean cartaPodeColocar,UserBase * args,SDL_Texture * imagens[10][21]){
     int filaCarta = args->filaSelecionada, tam= mcj[filaCarta][0];
     for(int i=0;i<args->numCartasSelecionadas;i++){
