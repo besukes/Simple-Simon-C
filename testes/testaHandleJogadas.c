@@ -12,7 +12,7 @@ void testa_desfazJogadaBasica(void)
     matrizCartaJogo[5][0] = 1;
     matrizCartaJogo[5][1] = 11;
 
-    undo.isp = 0;
+    
     undo.ultimasJogadas[0].antigaPos = 2;
     undo.ultimasJogadas[0].novaPos = 5;
     undo.ultimasJogadas[0].cartasMovidas = 1;
@@ -28,14 +28,8 @@ void testa_desfazJogadaBasica(void)
 void testa_desfazerFilaCompleta(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    undoMove undo = {0};
+    undoMove undo = {.ultimasJogadas[0].antigaPos = 0, .ultimasJogadas[0].novaPos = 1 , .ultimasJogadas[0].cartasMovidas = 3 , .ultimasJogadas[0].filaPreenchida = 1};
     SDL_Texture *imgs[10][21] = {NULL};
-
-    undo.isp = 0;
-    undo.ultimasJogadas[0].antigaPos = 0;
-    undo.ultimasJogadas[0].novaPos = 1;
-    undo.ultimasJogadas[0].cartasMovidas = 3;
-    undo.ultimasJogadas[0].filaPreenchida = 1;
 
     for(int i = 0 ; i < 13 ; i++)
     undo.ultimasJogadas[0].cartas[i] = 13 - i;
@@ -54,7 +48,7 @@ void testa_rowNaoCompleta(void)
 {
     undoMove undo = {0};
     UserBase args = {0};
-    undo.isp = 0;
+    
 
     args.filaSelecionada = 2;
     args.numCartasSelecionadas = 2;
@@ -72,14 +66,11 @@ void testa_rowCompleta(void)
     int matrizCartaJogo[10][21] = {0};
     SDL_Texture *imgs[10][21] = {NULL};
     undoMove undo = {0};
-    UserBase args = {0};
+    UserBase args = {.filaSelecionada = 0 , .numCartasSelecionadas = 1};
 
     matrizCartaJogo[4][0] = 13;
     for(int i = 0 ; i < 13 ; i++)
     matrizCartaJogo[4][i+1] = 13 - i;
-
-    args.filaSelecionada = 0;
-    args. numCartasSelecionadas = 1;
 
     rowCompleta(matrizCartaJogo, imgs , 4 , &args, &undo);
 
@@ -93,17 +84,17 @@ void testa_updateEstado(void)
     UserBase args = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
-    matrizCartaJogo[0][0] = 5;
+    matrizCartaJogo[0][0] = 4;
     matrizCartaJogo[0][1] = 52;
-    matrizCartaJogo[0][2] = 51;
-    matrizCartaJogo[0][3] = 16;
-    matrizCartaJogo[0][4] = 15;
-    matrizCartaJogo[0][5] = 14;
+    matrizCartaJogo[0][2] = 16;
+    matrizCartaJogo[0][3] = 15;
+    matrizCartaJogo[0][4] = 14;
 
-    updateEstado(0 , 3 , matrizCartaJogo , &args , imgs);
+
+    updateEstado(0 , 2 , matrizCartaJogo , &args , imgs);
 
     CU_ASSERT_EQUAL(args.numCartasSelecionadas , 3);
-    CU_ASSERT_EQUAL(matrizCartaJogo[0][0] , 2);
+    CU_ASSERT_EQUAL(matrizCartaJogo[0][0] , 1);
     CU_ASSERT_EQUAL(args.cartas[0] , 16);
     CU_ASSERT_EQUAL(args.cartas[1] , 15);
     CU_ASSERT_EQUAL(args.cartas[2] , 14);
@@ -127,18 +118,13 @@ void testa_colocaArrayCartas(void)
 void testa_jogadaNaoRealizada(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    UserBase args = {0};
+    UserBase args = {.filaSelecionada = 7 , .numCartasSelecionadas = 2, .cartas[0] = 10, .cartas[1] = 9};
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[7][0] = 3;
     matrizCartaJogo[7][1] = 52;
     matrizCartaJogo[7][2] = 51;
     matrizCartaJogo[7][3] = 11;
-
-    args.filaSelecionada = 7;
-    args.numCartasSelecionadas = 2;
-    args.cartas[0] = 10;
-    args.cartas[1] = 9;
 
     jogadaNaoRealizada(matrizCartaJogo, 1 , 0 , &args , imgs);
 

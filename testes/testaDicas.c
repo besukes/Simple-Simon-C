@@ -4,6 +4,7 @@
 
 void testa_jogadorQuerDica(void){
     UserBase args;
+    args.dica.numDicas = 0;
     int linha = 1 , linha2 = 2;
     jogadorQuerDica(&args,linha);
     CU_ASSERT_EQUAL(args.dica.querDica,1);
@@ -20,11 +21,13 @@ void testa_ColocaDicaUtilizador(void){
     mj[1][1] = 4;
     mj[2][1] = 5 ;
     UserBase args;
+    args.dica.numDicas = 0;
     colocaDicaUtilizador(mj,&args);
     CU_ASSERT_EQUAL(args.dica.filas[0],0);
     CU_ASSERT_EQUAL(args.dica.filas[1],1);
 }
 
 void testaDicas (CU_pSuite * suite){
-   // CU_add_test(*suite,"testa_atualizaEstadoDica",testa_jogadorQuerDica);
+   CU_add_test(*suite,"testa_atualizaEstadoDica",testa_jogadorQuerDica);
+   CU_add_test(*suite,"testa_ColocaDicaUtilizador",testa_ColocaDicaUtilizador);
 }
