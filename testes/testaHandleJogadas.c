@@ -5,7 +5,7 @@
 void testa_desfazJogadaBasica(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    undoMove *undo;
+    undoMove *undo = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[2][0] = 3;
@@ -28,7 +28,7 @@ void testa_desfazJogadaBasica(void)
 void testa_desfazerFilaCompleta(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    undoMove *undo;
+    undoMove *undo = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
     undo->isp = 0;
@@ -52,8 +52,8 @@ void testa_desfazerFilaCompleta(void)
 }
 void testa_rowNaoCompleta(void)
 {
-    undoMove *undo;
-    UserBase *args;
+    undoMove *undo = {0};
+    UserBase *args = {0};
     undo->isp = 0;
 
     args->filaSelecionada = 2;
@@ -70,9 +70,9 @@ void testa_rowNaoCompleta(void)
 void testa_rowCompleta(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    SDL_Texture *imgs = {NULL};
-    undoMove *undo;
-    UserBase *args;
+    SDL_Texture *imgs[10][21] = {NULL};
+    undoMove *undo = {0};
+    UserBase *args = {0};
 
     matrizCartaJogo[4][0] = 13;
     for(int i = 0 ; i < 13 ; i++)
@@ -90,7 +90,7 @@ void testa_rowCompleta(void)
 void testa_updateEstado(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    UserBase *args;
+    UserBase *args = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[0][0] = 5;
@@ -111,7 +111,7 @@ void testa_updateEstado(void)
 void testa_colocaArrayCartas(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    UserBase *args;
+    UserBase *args = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[4][0] = 1;
@@ -127,7 +127,7 @@ void testa_colocaArrayCartas(void)
 void testa_jogadaNaoRealizada(void)
 {
     int matrizCartaJogo[10][21] = {0};
-    UserBase *args;
+    UserBase *args = {0};
     SDL_Texture *imgs[10][21] = {NULL};
 
     matrizCartaJogo[7][0] = 3;
