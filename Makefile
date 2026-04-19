@@ -30,6 +30,8 @@ testaFBase.o: testes/testaFBase.c
 	gcc -Wall -ggdb -Iinclude -c testes/testaFBase.c
 testesMain.o: testes/testesMain.c
 	gcc -Wall -ggdb -Iinclude -c testes/testesMain.c
+testaEventos.o: testes/testaEventos.c
+	gcc -Wall -ggdb -Iinclude -c testes/testaEventos.c
 dicas.o: src/dicas.c
 	gcc -Wall -ggdb -Iinclude -c src/dicas.c
 handleJogadas.o: src/handleJogadas.c
@@ -38,12 +40,14 @@ eventos.o: src/eventos.c
 	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/eventos.c
 funcoesBase.o: src/funcoesBase.c
 	gcc -Wall -ggdb -Iinclude -lSDL2 -lSDL2_image -c src/funcoesBase.c
-testesSimpleSimon: dicas.o eventos.o funcoesBase.o handleJogadas.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o
-	gcc $^ -o $@ -lcunit
+testesSimpleSimon: dicas.o eventos.o funcoesBase.o handleJogadas.o audio.o criarJogo.o testesMain.o testaFBase.o testaDicas.o testaHandleJogadas.o testaEventos.o
+	gcc $^ -o $@ -lcunit -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
+audio.o: src/audio.c
+	gcc -Wall -ggdb -Iinclude -c src/audio.c
+criarJogo.o: src/criarJogo.c
+	gcc -Wall -ggdb -Iinclude -c src/criarJogo.c
 cleant:
-	rm testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o testaFBase.o testaHandleJogadas.o testaDicas.o
-
-
+	rm -f testesSimpleSimon testesMain.o dicas.o eventos.o funcoesBase.o handleJogadas.o audio.o criarJogo.o testaFBase.o testaHandleJogadas.o testaDicas.o testaEventos.o
 
 check:
 	@command -v gcc >/dev/null 2>&1 || { echo "gcc not installed"; exit 1; }
