@@ -308,7 +308,7 @@ void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[])
 {
     SDL_Renderer *ren = args->rendererBase;
     SDL_Rect fundo = {0, 0, 1920, 1080};
-    SDL_RenderCopy(args->rendererBase, imagensJogo[19], NULL, &fundo);
+    SDL_RenderCopy(args->rendererBase, imagensJogo[22], NULL, &fundo);
     SDL_Texture *hand[2] = {imagensJogo[13], imagensJogo[14]};
     desenhaHandRow(args, hand, 2);
     SDL_SetRenderDrawBlendMode(ren, SDL_BLENDMODE_BLEND);
