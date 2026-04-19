@@ -67,7 +67,7 @@ void telaTemas(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event){
 
 /*Se o utilizador estiver na tela de vitória então desenha a tela de vitória e verifica os eventos do clique nessa tela*/
 void telaVitoria(UserBase * args,SDL_Texture * imagensJogo[], SDL_Event event , int matrizCartasJogo[10][21], undoMove * estadoUndoGlobal, SDL_Texture * imagensCartas[10][21],Mix_Chunk * arraySom[]){
-    desenhaVitoria(args , imagensJogo , event);
+    desenhaVitoria(args , imagensJogo);
     handleVitoria(args,event,matrizCartasJogo,estadoUndoGlobal,imagensCartas,arraySom);
 }
     

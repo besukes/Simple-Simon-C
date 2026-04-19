@@ -86,8 +86,9 @@ void botoes(UserBase * args,SDL_Texture * imagensJogo[]);
 void desenhaMenu(UserBase * args , SDL_Texture * imagensJogo[] ,SDL_Event event);
 void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
 void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
-void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event);
+void desenhaVitoria(UserBase * args , SDL_Texture *imagensJogo[] );
 void inicializaTema(UserBase * args ,SDL_Texture *imagensJogo[]);
+void selecaoTema(UserBase *args , SDL_Texture *imagensJogo[] , int estilo);
 
 
 //modulo criarJogo.c

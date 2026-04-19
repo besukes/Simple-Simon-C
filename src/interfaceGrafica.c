@@ -94,6 +94,7 @@ void desenhaFundo(UserBase *args, SDL_Texture *imagensJogo[]) {
         SDL_RenderCopy(args->rendererBase, imagensJogo[7], NULL, &fundo);
     }
 }
+//Função feita para generalizar hovered effect
 int isHoveredGeral (UserBase *args ,SDL_Rect *rect)
 {
     int hovered = (args->mouseX >= rect->x  && args->mouseX <= rect->x+ rect->w &&
@@ -103,6 +104,28 @@ int isHoveredGeral (UserBase *args ,SDL_Rect *rect)
         }
         else return 0;
 }
+/* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
+static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
+                                const char *txt, SDL_Color cor,
+                                int y, int escala)
+{
+    SDL_Surface *s = TTF_RenderText_Blended(f, txt, cor);
+    SDL_Texture *tx = SDL_CreateTextureFromSurface(r, s);
+    int w = s->w * escala, h = s->h * escala;
+    SDL_FreeSurface(s);
+    SDL_Rect sombra = {960 - w / 2 + 5, y + 5, w, h};
+    SDL_Rect rect = {960 - w / 2, y, w, h};
+    SDL_SetTextureColorMod(tx, 60, 45, 0);
+    SDL_RenderCopy(r, tx, NULL, &sombra);
+    SDL_SetTextureColorMod(tx, cor.r, cor.g, cor.b);
+    SDL_RenderCopy(r, tx, NULL, &rect);
+    SDL_DestroyTexture(tx);
+}
+//Função que faz efeito hover e efeito spin na carta de temas Balatro
+/*O cálculo do angulo aqui é um pouco diferente , como 360 = 0 , então o que faço é , no primeiro tick de clique eu digo que VelB é 200 ,
+e a cada tick de jogo este 200 é multiplicado por 0.99 , quando este velB chega a 0.04- , então para de "girar" e volta para o ang = 0 q é a 
+posição inicial
+O efeito de hover é o mesmo de sempre , é aquele "boolean" */
 void desenhaEstilosGiroB (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect *tema)
 {
     
@@ -121,6 +144,7 @@ void desenhaEstilosGiroB (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect 
         
         SDL_RenderCopyEx(args->rendererBase, imagensJogo[20], NULL, tema ,args->angB , NULL , SDL_FLIP_NONE);
 }
+//Função que faz efeito hover e efeito spin na carta de temas Solitaire
 void desenhaEstilosGiroS (UserBase *args , SDL_Texture *imagensJogo[], SDL_Rect *tema)
 {
     
@@ -308,7 +332,20 @@ double calculoAngulo (int tempo , double freq , double amp){
     double onda = sin(oscilacao* freq);
     return onda * amp;
 }
-
+//Funçaõ que escreve o tema selecionado e faz uma animação
+void selecaoTema (UserBase *args , SDL_Texture *imagensJogo[] , int estilo)
+{
+    
+    SDL_Rect dest ;
+    dest.w = 500;
+    dest.h = 400;
+    dest.x = (1920 - dest.w) / 2;
+    int tempoatual = args->tempo;
+    double offset = offsetloop(tempoatual, 1.5, 25);
+    double ang = calculoAngulo(tempoatual, 10 ,5);
+    dest.y = 325 + offset;
+    SDL_RenderCopyEx(args->rendererBase, imagensJogo[12 + 7*estilo], NULL, &dest, ang, NULL, SDL_FLIP_NONE);
+}
 
 /* Função que desenha o logo do jogo no ecrã */
 void desenhaLogo(UserBase *args, SDL_Texture *logo) {
@@ -332,23 +369,6 @@ void desenhaMenu(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event
     botoes(args , imagensJogo); 
 }
 
-/* Renderiza texto centrado no x=960 (em 1920x1080 e scaled para outras resoluções) com sombra */
-static void renderTextoCentrado(SDL_Renderer *r, TTF_Font *f,
-                                const char *txt, SDL_Color cor,
-                                int y, int escala)
-{
-    SDL_Surface *s = TTF_RenderText_Blended(f, txt, cor);
-    SDL_Texture *tx = SDL_CreateTextureFromSurface(r, s);
-    int w = s->w * escala, h = s->h * escala;
-    SDL_FreeSurface(s);
-    SDL_Rect sombra = {960 - w / 2 + 5, y + 5, w, h};
-    SDL_Rect rect = {960 - w / 2, y, w, h};
-    SDL_SetTextureColorMod(tx, 60, 45, 0);
-    SDL_RenderCopy(r, tx, NULL, &sombra);
-    SDL_SetTextureColorMod(tx, cor.r, cor.g, cor.b);
-    SDL_RenderCopy(r, tx, NULL, &rect);
-    SDL_DestroyTexture(tx);
-}
 
 /* Função que preenche um dado retângulo com uma cor apenas para simplificar instruções */
 static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
@@ -359,7 +379,7 @@ static void retangulo(SDL_Renderer *ren, SDL_Rect rc,
 }
 
 /* Desenha o menu de vitória para quando o utilizador vence */
-void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[], SDL_Event event)
+void desenhaVitoria(UserBase *args, SDL_Texture *imagensJogo[])
 {
     SDL_Renderer *ren = args->rendererBase;
     desenhaFundo(args, imagensJogo);
@@ -387,30 +407,11 @@ void desenhaTemas(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event even
     botoes(args , imagensJogo); 
     SDL_Texture *hand[1] = {imagensJogo[13]};
     desenhaHandRow(args , hand , 1);
+    if ( args-> estilo == balatro)
+    selecaoTema(args, imagensJogo , 0);
+    else
+    selecaoTema(args, imagensJogo , 1);
 }
-
-/*Função que desenha todos os estilos de cartas presentes no jogo e deixam o utilizador escolher um deles
-void desenhaEstilos(UserBase * args , SDL_Texture *imagensJogo[] ,  SDL_Event event)
-{
-    SDL_Rect balatrob = {400, 100, 500, 300};
-    SDL_Rect solitaireb = {1000, 100, 500, 300};
-    SDL_Rect menu = {100 , 900 , 200 ,200};
-    SDL_Rect YTI = {675 , 600 , 600 ,200};
-    SDL_Rect estilo = {675 , 800 , 600 ,200};
-    SDL_RenderCopy(args->rendererBase, imagensJogo[9], NULL, &balatrob);
-    SDL_RenderCopy(args->rendererBase, imagensJogo[10], NULL, &solitaireb);
-    SDL_RenderCopy(args->rendererBase, imagensJogo[11], NULL, &YTI);
-    SDL_RenderCopy(args->rendererBase, imagensJogo[1], NULL, &menu);
-    if (args -> estilo == balatro)
-    {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[12], NULL, &estilo);
-    }
-    else if (args -> estilo == solitaire)
-    {
-        SDL_RenderCopy(args->rendererBase, imagensJogo[18], NULL, &estilo);
-    } 
-}
-    */
 
 /*Função que desenha as cartas que estão a ser arrastadas pelo utilizador utilizando o UserBase e as cartas que lá estão guardadas (apenas executa se
 o args->mouseButtonDown ==1,i.e, o utilizador está a segurar o mouse , e se tiver uma fila selecionada(args->filaSelecionada != -1))*/
