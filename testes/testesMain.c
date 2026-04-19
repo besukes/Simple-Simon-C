@@ -1,5 +1,6 @@
 #include "CUnit/Basic.h"
 #include"simpleSimon.h"
+#include "testesMain.h"
 //CU ASSERT EQUAL
 //CU_add_teste
 

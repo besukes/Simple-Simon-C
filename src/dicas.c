@@ -1,5 +1,5 @@
 #include "simpleSimon.h"
-
+#include <SDL2/SDL.h>
 
 /*Função que atualiza o estado das dicas. 
 Caso o utilizador tenha clicado no botão de dica e ja tiver ultrapassado o tempo limite entao passa o bool querDicapara 0.
